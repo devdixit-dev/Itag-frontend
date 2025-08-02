@@ -75,6 +75,9 @@ const FinancialJourney = () => {
   const [showInvestmentForm, setShowInvestmentForm] = useState(false);
   const [showInsuranceForm, setShowInsuranceForm] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+
   const personalDetails = watch();
 
   // Calculate totals
@@ -166,6 +169,9 @@ const FinancialJourney = () => {
   };
 
   const onSubmit = async (data: PersonalDetails) => {
+    setIsSubmitting(true); // Disable the button
+    setTimeout(() => setIsSubmitting(false), 10000); // Re-enable after 10 seconds
+
     const financialData = {
       personalDetails: data,
       liabilities,
@@ -432,7 +438,7 @@ const FinancialJourney = () => {
 
             {/* Submit Button */}
             <div className="flex gap-4">
-              <Button onClick={handleSubmit(onSubmit)} size="lg" className="btn-finance flex-1">
+              <Button onClick={handleSubmit(onSubmit)} size="lg" className="btn-finance flex-1" disabled={isSubmitting}>
                 <Mail className="w-5 h-5 mr-2" />
                 Submit Financial Profile
               </Button>
