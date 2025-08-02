@@ -194,7 +194,7 @@ const FinancialJourney = () => {
     }
 
     try {
-      const res = await fetch(`${process.env.BASE_URL}/client-info`, {
+      const res = await fetch(`${process.env.VITE_BASE_URL}/client-info`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
