@@ -24,6 +24,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 interface PersonalDetails {
   fullName: string;
@@ -180,7 +181,6 @@ const FinancialJourney = () => {
       timestamp: new Date().toISOString()
     };
 
-    // Save email to localStorage for admin to view
     const emails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
     if (!emails.find((e: any) => e.email === data.email)) {
       emails.push({
@@ -194,47 +194,29 @@ const FinancialJourney = () => {
     }
 
     try {
-      const res = await fetch(`${process.env.VITE_BASE_URL}/client-info`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          personalDetails: financialData.personalDetails,
-          liabilities: liabilities,
-          investments: investments,
-          insurances: insurances,
-          summary: financialData.summary
-        }),
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/client-info`, {
+        personalDetails: financialData.personalDetails,
+        liabilities,
+        investments,
+        insurances,
+        summary: financialData.summary
       });
 
-      let result;
-      const contentType = res.headers.get("content-type");
+      toast({
+        title: "Financial Profile Submitted!",
+        description: "Your financial data has been submitted successfully.",
+      });
 
-      if (contentType && contentType.includes("application/json")) {
-        result = await res.json();
-      } else {
-        result = { message: 'No JSON response from server' };
-      }
-
-
-      if (res.ok) {
-        toast({
-          title: "Financial Profile Submitted!",
-          description: "Your financial data has been submitted successfully.",
-        });
-      } else {
-        throw new Error(result.message || 'Submission failed');
-      }
     } catch (error: any) {
       console.error("Submission error:", error);
       toast({
         title: "Submission Failed",
-        description: error.message || "Something went wrong while submitting your financial profile.",
+        description: error.response?.data?.message || error.message || "Something went wrong while submitting your financial profile.",
         variant: "destructive"
       });
     }
   };
+
 
 
   return (
