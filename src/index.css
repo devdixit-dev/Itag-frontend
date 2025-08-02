@@ -1,0 +1,238 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ITagFin Design System - Professional Finance Theme */
+/* Font import handled in index.html */
+
+/* in your global CSS file */
+.scroll-animation {
+  animation: scroll 120s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --background: 0 0% 100%;
+    --foreground: 210 20% 14%;
+
+    /* Finance Blue Palette */
+    --primary: 213 94% 26%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 213 84% 45%;
+    --primary-dark: 213 100% 18%;
+
+    /* Professional Grays */
+    --secondary: 210 10% 93%;
+    --secondary-foreground: 210 15% 25%;
+    --muted: 210 8% 96%;
+    --muted-foreground: 210 15% 40%;
+
+    /* Trust & Security Colors */
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* UI Elements */
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 14%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 213 94% 26%;
+
+    /* Layout */
+    --radius: 0.75rem;
+
+    /* Finance Theme Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(213 94% 26%), hsl(213 84% 45%));
+    --gradient-hero: linear-gradient(135deg, hsl(213 94% 26%) 0%, hsl(213 84% 35%) 50%, hsl(213 94% 20%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 8% 98%) 100%);
+
+    /* Professional Shadows */
+    --shadow-finance: 0 4px 20px hsl(213 94% 26% / 0.1);
+    --shadow-card: 0 2px 10px hsl(210 15% 25% / 0.08);
+    --shadow-hover: 0 8px 30px hsl(213 94% 26% / 0.15);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark Theme Core */
+    --background: 210 20% 8%;
+    --foreground: 210 10% 95%;
+
+    /* Dark Finance Blues */
+    --primary: 213 84% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 213 74% 65%;
+    --primary-dark: 213 94% 35%;
+
+    /* Dark Professional Grays */
+    --secondary: 210 15% 15%;
+    --secondary-foreground: 210 10% 85%;
+    --muted: 210 15% 12%;
+    --muted-foreground: 210 10% 60%;
+
+    /* Dark UI Elements */
+    --card: 210 15% 10%;
+    --card-foreground: 210 10% 95%;
+    --popover: 210 15% 10%;
+    --popover-foreground: 210 10% 95%;
+    --border: 210 15% 20%;
+    --input: 210 15% 15%;
+    --ring: 213 84% 55%;
+
+    /* Dark Trust & Security Colors */
+    --accent: 142 66% 46%;
+    --accent-foreground: 0 0% 100%;
+    --success: 142 66% 46%;
+    --warning: 38 82% 60%;
+    --destructive: 0 74% 70%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Dark Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(213 84% 55%), hsl(213 74% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(213 84% 45%) 0%, hsl(213 74% 55%) 50%, hsl(213 84% 35%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 15% 10%) 0%, hsl(210 15% 12%) 100%);
+
+    /* Dark Shadows */
+    --shadow-finance: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 2px 10px hsl(0 0% 0% / 0.2);
+    --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.4);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+
+  /* Finance Button Variants */
+  .btn-finance {
+    @apply bg-gradient-to-r from-primary to-primary-light text-primary-foreground px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105;
+  }
+
+  .btn-finance-outline {
+    @apply border-2 border-primary text-primary bg-transparent px-6 py-3 rounded-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300;
+  }
+
+  .btn-finance-ghost {
+    @apply text-primary hover:bg-primary/10 px-6 py-3 rounded-lg font-medium transition-all duration-300;
+  }
+
+  /* Card Variants */
+  .card-finance {
+    @apply bg-card rounded-xl p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 border border-border;
+  }
+
+  .card-finance-gradient {
+    @apply bg-gradient-to-br from-card to-secondary/50 rounded-xl p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 border border-border;
+  }
+
+  /* Hero Text */
+  .hero-title {
+    @apply text-4xl md:text-6xl font-bold text-white leading-tight;
+  }
+
+  .hero-subtitle {
+    @apply text-lg md:text-xl text-white/90 max-w-2xl;
+  }
+
+  /* Section Headers */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-foreground mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-muted-foreground max-w-3xl mx-auto mb-12;
+  }
+
+  /* Slider Animations */
+  .slider-fade {
+    @apply opacity-0 translate-y-4 transition-all duration-500 ease-out;
+  }
+
+  .slider-fade.active {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Professional Hover Effects */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-2;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  /* Finance Icons */
+  .icon-finance {
+    @apply w-12 h-12 text-primary mb-4;
+  }
+
+  /* Running Slider Animation */
+  .scroll-animation {
+    animation: scroll 30s linear infinite;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
