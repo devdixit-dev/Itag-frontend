@@ -57,7 +57,7 @@ const Admin = () => {
       setJobApplications(jobs);
 
       const fetchClients = async () => {
-        const getClients = await (await axios.get("http://localhost:5000/admin/clients")).data
+        const getClients = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/clients`)).data
         setClients(getClients.clients);
         console.log(clients)
       }
