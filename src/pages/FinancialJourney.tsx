@@ -31,7 +31,7 @@ interface PersonalDetails {
   mobileNumber: string;
   finalGoalAmount: number;
   employmentType: string;
-  sourceOfIncome: string; 
+  sourceOfIncome: string;
   monthlyIncome: number;
   annualDividendIncome: number;
   annualRentInterestIncome: number;
@@ -208,7 +208,15 @@ const FinancialJourney = () => {
         }),
       });
 
-      const result = await res.json();
+      let result;
+      const contentType = res.headers.get("content-type");
+
+      if (contentType && contentType.includes("application/json")) {
+        result = await res.json();
+      } else {
+        result = { message: 'No JSON response from server' };
+      }
+
 
       if (res.ok) {
         toast({
