@@ -23,9 +23,7 @@ import {
   Mail,
   Briefcase,
   Download,
-  User2,
-  ChevronDown,
-  ChevronUp,
+  User2
 } from 'lucide-react';
 import Insurance from './Insurance';
 
@@ -41,7 +39,6 @@ const Admin = () => {
   const [emailSubscribers, setEmailSubscribers] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
   const [clients, setClients] = useState([]);
-  const [showClientDetails, setShowClientDetails] = useState(true);
 
   const username = import.meta.env.VITE_ADMIN_USERNAME;
   const password = import.meta.env.VITE_ADMIN_PASSWORD;
@@ -510,172 +507,166 @@ const Admin = () => {
                 <h2 className="text-3xl font-bold text-foreground">Client Details</h2>
                 <p className="text-muted-foreground">Manage client details</p>
               </div>
-              <button onClick={() => setShowClientDetails(prev => !prev)} className="p-2">
-                {showClientDetails ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-              </button>
             </div>
 
-            {showClientDetails && (
-              <div className="grid gap-4">
-                {clients.map((client, index) => (
-                  <Card key={index}>
-                    <CardContent className="pt-6">
-                      <div>
-
-                        <h3 className='text-xl font-bold mb-2'>Personal & Income Details</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 border-b-2 pb-6">
-                          <div>
-                            <Label htmlFor="name">Full Name</Label>
-                            <Input value={`${client.personalDetails.fullName}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="email">Email</Label>
-                            <Input value={`${client.personalDetails.email}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Mobile Number</Label>
-                            <Input value={`${client.personalDetails.mobileNumber}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Final Goal Amount</Label>
-                            <Input value={`${client.personalDetails.finalGoalAmount}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Employment Type</Label>
-                            <Input value={`${client.personalDetails.employmentType}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Primary Source of Income</Label>
-                            <Input value={`${client.personalDetails.sourceOfIncome}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Monthly Income</Label>
-                            <Input value={`${client.personalDetails.monthlyIncome}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Annual Dividend Income</Label>
-                            <Input value={`${client.personalDetails.annualDividendIncome}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Annual Rent/Interest Income</Label>
-                            <Input value={`${client.personalDetails.annualRentInterestIncome}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Annual Bonus/Gift Income</Label>
-                            <Input value={`${client.personalDetails.annualBonusGiftIncome}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">NPS/Pension Scheme</Label>
-                            <Input value={`${client.personalDetails.npsScheme}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Annual NPS Amount</Label>
-                            <Input value={`${client.personalDetails.annualNpsAmount}`} readOnly />
-                          </div>
+            <div className="grid gap-4">
+              {clients.map((client, index) => (
+                <Card key={index}>
+                  <CardContent className="pt-6">
+                    <div>
+                      <h3 className='text-xl font-bold mb-2'>Personal & Income Details</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 border-b-2 pb-6">
+                        <div>
+                          <Label htmlFor="name">Full Name</Label>
+                          <Input value={`${client.personalDetails.fullName}`} readOnly />
                         </div>
-
-                        <h3 className='text-xl font-bold mt-4'>Liabilities</h3>
-                        {client.liabilities.map((liability: any, index: any) => (
-                          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 border-b-2 pb-6" key={index}>
-                            <div>
-                              <Label htmlFor="name">Loan Type</Label>
-                              <Input value={`${liability.loanType}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="email">Loan Amount</Label>
-                              <Input value={`${liability.loanAmount}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="name">Monthly EMI</Label>
-                              <Input value={`${liability.emi}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="name">Duration Left (Years)</Label>
-                              <Input value={`${liability.durationLeft}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="name">Interest Rate (%)</Label>
-                              <Input value={`${liability.interestRate}`} readOnly />
-                            </div>
-                          </div>
-                        ))}
-
-                        <h3 className='text-xl font-bold mt-4'>Investments</h3>
-                        {client.investments.map((investment: any, index: any) => (
-                          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 border-b-2 pb-6" key={index}>
-                            <div>
-                              <Label htmlFor="name">Investment Type</Label>
-                              <Input value={`${investment.investmentType}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="email">Current Value</Label>
-                              <Input value={`${investment.amount}`} readOnly />
-                            </div>
-                          </div>
-                        ))}
-
-                        <h3 className='text-xl font-bold mt-4'>Insurance</h3>
-                        {client.insurances.map((insurance: any, index: any) => (
-                          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 border-b-2 pb-6" key={index}>
-                            <div>
-                              <Label htmlFor="name">Insurance Type</Label>
-                              <Input value={`${insurance.insuranceType}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="email">Annual Premium</Label>
-                              <Input value={`${insurance.premium}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="name">Coverage Amount</Label>
-                              <Input value={`${insurance.coverage}`} readOnly />
-                            </div>
-                            <div>
-                              <Label htmlFor="email">Additional Details</Label>
-                              <Input value={`${insurance.details}`} readOnly />
-                            </div>
-                          </div>
-                        ))}
-
-                        <h3 className='text-xl font-bold mt-4'>Summary</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 pb-6" key={index}>
-                          <div>
-                            <Label htmlFor="name">Buffer Amount</Label>
-                            {client.summary.bufferAmount < 0
-                              ? <Input className='text-red-500' value={`${client.summary.bufferAmount}`} readOnly />
-                              : <Input className='text-green-500 font-medium' value={`${client.summary.bufferAmount}`} readOnly />
-                            }
-                          </div>
-                          <div>
-                            <Label htmlFor="email">Total Income</Label>
-                            <Input value={`${client.summary.totalIncome}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="name">Total Insurances</Label>
-                            <Input value={`${client.summary.totalInsurance}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="email">Total Investments</Label>
-                            <Input value={`${client.summary.totalInvestments}`} readOnly />
-                          </div>
-                          <div>
-                            <Label htmlFor="email">Total Liabilities</Label>
-                            <Input value={`${client.summary.totalLiabilities}`} readOnly />
-                          </div>
+                        <div>
+                          <Label htmlFor="email">Email</Label>
+                          <Input value={`${client.personalDetails.email}`} readOnly />
                         </div>
-
+                        <div>
+                          <Label htmlFor="name">Mobile Number</Label>
+                          <Input value={`${client.personalDetails.mobileNumber}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Final Goal Amount</Label>
+                          <Input value={`${client.personalDetails.finalGoalAmount}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Employment Type</Label>
+                          <Input value={`${client.personalDetails.employmentType}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Primary Source of Income</Label>
+                          <Input value={`${client.personalDetails.sourceOfIncome}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Monthly Income</Label>
+                          <Input value={`${client.personalDetails.monthlyIncome}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Annual Dividend Income</Label>
+                          <Input value={`${client.personalDetails.annualDividendIncome}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Annual Rent/Interest Income</Label>
+                          <Input value={`${client.personalDetails.annualRentInterestIncome}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Annual Bonus/Gift Income</Label>
+                          <Input value={`${client.personalDetails.annualBonusGiftIncome}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">NPS/Pension Scheme</Label>
+                          <Input value={`${client.personalDetails.npsScheme}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Annual NPS Amount</Label>
+                          <Input value={`${client.personalDetails.annualNpsAmount}`} readOnly />
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-                {clients.length === 0 && (
-                  <Card>
-                    <CardContent className="pt-6 text-center">
-                      <p className="text-muted-foreground">No clients yet.</p>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            )}
+
+                      <h3 className='text-xl font-bold mt-4'>Liabilities</h3>
+                      {client.liabilities.map((liability: any, index: any) => (
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 border-b-2 pb-6" key={index}>
+                          <div>
+                            <Label htmlFor="name">Loan Type</Label>
+                            <Input value={`${liability.loanType}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="email">Loan Amount</Label>
+                            <Input value={`${liability.loanAmount}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="name">Monthly EMI</Label>
+                            <Input value={`${liability.emi}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="name">Duration Left (Years)</Label>
+                            <Input value={`${liability.durationLeft}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="name">Interest Rate (%)</Label>
+                            <Input value={`${liability.interestRate}`} readOnly />
+                          </div>
+                        </div>
+                      ))}
+
+                      <h3 className='text-xl font-bold mt-4'>Investments</h3>
+                      {client.investments.map((investment: any, index: any) => (
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 border-b-2 pb-6" key={index}>
+                          <div>
+                            <Label htmlFor="name">Investment Type</Label>
+                            <Input value={`${investment.investmentType}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="email">Current Value</Label>
+                            <Input value={`${investment.amount}`} readOnly />
+                          </div>
+                        </div>
+                      ))}
+
+                      <h3 className='text-xl font-bold mt-4'>Insurance</h3>
+                      {client.insurances.map((insurance: any, index: any) => (
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 border-b-2 pb-6" key={index}>
+                          <div>
+                            <Label htmlFor="name">Insurance Type</Label>
+                            <Input value={`${insurance.insuranceType}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="email">Annual Premium</Label>
+                            <Input value={`${insurance.premium}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="name">Coverage Amount</Label>
+                            <Input value={`${insurance.coverage}`} readOnly />
+                          </div>
+                          <div>
+                            <Label htmlFor="email">Additional Details</Label>
+                            <Input value={`${insurance.details}`} readOnly />
+                          </div>
+                        </div>
+                      ))}
+
+                      <h3 className='text-xl font-bold mt-4'>Summary</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4 pb-6" key={index}>
+                        <div>
+                          <Label htmlFor="name">Buffer Amount</Label>
+                          {client.summary.bufferAmount < 0
+                            ? <Input className='text-red-500' value={`${client.summary.bufferAmount}`} readOnly />
+                            : <Input className='text-green-500 font-medium' value={`${client.summary.bufferAmount}`} readOnly />
+                          }
+                        </div>
+                        <div>
+                          <Label htmlFor="email">Total Income</Label>
+                          <Input value={`${client.summary.totalIncome}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="name">Total Insurances</Label>
+                          <Input value={`${client.summary.totalInsurance}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="email">Total Investments</Label>
+                          <Input value={`${client.summary.totalInvestments}`} readOnly />
+                        </div>
+                        <div>
+                          <Label htmlFor="email">Total Liabilities</Label>
+                          <Input value={`${client.summary.totalLiabilities}`} readOnly />
+                        </div>
+                      </div>
+
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+              {clients.length === 0 && (
+                <Card>
+                  <CardContent className="pt-6 text-center">
+                    <p className="text-muted-foreground">No clients yet.</p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
         )}
 
