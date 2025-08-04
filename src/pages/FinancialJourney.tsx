@@ -66,7 +66,7 @@ interface Insurance {
 
 const FinancialJourney = () => {
   const { toast } = useToast();
-  const { register, handleSubmit, watch, setValue } = useForm<PersonalDetails>();
+  const { register, handleSubmit, reset, watch, setValue } = useForm<PersonalDetails>();
   const [npsAmount, setNpsAmount] = useState<any>([]);
   const [liabilities, setLiabilities] = useState<Liability[]>([]);
   const [investments, setInvestments] = useState<Investment[]>([]);
@@ -213,6 +213,13 @@ const FinancialJourney = () => {
         description: "Your financial data has been submitted successfully.",
       });
 
+      reset(); // reset form fields (react-hook-form)
+      setLiabilities([]);
+      setInvestments([]);
+      setInsurances([]);
+      setNpsAmount([]);
+
+      localStorage.removeItem('financial_journey_emails');
     } catch (error: any) {
       console.error("Submission error:", error);
       toast({
