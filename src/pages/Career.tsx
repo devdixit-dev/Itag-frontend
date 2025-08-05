@@ -116,7 +116,7 @@ const Career = () => {
               Join Our <span className="text-primary">Team</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Build your career with ITagFin and help shape the future of financial services
+              Build your career with I Tag Financials and help shape the future of financial services
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               <div className="text-center">

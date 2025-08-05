@@ -200,7 +200,7 @@ const FinancialJourney = () => {
     }
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/client-info`, {
+      const res = await axios.post(`${import.meta.env.VITE_PRO_URL || import.meta.env.VITE_DEV_URL}/client-info`, {
         personalDetails: financialData.personalDetails,
         liabilities,
         investments,
