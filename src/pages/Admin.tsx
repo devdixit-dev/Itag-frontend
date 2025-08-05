@@ -57,7 +57,7 @@ const Admin = () => {
       setJobApplications(jobs);
 
       const fetchClients = async () => {
-        const getClients = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/clients`)).data
+        const getClients = await (await axios.get(`${import.meta.env.VITE_PRO_URL}/admin/clients`)).data
         setClients(getClients.clients);
         console.log(clients)
       }
@@ -239,7 +239,7 @@ const Admin = () => {
             className={`px-4 py-2 font-medium ${activeTab === 'clients' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
           >
             <User2 className="w-4 h-4 inline mr-2" />
-            Client Information ({clients.length})
+            Client Information
           </button>
         </div>
 
