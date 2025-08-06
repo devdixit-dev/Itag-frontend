@@ -85,20 +85,20 @@ const amcPartners = [
   { name: "WhiteOak Capital Mutual Fund", logo: whiteoak },
 ];
 
-const bankPartners = [
-  { name: "State Bank of India", logo: "SBI" },
-  { name: "HDFC Bank", logo: "HDFC" },
-  { name: "ICICI Bank", logo: "ICICI" },
-  { name: "Axis Bank", logo: "AXIS" },
-  { name: "Punjab National Bank", logo: "PNB" },
-  { name: "Bank of Baroda", logo: "BOB" },
-  { name: "Canara Bank", logo: "CANARA" },
-  { name: "Union Bank", logo: "UNION" },
-  { name: "IDFC First Bank", logo: "IDFC" },
-  { name: "Yes Bank", logo: "YES" },
-  { name: "IndusInd Bank", logo: "IIB" },
-  { name: "Federal Bank", logo: "FED" }
-];
+// const bankPartners = [
+//   { name: "State Bank of India", logo: "SBI" },
+//   { name: "HDFC Bank", logo: "HDFC" },
+//   { name: "ICICI Bank", logo: "ICICI" },
+//   { name: "Axis Bank", logo: "AXIS" },
+//   { name: "Punjab National Bank", logo: "PNB" },
+//   { name: "Bank of Baroda", logo: "BOB" },
+//   { name: "Canara Bank", logo: "CANARA" },
+//   { name: "Union Bank", logo: "UNION" },
+//   { name: "IDFC First Bank", logo: "IDFC" },
+//   { name: "Yes Bank", logo: "YES" },
+//   { name: "IndusInd Bank", logo: "IIB" },
+//   { name: "Federal Bank", logo: "FED" }
+// ];
 
 const insuranceTypes = [
   { name: "Motor Insurance", icon: Car, description: "Comprehensive vehicle protection" },
@@ -110,11 +110,11 @@ const insuranceTypes = [
 ];
 
 const LogoCard = ({ item, showIcon = false }) => (
-  <div className="flex-none w-48 mx-4">
+  <div className="flex-none w-48">
     <div className="card-finance text-center p-6 h-32 flex flex-col justify-center hover-scale bg-transparent border-0">
       {showIcon ? (
         <div className="mx-auto mb-2">
-          <item.icon className="w-8 h-8 text-primary mx-auto" />
+          <item.icon className="w-8 h-8 text-primary" />
         </div>
       ) : (
         <div className="w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2">
