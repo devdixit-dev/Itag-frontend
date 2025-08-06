@@ -20,11 +20,11 @@ const Career = () => {
   const jobOpenings = [
     {
       id: 1,
-      title: 'Wealth Advisor',
+      title: 'Senior Wealth Advisor',
       department: 'Wealth Management / Financial Advisory',
       location: 'Vadodara, India',
       type: 'Full-time',
-      experience: '0-1 years',
+      experience: '1-3 years',
       description: 'We are looking for an experienced financial advisor to join our team and help clients achieve their financial goals through comprehensive planning and investment strategies.',
       requirements: [
         'Graduate (Commerce, Finance) or MBA (preferred)',
@@ -49,14 +49,38 @@ const Career = () => {
     },
     {
       id: 2,
-      title: 'Stock Market Intern',
+      title: 'Junior Wealth Advisor',
+      department: 'Wealth Management / Financial Advisory',
+      location: 'Vadodara, India',
+      type: 'Full-time',
+      experience: '0-1 years',
+      description: 'We are looking for an experienced financial advisor to join our team and help clients achieve their financial goals through comprehensive planning and investment strategies.',
+      requirements: [
+        'Graduate (Commerce, Finance)',
+        'NISM VA / NISM VII (preferred)',
+      ],
+      responsibilities: [
+        'Assist senior advisors in managing client relationships',
+        'Schedule meetings, prepare follow-up notes, and maintain client records',
+        'Support in the preparation of financial plans based on client goals and risk profiles',
+        'Help in building proposals using financial planning software/tools',
+        'Prepare portfolio review reports for client meetings',
+        'Maintain accurate and up-to-date CRM records',
+        'Coordinate with operations/back-office for account opening, KYC, and transaction support',
+        'Stay informed about market trends, investment products, and industry regulations',
+        'Attend training sessions and certifications as required (e.g., NISM, CFP modules)'
+      ]
+    },
+    {
+      id: 3,
+      title: 'Wealth Advisor - Intern',
       department: 'Stock Market / Equity Research / Trading Support',
       location: 'Vadodara, India',
       type: 'Full-time',
       experience: 'Not required',
       description: 'Join our research team to analyze market trends, evaluate investment opportunities, and provide insights to support our advisory services.',
       requirements: [
-        'Pursuing or recently completed B. Com or BBA',
+        'Pursuing or recently completed B. Com, BBA or MBA in Finance',
         'Basic understanding of stock market, equities, and financial statements',
         'Good working knowledge of Excel and PowerPoint',
         'Strong analytical mindset and eagerness to learn',
@@ -74,7 +98,7 @@ const Career = () => {
       ]
     },
     {
-      id: 3,
+      id: 4,
       title: 'Digital Marketing Specialist',
       department: 'Marketing',
       location: 'Vadodara, India',
