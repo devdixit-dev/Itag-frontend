@@ -117,7 +117,7 @@ const LogoCard = ({ item, showIcon = false }) => (
           <item.icon className="w-8 h-8 text-primary mx-auto" />
         </div>
       ) : (
-        <div className="w-20 h-20 rounded-lg flex items-center justify-center mx-auto mb-2">
+        <div className="w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2">
           <img src={item.logo} className="font-bold text-sm"></img>
         </div>
       )}
@@ -154,7 +154,7 @@ const PartnerSliders = () => {
         </div>
 
         {/* Banking & Insurance Partners */}
-        <div>
+        {/* <div>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
               Banking & Insurance Partners
@@ -165,7 +165,7 @@ const PartnerSliders = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-1 gap-12">
-            {/* Banking Partners */}
+            Banking Partners
             <div>
               <div className="relative overflow-hidden">
                 <div className="flex scroll-animation" style={{ animationDirection: 'reverse' }}>
@@ -176,7 +176,7 @@ const PartnerSliders = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

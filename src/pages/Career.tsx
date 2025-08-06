@@ -20,57 +20,66 @@ const Career = () => {
   const jobOpenings = [
     {
       id: 1,
-      title: 'Senior Financial Advisor',
-      department: 'Advisory Services',
-      location: 'Mumbai, India',
+      title: 'Wealth Advisor',
+      department: 'Wealth Management / Financial Advisory',
+      location: 'Vadodara, India',
       type: 'Full-time',
-      experience: '3-5 years',
+      experience: '0-1 years',
       description: 'We are looking for an experienced financial advisor to join our team and help clients achieve their financial goals through comprehensive planning and investment strategies.',
       requirements: [
-        'Bachelor\'s degree in Finance, Economics, or related field',
-        'Certified Financial Planner (CFP) certification preferred',
-        '3+ years of experience in financial advisory',
+        'Graduate (Commerce, Finance) or MBA (preferred)',
+        'NISM VA / NISM XA & XB / CFP / CFA (preferred)',
+        '1+ years of experience in wealth management, banking or advisory',
         'Strong analytical and communication skills',
         'Knowledge of investment products and tax planning'
       ],
       responsibilities: [
-        'Provide comprehensive financial planning services',
-        'Analyze client financial situations and goals',
-        'Develop customized investment strategies',
-        'Monitor and review client portfolios',
-        'Maintain client relationships and provide ongoing support'
+        'Assess client financial situation, goals, and risk tolerance',
+        'Prepare customized financial plans (retirement, tax, education, etc..)',
+        'Recommend mutual funds, equities, bonds, insurance, PMS, and structured products',
+        'Monitor market trends and adjust client portfolios accordingly',
+        'Identify and onboard new HNI/retail clients',
+        'Network through referrals, events, and cold outreach',
+        'Build and maintain long-term client relationships',
+        'Conduct regular portfolio reviews and update clients',
+        'Handle client queries with timely follow-up',
+        'Ensure all advisory follows SEBI/RBI/IRDA guidelines',
+        'Maintain accurate documentation and CRM updates'
       ]
     },
     {
       id: 2,
-      title: 'Investment Research Analyst',
-      department: 'Research',
-      location: 'Delhi, India',
+      title: 'Stock Market Intern',
+      department: 'Stock Market / Equity Research / Trading Support',
+      location: 'Vadodara, India',
       type: 'Full-time',
-      experience: '2-4 years',
+      experience: 'Not required',
       description: 'Join our research team to analyze market trends, evaluate investment opportunities, and provide insights to support our advisory services.',
       requirements: [
-        'Master\'s degree in Finance, Economics, or MBA',
-        'CFA Level 1 or higher preferred',
-        'Strong analytical and research skills',
-        'Proficiency in financial modeling',
-        'Knowledge of equity and debt markets'
+        'Pursuing or recently completed B. Com or BBA',
+        'Basic understanding of stock market, equities, and financial statements',
+        'Good working knowledge of Excel and PowerPoint',
+        'Strong analytical mindset and eagerness to learn',
+        'Good communication and time management skills'
       ],
       responsibilities: [
-        'Conduct fundamental analysis of securities',
-        'Prepare research reports and recommendations',
-        'Monitor market trends and economic indicators',
-        'Support investment decision-making process',
-        'Present findings to senior management'
+        'Monitor NSE/BSE indices, sector performance, and global market cues',
+        'Help prepare research notes and company analysis based on quarterly/annual reports',
+        'Maintain and update stock watchlists, track earnings calendars, and organize historical price data',
+        'Create market summary reports, investment case studies, and sector snapshots for internal or client use',
+        'Observe trade executions and help with order management, confirmations, and compliance records',
+        'Summarize relevant economic and company-specific news and its potential market impact',
+        'Help track demo portfolios or real-time client portfolios and generate performance summaries',
+        'Gain exposure to financial platforms such as Money control, NSE/BSE websites, Trading view, or brokerage platforms'
       ]
     },
     {
       id: 3,
       title: 'Digital Marketing Specialist',
       department: 'Marketing',
-      location: 'Bangalore, India',
+      location: 'Vadodara, India',
       type: 'Full-time',
-      experience: '2-3 years',
+      experience: '0-1 years',
       description: 'Drive our digital marketing initiatives to enhance brand visibility and generate leads for our financial services.',
       requirements: [
         'Bachelor\'s degree in Marketing, Communications, or related field',
@@ -156,9 +165,7 @@ const Career = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <CardTitle className="text-xl mb-2">{job.title}</CardTitle>
-                      <CardDescription className="text-base">{job.description}</CardDescription>
                     </div>
-                    {/* <Badge variant="secondary">{job.type}</Badge> */}
                   </div>
                   <div className="flex flex-wrap gap-4 mt-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
@@ -181,6 +188,14 @@ const Career = () => {
                       <h4 className="font-semibold mb-2">Key Requirements:</h4>
                       <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
                         {job.requirements.slice(0, 3).map((req, index) => (
+                          <li key={index}>{req}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-2">Responsibilities:</h4>
+                      <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+                        {job.responsibilities.map((req, index) => (
                           <li key={index}>{req}</li>
                         ))}
                       </ul>
