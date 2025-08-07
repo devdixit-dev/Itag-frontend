@@ -40,24 +40,20 @@ const Admin = () => {
   const [jobApplications, setJobApplications] = useState([]);
   const [clients, setClients] = useState([]);
 
-  const username = import.meta.env.VITE_ADMIN_USERNAME;
-  const password = import.meta.env.VITE_ADMIN_PASSWORD;
-
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAdminLoggedIn');
-    if (loggedIn === 'true') {
-      setIsLoggedIn(true);
+    // Restore emailSubscribers and jobApplications
+    const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
+    const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
+    const jobs = JSON.parse(localStorage.getItem('job_applications') || '[]');
 
-      // Restore emailSubscribers and jobApplications
-      const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
-      const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
-      const jobs = JSON.parse(localStorage.getItem('job_applications') || '[]');
+    setEmailSubscribers([...emails, ...financialJourneyEmails]);
+    setJobApplications(jobs);
 
-      setEmailSubscribers([...emails, ...financialJourneyEmails]);
-      setJobApplications(jobs);
-
+    if (isLoggedIn) {
       const fetchClients = async () => {
-        const getClients = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/clients`)).data
+        const getClients = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/clients`, {},
+          { withCredentials: true }
+        )).data
         setClients(getClients.clients);
         console.log(clients)
       }
@@ -65,24 +61,24 @@ const Admin = () => {
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginForm.username === username && loginForm.password === password) {
+
+    const adminLogin = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin`, {
+      username: loginForm.username,
+      password: loginForm.password
+    }, { withCredentials: true });
+
+    console.log('Login Success:', adminLogin.data);
+
+    if (adminLogin.status === 200) {
       setIsLoggedIn(true);
-      localStorage.setItem('isAdminLoggedIn', 'true');
-      // Load email subscribers and job applications
-      const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
-      const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
-      const jobs = JSON.parse(localStorage.getItem('job_applications') || '[]');
-
-      setEmailSubscribers([...emails, ...financialJourneyEmails]);
-      setJobApplications(jobs);
-
       toast({
         title: "🎉 Login Successful!",
         description: "Welcome to the admin panel. You can now manage content and view applications.",
       });
-    } else {
+    }
+    else {
       toast({
         title: "❌ Login Failed",
         description: "Invalid credentials. Use username: admin, password: admin",
@@ -90,9 +86,10 @@ const Admin = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const adminLogout = await axios.post(`${import.meta.env.VITE_DEV_URL}/logout`, {}, { withCredentials: true })
     setIsLoggedIn(false);
-    localStorage.removeItem('isAdminLoggedIn');
+    console.log(`Logged out`, adminLogout);
     setLoginForm({ username: '', password: '' });
     toast({
       title: "👋 Logged Out",
@@ -167,6 +164,7 @@ const Admin = () => {
                   onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
                   placeholder="Enter username"
                   required
+                  autoComplete='true'
                 />
               </div>
               <div>
