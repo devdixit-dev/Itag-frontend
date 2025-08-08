@@ -63,26 +63,37 @@ const Admin = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const adminLogin = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin`, {
+        username: loginForm.username,
+        password: loginForm.password
+      }, { withCredentials: true });
 
-    const adminLogin = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin`, {
-      username: loginForm.username,
-      password: loginForm.password
-    }, { withCredentials: true });
+      console.log('Login Success:', adminLogin.data);
 
-    console.log('Login Success:', adminLogin.data);
-
-    if (adminLogin.status === 200) {
-      setIsLoggedIn(true);
-      toast({
-        title: "🎉 Login Successful!",
-        description: "Welcome to the admin panel. You can now manage content and view applications.",
-      });
+      if (adminLogin.status === 200) {
+        setIsLoggedIn(true);
+        toast({
+          title: "🎉 Login Successful!",
+          description: "Welcome to the admin panel. You can now manage content and view applications.",
+        });
+      }
     }
-    else {
-      toast({
-        title: "❌ Login Failed",
-        description: "Invalid credentials. Use username: admin, password: admin",
-      });
+    catch (err) {
+      setIsLoggedIn(false);
+      if (err.response.status === 400) {
+        toast({
+          title: "❌ Login Failed",
+          description: "Invalid credentials",
+        });
+      }
+      else {
+        toast({
+          title: "🚨 Error",
+          description: "Something went wrong. Please try again later.",
+        });
+        console.log(`Frontend error - ${err}`);
+      }
     }
   };
 
