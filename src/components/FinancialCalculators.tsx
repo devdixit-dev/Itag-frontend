@@ -12,6 +12,7 @@ const FinancialCalculators = () => {
   const [sipAmount, setSipAmount] = useState(5000);
   const [sipRate, setSipRate] = useState(12);
   const [sipYears, setSipYears] = useState(10);
+  const [inflPercent, setInflPercent] = useState(0);
   const [sipResult, setSipResult] = useState(null);
 
   // Loan Calculator State
@@ -32,11 +33,16 @@ const FinancialCalculators = () => {
     const futureValue = sipAmount * (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
     const totalInvestment = sipAmount * months;
     const returns = futureValue - totalInvestment;
-    
+
+    // Adjust for inflation
+    const annualInflationRate = inflPercent / 100;
+    const inflationAdjustedFV = futureValue / Math.pow(1 + annualInflationRate, sipYears);
+
     setSipResult({
       futureValue: Math.round(futureValue),
       totalInvestment: Math.round(totalInvestment),
-      returns: Math.round(returns)
+      returns: Math.round(returns),
+      inflationAdjustedFV: Math.round(inflationAdjustedFV)
     });
   };
 
@@ -46,7 +52,7 @@ const FinancialCalculators = () => {
     const emi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
     const totalPayment = emi * months;
     const totalInterest = totalPayment - loanAmount;
-    
+
     setLoanResult({
       emi: Math.round(emi),
       totalPayment: Math.round(totalPayment),
@@ -59,14 +65,14 @@ const FinancialCalculators = () => {
     const months = goalYears * 12;
     const monthlyInvestment = goalAmount / (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
     const totalInvestment = monthlyInvestment * months;
-    
+
     setGoalResult({
       monthlyInvestment: Math.round(monthlyInvestment),
       totalInvestment: Math.round(totalInvestment)
     });
   };
 
-  const formatCurrency = (amount) => {
+  const formatCurrency = (amount: any) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
@@ -143,6 +149,16 @@ const FinancialCalculators = () => {
                         className="mt-2"
                       />
                     </div>
+                    <div>
+                      <Label htmlFor="infPercent">Adjust Inflation(%)</Label>
+                      <Input
+                        id="infPercent"
+                        type="number"
+                        value={inflPercent}
+                        onChange={(e) => setInflPercent(Number(e.target.value))}
+                        className="mt-2"
+                      />
+                    </div>
                     <Button onClick={calculateSIP} className="w-full btn-finance">
                       <Calculator className="w-4 h-4 mr-2" />
                       Calculate SIP
@@ -151,7 +167,7 @@ const FinancialCalculators = () => {
                 </Card>
 
                 {sipResult && (
-                  <div className="space-y-6">
+                  <div className="space-y-2">
                     <Card className="card-finance bg-gradient-to-br from-primary/5 to-accent/5">
                       <CardHeader>
                         <CardTitle>SIP Calculation Results</CardTitle>
@@ -160,7 +176,7 @@ const FinancialCalculators = () => {
                         <div className="flex justify-between">
                           <span>Future Value:</span>
                           <span className="font-semibold text-primary">
-                            {formatCurrency(sipResult.futureValue)}
+                            {formatCurrency(sipResult.inflationAdjustedFV)}
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -174,6 +190,9 @@ const FinancialCalculators = () => {
                           <span className="font-semibold text-success">
                             {formatCurrency(sipResult.returns)}
                           </span>
+                        </div>
+                        <div className="flex justify-center">
+                          <p className="text-red-500">Note: Future value adjust inflation</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -199,7 +218,7 @@ const FinancialCalculators = () => {
                                 dataKey="value"
                               >
                               </Pie>
-                              <Tooltip 
+                              <Tooltip
                                 formatter={(value) => formatCurrency(value)}
                               />
                               <Legend />
@@ -311,7 +330,7 @@ const FinancialCalculators = () => {
                                 dataKey="value"
                               >
                               </Pie>
-                              <Tooltip 
+                              <Tooltip
                                 formatter={(value) => formatCurrency(value)}
                               />
                               <Legend />
@@ -423,7 +442,7 @@ const FinancialCalculators = () => {
                                 dataKey="value"
                               >
                               </Pie>
-                              <Tooltip 
+                              <Tooltip
                                 formatter={(value) => formatCurrency(value)}
                               />
                               <Legend />
