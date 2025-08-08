@@ -23,6 +23,8 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 
+import axios from "axios";
+
 
 const Footer = () => {
   const { toast } = useToast();
@@ -46,6 +48,17 @@ const Footer = () => {
     // Reset form
     setCallbackForm({ name: '', phone: '', email: '', preferredTime: '' });
   };
+
+  const handleNewsletterEmail = async () => {
+    const getEmail = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/newsletter`, { email: newsletterEmail })).data
+
+    if (getEmail.status === 200) {
+      toast({
+        title: "🎉 Email subscription added"
+      });
+      setNewsletterEmail('');
+    }
+  }
 
   const quickLinks = [
     { name: "Home", href: "/" },
@@ -171,37 +184,9 @@ const Footer = () => {
                   <button
                     type="submit"
                     className="px-4 py-2 bg-white text-primary rounded-md hover:bg-white/90 transition-colors font-medium"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (!newsletterEmail.includes('@')) {
-                        toast({
-                          title: "Invalid Email",
-                          description: "Please enter a valid email address.",
-                        });
-                        return;
-                      }
-
-                      const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
-                      const alreadyExists = emails.some((entry: { email: string; }) => entry.email === newsletterEmail);
-
-                      if (!alreadyExists) {
-                        emails.push({
-                          email: newsletterEmail,
-                          source: 'newsletter',
-                          timestamp: new Date().toISOString()
-                        });
-                        localStorage.setItem('newsletter_emails', JSON.stringify(emails));
-                      }
-
-                      toast({
-                        title: "📧 Subscription Successful!",
-                        description: "You've successfully subscribed to our newsletter. Thank you!",
-                      });
-
-                      setNewsletterEmail('');
-                    }}
+                    onClick={handleNewsletterEmail}
                   >
-                    <BellIcon width={20}/>
+                    <BellIcon width={18} />
                   </button>
                 </div>
               </div>

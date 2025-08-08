@@ -46,12 +46,18 @@ const Admin = () => {
         const response = await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/verify`, { withCredentials: true });
         if (response.status === 200 && response.data.loggedIn) {
           setIsLoggedIn(true);
+
           const fetchClients = async () => {
             const getClients = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/clients`, { withCredentials: true })).data
             setClients(getClients.clients);
-            console.log(clients)
           }
           fetchClients();
+
+          const fetchEmails = async () => {
+            const getEmails = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/emails`, {}, { withCredentials: true })).data
+            setEmailSubscribers(getEmails.emails);
+          }
+          fetchEmails();
         }
       }
       catch (err) {
@@ -61,12 +67,12 @@ const Admin = () => {
     checkLogin();
 
     // Restore emailSubscribers and jobApplications
-    const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
-    const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
-    const jobs = JSON.parse(localStorage.getItem('job_applications') || '[]');
+    // const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
+    // // const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
+    // const jobs = JSON.parse(localStorage.getItem('job_applications') || '[]');
 
-    setEmailSubscribers([...emails, ...financialJourneyEmails]);
-    setJobApplications(jobs);
+    // // setEmailSubscribers([...emails, ...financialJourneyEmails]);
+    // setJobApplications(jobs);
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -384,32 +390,12 @@ const Admin = () => {
                 <Card key={index}>
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-center">
-                      <div>
+                      <div className='w-full flex justify-between'>
                         <p className="font-medium">{subscriber.email}</p>
                         <div className="flex gap-4 text-sm text-muted-foreground">
-                          <span>Source: {subscriber.source}</span>
-                          <span>Date: {new Date(subscriber.timestamp).toLocaleDateString()}</span>
+                          <span>Source : {subscriber.source}</span>
                         </div>
                       </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          const updatedEmails = emailSubscribers.filter((_, i) => i !== index);
-                          setEmailSubscribers(updatedEmails);
-                          // Update localStorage
-                          const newsletterEmails = updatedEmails.filter(e => e.source === 'newsletter');
-                          const journeyEmails = updatedEmails.filter(e => e.source === 'financial_journey');
-                          localStorage.setItem('newsletter_emails', JSON.stringify(newsletterEmails));
-                          localStorage.setItem('financial_journey_emails', JSON.stringify(journeyEmails));
-                          toast({
-                            title: "Email Removed",
-                            description: "Subscriber has been removed from the list.",
-                          });
-                        }}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>
