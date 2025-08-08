@@ -41,6 +41,25 @@ const Admin = () => {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/verify`, { withCredentials: true });
+        if (response.status === 200 && response.data.loggedIn) {
+          setIsLoggedIn(true);
+          const fetchClients = async () => {
+            const getClients = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/clients`, { withCredentials: true })).data
+            setClients(getClients.clients);
+            console.log(clients)
+          }
+          fetchClients();
+        }
+      }
+      catch (err) {
+        setIsLoggedIn(false);
+      }
+    }
+    checkLogin();
+
     // Restore emailSubscribers and jobApplications
     const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
     const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
@@ -48,17 +67,6 @@ const Admin = () => {
 
     setEmailSubscribers([...emails, ...financialJourneyEmails]);
     setJobApplications(jobs);
-
-    if (isLoggedIn) {
-      const fetchClients = async () => {
-        const getClients = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/clients`, {},
-          { withCredentials: true }
-        )).data
-        setClients(getClients.clients);
-        console.log(clients)
-      }
-      fetchClients();
-    }
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -248,7 +256,7 @@ const Admin = () => {
             className={`px-4 py-2 font-medium ${activeTab === 'clients' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
           >
             <User2 className="w-4 h-4 inline mr-2" />
-            Client Information
+            Client Information ({clients.length})
           </button>
         </div>
 
