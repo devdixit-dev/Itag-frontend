@@ -20,7 +20,7 @@ const Privacy = () => {
               use, and protect your personal information.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Last updated: January 2024
+              Last updated: August 2025
             </p>
           </div>
         </div>
@@ -156,15 +156,15 @@ const Privacy = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-semibold text-foreground">Email:</p>
-                    <p className="text-muted-foreground">privacy@itagfin.com</p>
+                    <p className="text-muted-foreground">advisory@itagfin.com</p>
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Phone:</p>
-                    <p className="text-muted-foreground">+91 98765 43210</p>
+                    <p className="text-muted-foreground">+91 75750 24455</p>
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  We will respond to your privacy-related inquiries within 30 days.
+                  We will respond to your privacy-related inquiries within 3 working days.
                 </p>
               </div>
             </div>

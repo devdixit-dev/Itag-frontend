@@ -20,7 +20,7 @@ const Terms = () => {
               By using our services, you agree to be bound by these terms.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Last updated: January 2024
+              Last updated: August 2025
             </p>
           </div>
         </div>
@@ -39,11 +39,11 @@ const Terms = () => {
               </div>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  By accessing and using ITagFin's services, you acknowledge that you have read, 
+                  By accessing and using I Tag Financial services, you acknowledge that you have read, 
                   understood, and agree to be bound by these Terms of Service and our Privacy Policy.
                 </p>
                 <p>
-                  These terms constitute a legally binding agreement between you and ITagFin. 
+                  These terms constitute a legally binding agreement between you and I Tag Financial. 
                   If you do not agree to these terms, please do not use our services.
                 </p>
               </div>
@@ -73,7 +73,7 @@ const Terms = () => {
                     <div>
                       <h4 className="font-semibold text-foreground mb-2">Important Notice</h4>
                       <p className="text-muted-foreground text-sm">
-                        ITagFin is a SEBI-registered investment advisor and IRDAI-licensed insurance broker. 
+                        I Tag Financial is a SEBI-registered investment advisor and IRDAI-licensed insurance broker. 
                         All our recommendations are based on thorough research and analysis, but investments 
                         are subject to market risks.
                       </p>
@@ -132,7 +132,7 @@ const Terms = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-3">No Guarantee</h3>
                   <p className="text-muted-foreground">
-                    ITagFin does not guarantee any specific returns or profits from investments. 
+                    I Tag Financial does not guarantee any specific returns or profits from investments. 
                     All financial decisions should be made after careful consideration of your risk appetite, 
                     financial goals, and investment horizon.
                   </p>
@@ -148,7 +148,7 @@ const Terms = () => {
               </div>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  ITagFin's liability is limited to the advisory fees paid by you. We shall not be 
+                  I Tag Financial's liability is limited to the advisory fees paid by you. We shall not be 
                   liable for any direct, indirect, incidental, or consequential damages arising from:
                 </p>
                 <ul className="space-y-2 ml-6">
@@ -193,15 +193,15 @@ const Terms = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-semibold text-foreground">Email:</p>
-                    <p className="text-muted-foreground">legal@itagfin.com</p>
+                    <p className="text-muted-foreground">advisory@itagfin.com</p>
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Phone:</p>
-                    <p className="text-muted-foreground">+91 98765 43210</p>
+                    <p className="text-muted-foreground">+91 75750 24455</p>
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Business Hours: Monday to Friday, 9:00 AM - 6:00 PM IST
+                  Business Hours: Monday to Friday, 9:00 AM - 5:00 PM IST
                 </p>
               </div>
             </div>
