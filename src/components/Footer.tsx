@@ -341,15 +341,14 @@ const Footer = () => {
               {/* © {currentYear} I Tag Financials. All rights reserved */}
               <div className="flex gap-4">
                 <Link to="/privacy" className="hover:text-white ml-1">Privacy Policy </Link> |
-                <Link to="/terms" className="hover:text-white ml-1">Terms of Service</Link> |
-                <Link to="/terms" className="hover:text-white ml-1">Disclosure</Link>
+                <Link to="/terms" className="hover:text-white ml-1">Terms of Service</Link>
               </div>
             </div>
 
             <div className="flex items-center space-x-4 text-sm text-white/80">
               <span>© {currentYear} I Tag Financials</span>
-              <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-              <span>Made by <a href="https://github.com/devdixit-dev" className="border-b border-green-500" target="_blank">Dev Dixit</a></span>
+              <div className="w-2 h-2 bg-success rounded-full animate-ping"></div>
+              <span>Made by <a href="https://github.com/devdixit-dev" className="border-b border-green-500 animate-pulse" target="_blank">Dev Dixit</a></span>
             </div>
           </div>
         </div>
