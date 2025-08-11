@@ -111,36 +111,6 @@ const PostJob = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="jobType">Job Type *</Label>
-                    <Select onValueChange={(value) => setValue("jobType", value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select job type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="full-time">Full-time</SelectItem>
-                        <SelectItem value="part-time">Part-time</SelectItem>
-                        <SelectItem value="contract">Contract</SelectItem>
-                        <SelectItem value="internship">Internship</SelectItem>
-                        <SelectItem value="consultant">Consultant</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="workMode">Work Mode</Label>
-                    <Select onValueChange={(value) => setValue("workMode", value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select work mode" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="on-site">On-site</SelectItem>
-                        <SelectItem value="remote">Remote</SelectItem>
-                        <SelectItem value="hybrid">Hybrid</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div>
                     <Label htmlFor="location">Location *</Label>
                     <Input 
                       {...register("location", { required: "Location is required" })}
@@ -169,64 +139,10 @@ const PostJob = () => {
                   </div>
                 </div>
 
-                {/* Compensation */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="md:col-span-2">
-                    <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
-                      <IndianRupee className="w-5 h-5" />
-                      Compensation
-                    </h3>
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="salaryMin">Minimum Salary (₹/year)</Label>
-                    <Input 
-                      {...register("salaryMin", { valueAsNumber: true })}
-                      type="number"
-                      placeholder="300000"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="salaryMax">Maximum Salary (₹/year)</Label>
-                    <Input 
-                      {...register("salaryMax", { valueAsNumber: true })}
-                      type="number"
-                      placeholder="800000"
-                    />
-                  </div>
-                </div>
-
                 {/* Detailed Information */}
                 <div className="space-y-6">
                   <h3 className="text-lg font-semibold text-foreground">Detailed Information</h3>
-                  
-                  <div>
-                    <Label htmlFor="skills">Required Skills *</Label>
-                    <Textarea 
-                      {...register("skills", { required: "Skills are required" })}
-                      placeholder="List the key skills required for this position (e.g., Financial Planning, Investment Analysis, Risk Management)"
-                      className={errors.skills ? "border-red-500" : ""}
-                      rows={3}
-                    />
-                    {errors.skills && (
-                      <p className="text-sm text-red-500 mt-1">{errors.skills.message}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="jobDescription">Job Description *</Label>
-                    <Textarea 
-                      {...register("jobDescription", { required: "Job description is required" })}
-                      placeholder="Provide a detailed description of the role, responsibilities, and what the candidate will be doing"
-                      className={errors.jobDescription ? "border-red-500" : ""}
-                      rows={5}
-                    />
-                    {errors.jobDescription && (
-                      <p className="text-sm text-red-500 mt-1">{errors.jobDescription.message}</p>
-                    )}
-                  </div>
-                  
+
                   <div>
                     <Label htmlFor="requirements">Requirements & Qualifications</Label>
                     <Textarea 
@@ -237,21 +153,16 @@ const PostJob = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="benefits">Benefits & Perks</Label>
+                    <Label htmlFor="jobDescription">Job Responsibilities *</Label>
                     <Textarea 
-                      {...register("benefits")}
-                      placeholder="Describe the benefits, perks, and what makes this opportunity attractive"
-                      rows={3}
+                      {...register("jobDescription", { required: "Job description is required" })}
+                      placeholder="Provide a detailed description of the role, responsibilities, and what the candidate will be doing"
+                      className={errors.jobDescription ? "border-red-500" : ""}
+                      rows={5}
                     />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="applicationDeadline">Application Deadline</Label>
-                    <Input 
-                      {...register("applicationDeadline")}
-                      type="date"
-                      min={new Date().toISOString().split('T')[0]}
-                    />
+                    {errors.jobDescription && (
+                      <p className="text-sm text-red-500 mt-1">{errors.jobDescription.message}</p>
+                    )}
                   </div>
                 </div>
 
