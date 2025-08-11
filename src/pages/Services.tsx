@@ -133,6 +133,13 @@ const Services = () => {
     }
   ];
 
+  const handleClickServices = (message: string) => {
+    const phoneNumber = '+917575024455'
+    const sendMessage = `Get started with ${message}`
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(sendMessage)}`;
+    window.open(url, '_blank');
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -204,7 +211,7 @@ const Services = () => {
                     </div>
                   </div>
 
-                  <Button className="btn-finance">
+                  <Button onClick={() => handleClickServices(service.title)} className="btn-finance">
                     Get Started with {service.title}
                   </Button>
                 </div>
