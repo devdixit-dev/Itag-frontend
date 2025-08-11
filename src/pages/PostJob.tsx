@@ -10,24 +10,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Briefcase, MapPin, IndianRupee, Clock, Users, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 interface JobPostData {
-  companyName: string;
-  contactEmail: string;
-  contactPhone: string;
-  jobTitle: string;
+  title: string;
   department: string;
-  jobType: string;
-  workMode: string;
   location: string;
-  salaryMin: number;
-  salaryMax: number;
   experience: string;
-  skills: string;
-  jobDescription: string;
   requirements: string;
-  benefits: string;
-  applicationDeadline: string;
+  responsibilities: string;
 }
 
 const PostJob = () => {
@@ -38,11 +29,22 @@ const PostJob = () => {
   const onSubmit = async (data: JobPostData) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/post-job`,
+      {
+        title: data.title,
+        department: data.department,
+        location: data.location,
+        experience: data.experience,
+        requirements: data.requirements,
+        responsibilities: data.responsibilities
+      },
+      { withCredentials: true }
+    );
+    const sentData = response.data;
     
+    await new Promise(resolve => setTimeout(resolve, 1000));
     // In a real application, this would send data to backend
-    console.log("Job post data:", data);
+    console.log("Job post frontend data:", sentData);
     
     toast({
       title: "Job Posted Successfully!",
@@ -79,14 +81,14 @@ const PostJob = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="jobTitle">Job Title *</Label>
+                    <Label htmlFor="title">Job Title *</Label>
                     <Input 
-                      {...register("jobTitle", { required: "Job title is required" })}
+                      {...register("title", { required: "Job title is required" })}
                       placeholder="e.g., Senior Financial Advisor"
-                      className={errors.jobTitle ? "border-red-500" : ""}
+                      className={errors.title ? "border-red-500" : ""}
                     />
-                    {errors.jobTitle && (
-                      <p className="text-sm text-red-500 mt-1">{errors.jobTitle.message}</p>
+                    {errors.title && (
+                      <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>
                     )}
                   </div>
                   
@@ -153,15 +155,15 @@ const PostJob = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="jobDescription">Job Responsibilities *</Label>
+                    <Label htmlFor="responsibilities">Job Responsibilities *</Label>
                     <Textarea 
-                      {...register("jobDescription", { required: "Job description is required" })}
+                      {...register("responsibilities", { required: "Job responsibilities is required" })}
                       placeholder="Provide a detailed description of the role, responsibilities, and what the candidate will be doing"
-                      className={errors.jobDescription ? "border-red-500" : ""}
+                      className={errors.responsibilities ? "border-red-500" : ""}
                       rows={5}
                     />
-                    {errors.jobDescription && (
-                      <p className="text-sm text-red-500 mt-1">{errors.jobDescription.message}</p>
+                    {errors.responsibilities && (
+                      <p className="text-sm text-red-500 mt-1">{errors.responsibilities.message}</p>
                     )}
                   </div>
                 </div>
