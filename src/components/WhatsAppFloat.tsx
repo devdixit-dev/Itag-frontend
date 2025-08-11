@@ -1,8 +1,9 @@
 import logo from '../assets/whatsapp.png'
 
-const WhatsAppFloat = ({message}) => {
+const WhatsAppFloat = () => {
   const handleWhatsAppClick = () => {
     const phoneNumber = '+917575024455'; // Replace with actual WhatsApp number
+    const message = 'Hello! I would like to inquire about your financial services.';
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };

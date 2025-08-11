@@ -283,7 +283,7 @@ const FinancialPlans = () => {
         </div>
       </section>
 
-      <WhatsAppFloat message={'Hello! I would like to inquire about your financial services.'} />
+      <WhatsAppFloat />
 
       <Footer />
     </div>
