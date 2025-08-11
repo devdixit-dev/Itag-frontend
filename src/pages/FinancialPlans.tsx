@@ -180,6 +180,13 @@ const FinancialPlans = () => {
     }
   ];
 
+  const handleClickPlans = (message: string) => {
+    const phoneNumber = '+917575024455'
+    const sendMessage = `I want to do ${message} and i want your help on this.`
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(sendMessage)}`;
+    window.open(url, '_blank');
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -236,7 +243,7 @@ const FinancialPlans = () => {
                     ))}
                   </div>
 
-                  <Button className="w-full btn-finance group-hover:scale-105 transition-transform">
+                  <Button onClick={() => handleClickPlans(plan.title)} className="w-full btn-finance group-hover:scale-105 transition-transform">
                     Get Connect
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -276,7 +283,7 @@ const FinancialPlans = () => {
         </div>
       </section>
 
-      <WhatsAppFloat />
+      <WhatsAppFloat message={'Hello! I would like to inquire about your financial services.'} />
 
       <Footer />
     </div>
