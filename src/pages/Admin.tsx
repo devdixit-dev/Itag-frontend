@@ -51,13 +51,19 @@ const Admin = () => {
             const getClients = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/clients`, { withCredentials: true })).data
             setClients(getClients.clients);
           }
-          fetchClients();
+          await fetchClients();
 
           const fetchEmails = async () => {
             const getEmails = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/emails`, {}, { withCredentials: true })).data
             setEmailSubscribers(getEmails.emails);
           }
-          fetchEmails();
+          await fetchEmails();
+
+          const fetchJobApps = async () => {
+            const getJobApps = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/job-apps`, { withCredentials: true })).data
+            setJobApplications(getJobApps.jobApplications);
+          }
+          await fetchJobApps();
         }
       }
       catch (err) {
@@ -65,14 +71,6 @@ const Admin = () => {
       }
     }
     checkLogin();
-
-    // Restore emailSubscribers and jobApplications
-    // const emails = JSON.parse(localStorage.getItem('newsletter_emails') || '[]');
-    // // const financialJourneyEmails = JSON.parse(localStorage.getItem('financial_journey_emails') || '[]');
-    // const jobs = JSON.parse(localStorage.getItem('job_applications') || '[]');
-
-    // // setEmailSubscribers([...emails, ...financialJourneyEmails]);
-    // setJobApplications(jobs);
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -431,9 +429,9 @@ const Admin = () => {
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{application.name}</h3>
-                        <p className="text-muted-foreground mb-2">Applied for: {application.position}</p>
-                        <div className="grid grid-cols-2 gap-4 text-sm">
+                        <h3 className="font-semibold text-lg">{application.fullname}</h3>
+                        <p className="text-muted-foreground mb-2">Applied for : {application.appliedForRole}</p>
+                        <div className="grid grid-cols-4 gap-4 text-sm">
                           <div>
                             <span className="font-medium">Email:</span> {application.email}
                           </div>
@@ -441,20 +439,14 @@ const Admin = () => {
                             <span className="font-medium">Phone:</span> {application.phone}
                           </div>
                           <div>
-                            <span className="font-medium">Experience:</span> {application.experience}
+                            <span className="font-medium">Intro:</span> {application.intro}
                           </div>
                           <div>
-                            <span className="font-medium">Applied:</span> {new Date(application.timestamp).toLocaleDateString()}
+                            <span className="font-medium">Applied :</span> {new Date(application.createdAt).toLocaleDateString()}
                           </div>
                         </div>
-                        {application.coverLetter && (
-                          <div className="mt-3">
-                            <span className="font-medium">Cover Letter:</span>
-                            <p className="text-sm text-muted-foreground mt-1">{application.coverLetter}</p>
-                          </div>
-                        )}
                       </div>
-                      <div className="flex gap-2">
+                      {/* <div className="flex gap-2">
                         {application.resume && (
                           <Button
                             variant="outline"
@@ -473,20 +465,10 @@ const Admin = () => {
                         )}
                         <Button
                           variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            const updatedApplications = jobApplications.filter((_, i) => i !== index);
-                            setJobApplications(updatedApplications);
-                            localStorage.setItem('job_applications', JSON.stringify(updatedApplications));
-                            toast({
-                              title: "Application Removed",
-                              description: "Job application has been removed.",
-                            });
-                          }}
-                        >
+                          size="sm">
                           <Trash2 className="w-4 h-4" />
                         </Button>
-                      </div>
+                      </div> */}
                     </div>
                   </CardContent>
                 </Card>

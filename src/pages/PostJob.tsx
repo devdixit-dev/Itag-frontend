@@ -48,7 +48,7 @@ const PostJob = () => {
     
     toast({
       title: "Job Posted Successfully!",
-      description: "Your job posting has been submitted and will be reviewed within 24 hours.",
+      description: "Your job posting has been submitted",
       duration: 5000,
     });
     

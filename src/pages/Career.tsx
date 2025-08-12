@@ -11,11 +11,16 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import { useToast } from '@/hooks/use-toast';
+import axios from 'axios';
 
 const Career = () => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<any>(null);
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [intro, setIntro] = useState('');
 
   const jobOpenings = [
     {
@@ -127,8 +132,19 @@ const Career = () => {
     setIsOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/apply-job`, {
+      appliedForRole : selectedJob.title,
+      fullname,
+      email,
+      phone,
+      intro
+    }, {});
+    const data = response.data;
+    console.log("Job apply data", data);
+
     toast({
       title: "✅ Application Submitted Successfully!",
       description: "Thank you for your interest! We will review your application and get back to you within 2-3 business days.",
@@ -243,24 +259,24 @@ const Career = () => {
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="name">Full Name</Label>
-              <Input id="name" type="text" required />
+              <Label htmlFor="fullname">Full Name</Label>
+              <Input id="fullname" type="text" onChange={(e) => setFullname(e.target.value)} value={fullname} required />
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" required />
+              <Input id="email" type="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
             </div>
             <div>
               <Label htmlFor="phone">Contact Number</Label>
-              <Input id="phone" type="tel" required />
+              <Input id="phone" type="tel" onChange={(e) => setPhone(e.target.value)} value={phone} required />
             </div>
             <div>
               <Label htmlFor="intro">Short Introduction</Label>
-              <Textarea id="intro" rows={3} required />
+              <Textarea id="intro" rows={3} onChange={(e) => setIntro(e.target.value)} value={intro} required />
             </div>
             <div>
               <Label htmlFor="resume">CV/Resume (PDF)</Label>
-              <Input id="resume" type="file" accept=".pdf" required />
+              <Input id="resume" type="file" accept=".pdf" />
             </div>
             <Button type="submit" className="w-full">
               Submit Application
