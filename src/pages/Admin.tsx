@@ -433,16 +433,16 @@ const Admin = () => {
                         <p className="text-muted-foreground mb-2">Applied for : {application.appliedForRole}</p>
                         <div className="grid grid-cols-4 gap-4 text-sm">
                           <div>
-                            <span className="font-medium">Email:</span> {application.email}
+                            <span className="font-medium">Email :</span> {application.email}
                           </div>
                           <div>
-                            <span className="font-medium">Phone:</span> {application.phone}
+                            <span className="font-medium">Phone :</span> {application.phone}
                           </div>
                           <div>
-                            <span className="font-medium">Intro:</span> {application.intro}
+                            <span className="font-medium">Intro :</span> {application.intro}
                           </div>
                           <div>
-                            <span className="font-medium">Applied :</span> {new Date(application.createdAt).toLocaleDateString()}
+                            <span className="font-medium">Date :</span> {new Date(application.createdAt).toLocaleDateString()}
                           </div>
                         </div>
                       </div>
