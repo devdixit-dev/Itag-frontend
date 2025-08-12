@@ -117,11 +117,11 @@ const LogoCard = ({ item, showIcon = false }) => (
           <item.icon className="w-8 h-8 text-primary" />
         </div>
       ) : (
-        <div className="w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-2">
+        <div className="w-20 h-22 rounded-lg flex items-center justify-center mx-auto mb-2">
           <img src={item.logo} className="font-bold text-sm"></img>
         </div>
       )}
-      <h4 className="font-semibold text-sm text-foreground">{item.name}</h4>
+      {/* <h4 className="font-semibold text-sm text-foreground">{item.name}</h4> */}
       {item.description && (
         <p className="text-xs text-muted-foreground mt-1">{item.description}</p>
       )}

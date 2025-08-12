@@ -8,43 +8,46 @@ import {
   Building2,
   Landmark
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const services = [
   {
     icon: TrendingUp,
     title: "Mutual Funds",
     description: "Diversified investment portfolios managed by expert fund managers to maximize your returns with calculated risk management.",
-    features: ["SIP Planning", "Goal-based Investing", "Tax Saving Funds"]
+    features: ["SIP Planning", "Goal-based Investing", "SWP Planning"],
+    link: '/mutual-funds'
   },
   {
     icon: Shield,
     title: "Insurance Solutions",
     description: "Comprehensive protection plans including life, health, motor, and general insurance to secure your family's future.",
-    features: ["Life Insurance", "Health Coverage", "Motor Insurance"]
+    features: ["Term Insurance", "Health Coverage", "Motor Insurance"],
+    link: '/insurance-services'
   },
   {
     icon: Building2,
     title: "Equity Trading",
     description: "Advanced stock market trading with research-backed recommendations and real-time market analysis.",
-    features: ["Stock Analysis", "Portfolio Management", "Market Research"]
+    features: ["Stock Analysis"]
   },
   {
     icon: CreditCard,
     title: "Loan Services",
     description: "Quick and hassle-free loan solutions for personal, home, and business needs with competitive interest rates.",
-    features: ["Personal Loans", "Home Loans", "Business Loans"]
+    features: ["Personal Loans", "Home Loans", "Education Loans"]
   },
   {
     icon: Landmark,
     title: "IPO Services",
     description: "Get exclusive access to Initial Public Offerings with expert guidance on investment timing and allocation.",
-    features: ["IPO Applications", "Market Analysis", "Investment Advisory"]
+    features: ["IPO Applications"]
   },
   {
     icon: Calculator,
     title: "Tax Planning",
     description: "Strategic tax optimization solutions to help you save more while staying compliant with regulations.",
-    features: ["Tax Saving", "Investment Planning", "Compliance"]
+    features: ["Equity Link Saving Scheme", "Investment Planning"]
   },
   {
     icon: Target,
@@ -73,7 +76,8 @@ const ServiceHighlights = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <div 
+            <a
+              href={service.link}
               key={index} 
               className="card-finance-gradient hover-lift group cursor-pointer"
             >
@@ -89,8 +93,7 @@ const ServiceHighlights = () => {
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {service.description}
                 </p>
-
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   {service.features.map((feature, featureIndex) => (
                     <div 
                       key={featureIndex}
@@ -100,9 +103,9 @@ const ServiceHighlights = () => {
                       {feature}
                     </div>
                   ))}
-                </div>
+                </div> */}
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

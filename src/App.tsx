@@ -20,6 +20,8 @@ import Terms from "./pages/Terms";
 import Login from "./pages/Login";
 import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
+import MutualFund from "./pages/MutualFund";
+import InsuranceServices from "./pages/InsuranceServices";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,9 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/login" element={<Login />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/mutual-funds" element={<MutualFund />} />
+            <Route path="/insurance-services" element={<InsuranceServices />} />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
