@@ -49,6 +49,18 @@ const Footer = () => {
     setCallbackForm({ name: '', phone: '', email: '', preferredTime: '' });
   };
 
+  const handleCallBack = () => {
+    const phoneNumber = '+917575024455';
+    const sendMessage = `Call back 
+      \n Name: ${callbackForm.name} 
+      \n Email: ${callbackForm.email} 
+      \n Phone: ${callbackForm.phone} 
+      \n Preferred Time: ${callbackForm.preferredTime}`;
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(sendMessage)}`;
+    window.open(url, '_blank');
+  }
+
+
   const handleNewsletterEmail = async () => {
     const getEmail = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/newsletter`, { email: newsletterEmail })).data
 
@@ -224,7 +236,7 @@ const Footer = () => {
                   <DialogHeader>
                     <DialogTitle>Request Expert Callback</DialogTitle>
                   </DialogHeader>
-                  <form onSubmit={handleCallbackSubmit} className="space-y-4">
+                  <form onSubmit={handleCallBack} className="space-y-4">
                     <div>
                       <Label htmlFor="callback-name">Full Name</Label>
                       <Input
