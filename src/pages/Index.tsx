@@ -28,7 +28,7 @@ const Index = () => {
       </section>
 
       <ServiceHighlights />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <FinancialCalculators />
       <PartnerSliders />
       <AppDownload />
