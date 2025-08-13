@@ -338,8 +338,6 @@ const Footer = () => {
                 <div className="text-sm text-white/80">
                   AMFI Registered Investment Advisor<br />
                   ARN - 319081 <br />
-                  IRDAI Licensed Insurance Broker<br />
-                  NSE & BSE Certified
                 </div>
               </div>
             </div>

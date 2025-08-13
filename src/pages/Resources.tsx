@@ -138,11 +138,11 @@ const Resources = () => {
       {/* Content */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="videos" className="w-full">
+          <Tabs defaultValue="reports" className="w-full">
             <TabsList className="grid w-full grid-cols-4 max-w-2xl mx-auto mb-12">
-              <TabsTrigger value="videos">Videos</TabsTrigger>
-              <TabsTrigger value="guides">Guides</TabsTrigger>
               <TabsTrigger value="reports">Reports</TabsTrigger>
+              <TabsTrigger value="guides">Guides</TabsTrigger>
+              <TabsTrigger value="videos">Videos</TabsTrigger>
               <TabsTrigger value="calculators">Tools</TabsTrigger>
             </TabsList>
 
