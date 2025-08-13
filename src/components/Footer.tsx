@@ -90,12 +90,12 @@ const Footer = () => {
   ];
 
   const services = [
-    { name: "Mutual Funds", href: "/services#mutual-funds" },
-    { name: "Insurance", href: "/services#insurance" },
-    { name: "IPO Services", href: "/services#ipo" },
-    { name: "Equity Trading", href: "/services#equity" },
-    { name: "Loans", href: "/services#loans" },
-    { name: "Tax Planning", href: "/services#tax" }
+    { name: "Mutual Funds", href: "/mutual-funds" },
+    { name: "Insurance", href: "/insurance-services" },
+    { name: "IPO Services", href: "/ipo-services" },
+    { name: "Stock Market", href: "/stock-market" },
+    { name: "Loans", href: "/loan-services" },
+    { name: "Tax Planning", href: "/tax-planning" }
   ];
 
   return (
@@ -120,7 +120,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-white/60" />
-                <span className="text-white/80">advisory@itagfin.com</span>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=advisory@gmail.com" className="text-white/80">advisory@itagfin.com</a>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-white/60" />
