@@ -21,6 +21,8 @@ const Career = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [intro, setIntro] = useState('');
+  const [resume, setResume] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const jobOpenings = [
     {
@@ -127,36 +129,75 @@ const Career = () => {
     }
   ];
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setResume(e.target.files[0]);
+    }
+  };
+
   const handleApply = (job: any) => {
     setSelectedJob(job);
     setIsOpen(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setLoading(true)
     e.preventDefault();
 
-    const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/apply-job`, {
-      appliedForRole : selectedJob.title,
-      fullname,
-      email,
-      phone,
-      intro
-    }, {});
-    const data = response.data;
-    console.log("Job apply data", data);
+    if (!resume) {
+      toast({
+        title: "❌ Resume Required",
+        description: "Please upload your resume before submitting.",
+      });
+      return;
+    }
 
-    toast({
-      title: "✅ Application Submitted Successfully!",
-      description: "Thank you for your interest! We will review your application and get back to you within 2-3 business days.",
-    });
-    setIsOpen(false);
+    const formData = new FormData();
+    formData.append("appliedForRole", selectedJob.title);
+    formData.append("fullname", fullname);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("intro", intro);
+    formData.append("resume", resume);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_DEV_URL}/apply-job`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      
+      toast({
+        title: "✅ Application Submitted Successfully!",
+        description:
+          "Thank you for your interest! We will review your application and get back to you within 2-3 business days.",
+      });
+      setLoading(false);
+      setIsOpen(false);
+      setFullname("");
+      setEmail("");
+      setPhone("");
+      setIntro("");
+      setResume(null);
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "❌ Submission Failed",
+        description: "Something went wrong. Please try again.",
+      });
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <WhatsAppFloat />
-      
+
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 via-primary/5 to-background pt-20 pb-16">
         <div className="container mx-auto px-4">
@@ -241,7 +282,7 @@ const Career = () => {
                       </ul>
                     </div>
                     <Button onClick={() => handleApply(job)} className="w-full">
-                      Apply Now
+                      Apply now
                     </Button>
                   </div>
                 </CardContent>
@@ -257,7 +298,7 @@ const Career = () => {
           <DialogHeader>
             <DialogTitle>Apply for {selectedJob?.title}</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
             <div>
               <Label htmlFor="fullname">Full Name</Label>
               <Input id="fullname" type="text" onChange={(e) => setFullname(e.target.value)} value={fullname} required />
@@ -276,10 +317,10 @@ const Career = () => {
             </div>
             <div>
               <Label htmlFor="resume">CV/Resume (PDF)</Label>
-              <Input id="resume" type="file" accept=".pdf" />
+              <Input id="resume" type="file" accept=".pdf" onChange={handleFileChange} required />
             </div>
-            <Button type="submit" className="w-full">
-              Submit Application
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Sending application': 'Submit Application'}
             </Button>
           </form>
         </DialogContent>
