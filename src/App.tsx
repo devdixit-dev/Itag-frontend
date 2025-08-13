@@ -22,6 +22,12 @@ import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 import MutualFund from "./pages/MutualFund";
 import InsuranceServices from "./pages/InsuranceServices";
+import StockMarket from "./pages/StockMarket";
+import LoanServices from "./pages/LoanServices";
+import IPOServices from "./pages/IpoServices";
+import TaxPlanning from "./pages/TaxPlanning";
+import FinancialPlanning from "./pages/FinancialPlanning";
+import InvestmentAdvisory from "./pages/InvestmentAdvisory";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +61,12 @@ const App = () => (
             <Route path="/resources" element={<Resources />} />
             <Route path="/mutual-funds" element={<MutualFund />} />
             <Route path="/insurance-services" element={<InsuranceServices />} />
-
+            <Route path="/stock-market" element={<StockMarket />} />
+            <Route path="/loan-services" element={<LoanServices />} />
+            <Route path="/ipo-services" element={<IPOServices />} />
+            <Route path="/tax-planning" element={<TaxPlanning />} />
+            <Route path="/financial-planning" element={<FinancialPlanning />} />
+            <Route path="/investment-advisory" element={<InvestmentAdvisory />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

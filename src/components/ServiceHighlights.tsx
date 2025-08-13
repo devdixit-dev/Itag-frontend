@@ -27,39 +27,45 @@ const services = [
   },
   {
     icon: Building2,
-    title: "Equity Trading",
+    title: "Stock Market",
     description: "Advanced stock market trading with research-backed recommendations and real-time market analysis.",
-    features: ["Stock Analysis"]
+    features: ["Stock Analysis"],
+    link: '/stock-market'
   },
   {
     icon: CreditCard,
     title: "Loan Services",
     description: "Quick and hassle-free loan solutions for personal, home, and business needs with competitive interest rates.",
-    features: ["Personal Loans", "Home Loans", "Education Loans"]
+    features: ["Personal Loans", "Home Loans", "Education Loans"],
+    link: '/loan-services'
   },
   {
     icon: Landmark,
     title: "IPO Services",
     description: "Get exclusive access to Initial Public Offerings with expert guidance on investment timing and allocation.",
-    features: ["IPO Applications"]
+    features: ["IPO Applications"],
+    link: '/ipo-services'
   },
   {
     icon: Calculator,
     title: "Tax Planning",
     description: "Strategic tax optimization solutions to help you save more while staying compliant with regulations.",
-    features: ["Equity Link Saving Scheme", "Investment Planning"]
+    features: ["Equity Link Saving Scheme", "Investment Planning"],
+    link: '/tax-planning'
   },
   {
     icon: Target,
     title: "Financial Planning",
     description: "Comprehensive financial roadmaps tailored to your life goals including retirement, education, and wealth creation.",
-    features: ["Retirement Planning", "Goal Setting", "Wealth Management"]
+    features: ["Retirement Planning", "Goal Setting", "Wealth Management"],
+    link: '/financial-planning'
   },
   {
     icon: PiggyBank,
     title: "Investment Advisory",
     description: "Personalized investment strategies based on your risk profile and financial objectives.",
-    features: ["Risk Assessment", "Portfolio Design", "Regular Reviews"]
+    features: ["Risk Assessment", "Portfolio Design", "Regular Reviews"],
+    link: '/investment-advisory'
   }
 ];
 
@@ -79,7 +85,7 @@ const ServiceHighlights = () => {
             <a
               href={service.link}
               key={index} 
-              className="card-finance-gradient hover-lift group cursor-pointer"
+              className="card-finance-gradient hover-lift group cursor-pointer hover:bg-blue-400"
             >
               <div className="text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
