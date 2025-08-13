@@ -179,29 +179,33 @@ const Footer = () => {
             </div>
 
             <div className="mt-8 space-y-4">
-              <div className="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                <h4 className="font-semibold mb-2">Newsletter</h4>
-                <p className="text-sm text-white/80 mb-3">
-                  Get latest financial insights delivered to your inbox
+              <div className="p-4 bg-white/10 rounded-lg backdrop-blur-sm max-w-md w-full mx-auto sm:max-w-lg lg:max-w-xl">
+                <h4 className="font-semibold mb-2 text-base sm:text-lg">Newsletter</h4>
+                <p className="text-sm text-white/80 mb-3 sm:text-base">
+                  Get latest financial insights
                 </p>
-                <div className="flex gap-2">
+                <form
+                  className="flex flex-col sm:flex-row gap-2"
+                  onSubmit={(e) => { e.preventDefault(); handleNewsletterEmail(); }}
+                >
                   <input
                     type="email"
                     placeholder="Enter email"
-                    className="flex-1 px-3 py-2 bg-white/20 border border-white/30 rounded-md text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                    className="flex-1 px-3 py-2 bg-white/20 border border-white/30 rounded-md text-white placeholder-white/60 focus:outline-none focus:border-white/50 w-full"
                     required
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-white text-primary rounded-md hover:bg-white/90 transition-colors font-medium"
-                    onClick={handleNewsletterEmail}
+                    className="px-4 py-2 bg-white text-primary rounded-md hover:bg-white/90 transition-colors font-medium flex items-center justify-center"
+                    aria-label="Subscribe to newsletter"
                   >
                     <BellIcon width={18} />
                   </button>
-                </div>
+                </form>
               </div>
+
 
               <div className="space-y-3">
                 <h4 className="font-semibold mb-3">Downloads</h4>
@@ -348,7 +352,6 @@ const Footer = () => {
         <div className="border-t border-white/20 mt-12 pt-4">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-white/80 text-center md:text-left">
-              {/* © {currentYear} I Tag Financials. All rights reserved */}
               <div className="flex gap-4">
                 <Link to="/privacy" className="hover:text-white ml-1">Privacy Policy </Link> |
                 <Link to="/terms" className="hover:text-white ml-1">Terms of Service</Link>
