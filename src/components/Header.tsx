@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import logo from '../assets/logo.svg'
+import logo from '../assets/logo.png'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -41,8 +41,8 @@ const Header = () => {
         <div className="flex items-center justify-between h-18">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-20 h-20 flex items-center justify-center">
-              <img src={logo} alt="logo" className="w-full" />
+            <div className="w-full h-20 flex items-center justify-center">
+              <img src={logo} alt="logo" className="w-40 h-18" />
             </div>
           </Link>
 
