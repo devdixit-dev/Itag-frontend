@@ -131,10 +131,10 @@ const LogoCard = ({ item, showIcon = false }) => (
 
 const PartnerSliders = () => {
   return (
-    <section className="py-20 bg-muted">
+    <section className="py-8 bg-muted">
       <div className="container mx-auto px-4">
         {/* AMC Partners */}
-        <div className="mb-16">
+        <div className="mb-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
               Our AMC Partners

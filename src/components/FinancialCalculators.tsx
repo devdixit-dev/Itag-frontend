@@ -149,16 +149,6 @@ const FinancialCalculators = () => {
                         className="mt-2"
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="infPercent">Adjust Inflation(%)</Label>
-                      <Input
-                        id="infPercent"
-                        type="number"
-                        value={inflPercent}
-                        onChange={(e) => setInflPercent(Number(e.target.value))}
-                        className="mt-2"
-                      />
-                    </div>
                     <Button onClick={calculateSIP} className="w-full btn-finance">
                       <Calculator className="w-4 h-4 mr-2" />
                       Calculate SIP
@@ -190,9 +180,6 @@ const FinancialCalculators = () => {
                           <span className="font-semibold text-success">
                             {formatCurrency(sipResult.returns)}
                           </span>
-                        </div>
-                        <div className="flex justify-center">
-                          <p className="text-red-500">Note: Future value adjust inflation</p>
                         </div>
                       </CardContent>
                     </Card>

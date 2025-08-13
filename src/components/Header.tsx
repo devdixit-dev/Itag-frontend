@@ -144,7 +144,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-4">
             {/* <ThemeToggle /> */}
             <Button variant="outline" asChild>
-              <a href="#" target="_blank">Client Login</a>
+              <a href="https://client.itagfin.com/pages/auth/login">Client Login</a>
             </Button>
           </div>
 

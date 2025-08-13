@@ -46,7 +46,7 @@ const HeroSlider = () => {
   };
 
   return (
-    <section className="relative h-[80vh] overflow-hidden">
+    <section className="relative h-[75vh] overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -68,7 +68,7 @@ const HeroSlider = () => {
               <p className={`hero-subtitle mb-8 slider-fade ${index === currentSlide ? 'active' : ''}`}>
                 {slide.subtitle}
               </p>
-              <div className={`flex flex-col sm:flex-row gap-4 slider-fade ${index === currentSlide ? 'active' : ''}`}>
+              {/* <div className={`flex flex-col sm:flex-row gap-4 slider-fade ${index === currentSlide ? 'active' : ''}`}>
                 <Button size="lg" className="btn-finance">
                   {slide.cta}
                 </Button>
@@ -76,7 +76,7 @@ const HeroSlider = () => {
                   <Play className="w-5 h-5 mr-2" />
                   Watch Demo
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
