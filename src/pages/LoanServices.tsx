@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CheckCircle } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import bgImage from "../assets/finance/man-riding-a-rocket.svg"; // Replace with your loan illustration image
+import bgImage from "../assets/finance/loan-services.svg"
 
 const LoanServices = () => {
   return (

@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CheckCircle } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import bgImage from "../assets/finance/man-riding-a-rocket.svg"; // replace with your stock market image
+import bgImage from "../assets/finance/stock-market.svg";
 
 const StockMarket = () => {
   return (

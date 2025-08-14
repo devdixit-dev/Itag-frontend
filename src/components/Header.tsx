@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import logo from '../assets/logo.png'
+import logo from '../assets/header-logo.png'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -195,20 +195,20 @@ const Header = () => {
               >
                 Career
               </Link>
-              <Link 
+              {/* <Link 
                 to="/blog" 
                 className="block py-2 text-foreground hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Blog
-              </Link>
+              </Link> */}
               <div className="pt-4 border-t border-border flex flex-col space-y-2">
                 <div className="flex items-center justify-between">
                   {/* <span className="text-sm font-medium">Theme</span> */}
                   {/* <ThemeToggle /> */}
                 </div>
                 <Button variant="outline" className="w-full" asChild>
-                  <Link to="#">Client Login</Link>
+                  <a href="https://client.itagfin.com/pages/auth/login">Client Login</a>
                 </Button>
               </div>
             </div>

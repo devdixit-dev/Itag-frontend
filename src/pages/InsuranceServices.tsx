@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CheckCircle, ArrowRight, Shield, HeartPulse, Car } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
-import insuranceImage from "../assets/finance/man-riding-a-rocket.svg";
+import insuranceImage from "../assets/finance/insurance.svg";
 
 const InsuranceServices = () => {
   return (

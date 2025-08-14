@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from '../assets/logo.png'
+import logo from '../assets/footer-logo.jpeg'
 import {
   Building,
   Mail,
@@ -106,7 +106,7 @@ const Footer = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 flex items-center justify-center">
-                <img src={logo} alt="logo" width={10} className="w-full rounded-xl" />
+                <img src={logo} alt="logo" width={10} className="w-full rounded-sm" />
               </div>
               <span className="text-2xl font-bold">I Tag Financials</span>
             </div>
