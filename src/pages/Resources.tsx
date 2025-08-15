@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import pdf from '../../downloads/Aug Month.pdf'
 import {
   BookOpen,
   Download,
@@ -90,7 +91,8 @@ const Resources = () => {
       date: "Jan 15, 2024",
       type: "Market Report",
       pages: "25 pages",
-      icon: TrendingUp
+      icon: TrendingUp,
+      link: pdf
     },
     {
       title: "Top Performing Mutual Funds Q4 2023",
@@ -268,10 +270,10 @@ const Resources = () => {
                               </div>
                             </div>
                           </div>
-                          <Button className="btn-finance">
+                          <a href={report.link} className="btn-finance flex items-center">
                             <Download className="w-4 h-4 mr-2" />
                             Download
-                          </Button>
+                          </a>
                         </div>
                       </CardContent>
                     </Card>
