@@ -30,15 +30,16 @@ import Insurance from './Insurance';
 const Admin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { blogs, addBlog, updateBlog, deleteBlog } = useBlogData();
+  // const { blogs, addBlog, updateBlog, deleteBlog } = useBlogData();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
-  const [editingBlog, setEditingBlog] = useState<any>(null);
+  // const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
+  // const [editingBlog, setEditingBlog] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('clients');
   const [emailSubscribers, setEmailSubscribers] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
   const [clients, setClients] = useState([]);
+  const [studyMaterials, setStudyMaterials] = useState([]);
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -120,53 +121,53 @@ const Admin = () => {
     });
   };
 
-  const handleAddBlog = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const newBlog = {
-      title: formData.get('title') as string,
-      excerpt: formData.get('excerpt') as string,
-      content: formData.get('content') as string,
-      author: formData.get('author') as string,
-      readTime: "5 min read",
-      category: formData.get('category') as string,
-      status: "Published"
-    };
+  // const handleAddBlog = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target as HTMLFormElement);
+  //   const newBlog = {
+  //     title: formData.get('title') as string,
+  //     excerpt: formData.get('excerpt') as string,
+  //     content: formData.get('content') as string,
+  //     author: formData.get('author') as string,
+  //     readTime: "5 min read",
+  //     category: formData.get('category') as string,
+  //     status: "Published"
+  //   };
 
-    addBlog(newBlog);
-    setIsAddBlogOpen(false);
-    toast({
-      title: "✅ Blog Added Successfully!",
-      description: "New blog post has been published and is now live.",
-    });
-  };
+  //   addBlog(newBlog);
+  //   setIsAddBlogOpen(false);
+  //   toast({
+  //     title: "✅ Blog Added Successfully!",
+  //     description: "New blog post has been published and is now live.",
+  //   });
+  // };
 
-  const handleEditBlog = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const updatedData = {
-      title: formData.get('title') as string,
-      excerpt: formData.get('excerpt') as string,
-      content: formData.get('content') as string,
-      author: formData.get('author') as string,
-      category: formData.get('category') as string,
-    };
+  // const handleEditBlog = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target as HTMLFormElement);
+  //   const updatedData = {
+  //     title: formData.get('title') as string,
+  //     excerpt: formData.get('excerpt') as string,
+  //     content: formData.get('content') as string,
+  //     author: formData.get('author') as string,
+  //     category: formData.get('category') as string,
+  //   };
 
-    updateBlog(editingBlog.id, updatedData);
-    setEditingBlog(null);
-    toast({
-      title: "📝 Blog Updated Successfully!",
-      description: "Blog post has been updated and changes are now live.",
-    });
-  };
+  //   updateBlog(editingBlog.id, updatedData);
+  //   setEditingBlog(null);
+  //   toast({
+  //     title: "📝 Blog Updated Successfully!",
+  //     description: "Blog post has been updated and changes are now live.",
+  //   });
+  // };
 
-  const handleDeleteBlog = (id: number) => {
-    deleteBlog(id);
-    toast({
-      title: "🗑️ Blog Deleted Successfully!",
-      description: "Blog post has been permanently removed.",
-    });
-  };
+  // const handleDeleteBlog = (id: number) => {
+  //   deleteBlog(id);
+  //   toast({
+  //     title: "🗑️ Blog Deleted Successfully!",
+  //     description: "Blog post has been permanently removed.",
+  //   });
+  // };
 
   if (!isLoggedIn) {
     return (
@@ -234,13 +235,13 @@ const Admin = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Tab Navigation */}
         <div className="flex gap-4 mb-8 border-b">
-          <button
+          {/* <button
             onClick={() => setActiveTab('blogs')}
             className={`px-4 py-2 font-medium ${activeTab === 'blogs' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
           >
             <BookOpen className="w-4 h-4 inline mr-2" />
             Blog Management
-          </button>
+          </button> */}
           <button
             onClick={() => setActiveTab('emails')}
             className={`px-4 py-2 font-medium ${activeTab === 'emails' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
@@ -262,10 +263,17 @@ const Admin = () => {
             <User2 className="w-4 h-4 inline mr-2" />
             Client Information ({clients.length})
           </button>
+          <button
+            onClick={() => setActiveTab('emails')}
+            className={`px-4 py-2 font-medium ${activeTab === 'emails' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
+          >
+            <Mail className="w-4 h-4 inline mr-2" />
+            Email Subscribers ({emailSubscribers.length})
+          </button>
         </div>
 
         {/* Blog Management Tab */}
-        {activeTab === 'blogs' && (
+        {/* {activeTab === 'blogs' && (
           <>
             <div className="flex justify-between items-center mb-8">
               <div>
@@ -359,7 +367,7 @@ const Admin = () => {
               ))}
             </div>
           </>
-        )}
+        )} */}
 
         {/* Email Subscribers Tab */}
         {activeTab === 'emails' && (
@@ -655,9 +663,8 @@ const Admin = () => {
           </div>
         )}
 
-
         {/* Edit Blog Dialog */}
-        <Dialog open={!!editingBlog} onOpenChange={() => setEditingBlog(null)}>
+        {/* <Dialog open={!!editingBlog} onOpenChange={() => setEditingBlog(null)}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Edit Blog Post</DialogTitle>
@@ -692,7 +699,7 @@ const Admin = () => {
               </form>
             )}
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
     </div>
   );
