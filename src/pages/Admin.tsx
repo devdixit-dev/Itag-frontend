@@ -6,9 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { useBlogData } from '@/hooks/useBlogData';
 import { useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -23,23 +21,27 @@ import {
   Mail,
   Briefcase,
   Download,
-  User2
+  User2,
+  Book
 } from 'lucide-react';
-import Insurance from './Insurance';
 
 const Admin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  // const { blogs, addBlog, updateBlog, deleteBlog } = useBlogData();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  // const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
-  // const [editingBlog, setEditingBlog] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState('clients');
+  const [activeTab, setActiveTab] = useState('emails');
   const [emailSubscribers, setEmailSubscribers] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
   const [clients, setClients] = useState([]);
-  const [studyMaterials, setStudyMaterials] = useState([]);
+
+  const [studyMaterials, setStudyMaterials] = useState({
+    active: 'reports',
+    reports: [],
+    guides: [],
+    videos: []
+  });
+
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -121,54 +123,6 @@ const Admin = () => {
     });
   };
 
-  // const handleAddBlog = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target as HTMLFormElement);
-  //   const newBlog = {
-  //     title: formData.get('title') as string,
-  //     excerpt: formData.get('excerpt') as string,
-  //     content: formData.get('content') as string,
-  //     author: formData.get('author') as string,
-  //     readTime: "5 min read",
-  //     category: formData.get('category') as string,
-  //     status: "Published"
-  //   };
-
-  //   addBlog(newBlog);
-  //   setIsAddBlogOpen(false);
-  //   toast({
-  //     title: "✅ Blog Added Successfully!",
-  //     description: "New blog post has been published and is now live.",
-  //   });
-  // };
-
-  // const handleEditBlog = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target as HTMLFormElement);
-  //   const updatedData = {
-  //     title: formData.get('title') as string,
-  //     excerpt: formData.get('excerpt') as string,
-  //     content: formData.get('content') as string,
-  //     author: formData.get('author') as string,
-  //     category: formData.get('category') as string,
-  //   };
-
-  //   updateBlog(editingBlog.id, updatedData);
-  //   setEditingBlog(null);
-  //   toast({
-  //     title: "📝 Blog Updated Successfully!",
-  //     description: "Blog post has been updated and changes are now live.",
-  //   });
-  // };
-
-  // const handleDeleteBlog = (id: number) => {
-  //   deleteBlog(id);
-  //   toast({
-  //     title: "🗑️ Blog Deleted Successfully!",
-  //     description: "Blog post has been permanently removed.",
-  //   });
-  // };
-
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
@@ -219,10 +173,6 @@ const Admin = () => {
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold text-primary">Admin Panel</h1>
             <div className="flex items-center gap-4">
-              <Button variant="outline" onClick={() => navigate('/')}>
-                <Eye className="w-4 h-4 mr-2" />
-                View Site
-              </Button>
               <Button variant="outline" onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
@@ -234,14 +184,7 @@ const Admin = () => {
 
       <div className="container mx-auto px-4 py-8">
         {/* Tab Navigation */}
-        <div className="flex gap-4 mb-8 border-b">
-          {/* <button
-            onClick={() => setActiveTab('blogs')}
-            className={`px-4 py-2 font-medium ${activeTab === 'blogs' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
-          >
-            <BookOpen className="w-4 h-4 inline mr-2" />
-            Blog Management
-          </button> */}
+        <div className="flex justify-between gap-4 mb-8 border-b">
           <button
             onClick={() => setActiveTab('emails')}
             className={`px-4 py-2 font-medium ${activeTab === 'emails' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
@@ -264,110 +207,13 @@ const Admin = () => {
             Client Information ({clients.length})
           </button>
           <button
-            onClick={() => setActiveTab('emails')}
-            className={`px-4 py-2 font-medium ${activeTab === 'emails' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
+            onClick={() => setActiveTab('study-materials')}
+            className={`px-4 py-2 font-medium ${activeTab === 'study-materials' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
           >
-            <Mail className="w-4 h-4 inline mr-2" />
-            Email Subscribers ({emailSubscribers.length})
+            <Book className="w-4 h-4 inline mr-2" />
+            Upload Study Materials
           </button>
         </div>
-
-        {/* Blog Management Tab */}
-        {/* {activeTab === 'blogs' && (
-          <>
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <h2 className="text-3xl font-bold text-foreground">Blog Management</h2>
-                <p className="text-muted-foreground">Manage your blog posts and content</p>
-              </div>
-              <Dialog open={isAddBlogOpen} onOpenChange={setIsAddBlogOpen}>
-                <DialogTrigger asChild>
-                  <Button>
-                    <PlusCircle className="w-4 h-4 mr-2" />
-                    Add New Blog
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Add New Blog Post</DialogTitle>
-                  </DialogHeader>
-                  <form onSubmit={handleAddBlog} className="space-y-4">
-                    <div>
-                      <Label htmlFor="title">Title</Label>
-                      <Input id="title" name="title" required />
-                    </div>
-                    <div>
-                      <Label htmlFor="excerpt">Excerpt</Label>
-                      <Textarea id="excerpt" name="excerpt" rows={2} required />
-                    </div>
-                    <div>
-                      <Label htmlFor="content">Content</Label>
-                      <Textarea id="content" name="content" rows={6} required />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="author">Author</Label>
-                        <Input id="author" name="author" required />
-                      </div>
-                      <div>
-                        <Label htmlFor="category">Category</Label>
-                        <Input id="category" name="category" required />
-                      </div>
-                    </div>
-                    <Button type="submit" className="w-full">
-                      Publish Blog
-                    </Button>
-                  </form>
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            <div className="grid gap-6">
-              {blogs.map((blog) => (
-                <Card key={blog.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <CardTitle className="text-xl mb-2">{blog.title}</CardTitle>
-                        <CardDescription className="mb-3">{blog.excerpt}</CardDescription>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <User className="w-4 h-4" />
-                            {blog.author}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            {blog.date}
-                          </div>
-                          <Badge variant="secondary">{blog.category}</Badge>
-                          <Badge variant={blog.status === 'Published' ? 'default' : 'outline'}>
-                            {blog.status}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setEditingBlog(blog)}
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDeleteBlog(blog.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </>
-        )} */}
 
         {/* Email Subscribers Tab */}
         {activeTab === 'emails' && (
@@ -663,43 +509,181 @@ const Admin = () => {
           </div>
         )}
 
-        {/* Edit Blog Dialog */}
-        {/* <Dialog open={!!editingBlog} onOpenChange={() => setEditingBlog(null)}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Edit Blog Post</DialogTitle>
-            </DialogHeader>
-            {editingBlog && (
-              <form onSubmit={handleEditBlog} className="space-y-4">
-                <div>
-                  <Label htmlFor="edit-title">Title</Label>
-                  <Input id="edit-title" name="title" defaultValue={editingBlog.title} required />
-                </div>
-                <div>
-                  <Label htmlFor="edit-excerpt">Excerpt</Label>
-                  <Textarea id="edit-excerpt" name="excerpt" rows={2} defaultValue={editingBlog.excerpt} required />
-                </div>
-                <div>
-                  <Label htmlFor="edit-content">Content</Label>
-                  <Textarea id="edit-content" name="content" rows={6} defaultValue={editingBlog.content} required />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="edit-author">Author</Label>
-                    <Input id="edit-author" name="author" defaultValue={editingBlog.author} required />
-                  </div>
-                  <div>
-                    <Label htmlFor="edit-category">Category</Label>
-                    <Input id="edit-category" name="category" defaultValue={editingBlog.category} required />
-                  </div>
-                </div>
-                <Button type="submit" className="w-full">
-                  Update Blog
-                </Button>
-              </form>
-            )}
-          </DialogContent>
-        </Dialog> */}
+        {/* Study Materials Tab */}
+        {activeTab === 'study-materials' && (
+          <div>
+            {/* Sub Tabs */}
+            <div className="flex gap-4 mb-6 border-b">
+              <button
+                onClick={() => setStudyMaterials({ ...studyMaterials, active: 'reports' })}
+                className={`px-4 py-2 font-medium ${studyMaterials.active === 'reports'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-muted-foreground'
+                  }`}
+              >
+                Market Reports
+              </button>
+              <button
+                onClick={() => setStudyMaterials({ ...studyMaterials, active: 'guides' })}
+                className={`px-4 py-2 font-medium ${studyMaterials.active === 'guides'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-muted-foreground'
+                  }`}
+              >
+                Investment Guides
+              </button>
+              <button
+                onClick={() => setStudyMaterials({ ...studyMaterials, active: 'videos' })}
+                className={`px-4 py-2 font-medium ${studyMaterials.active === 'videos'
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-muted-foreground'
+                  }`}
+              >
+                Videos
+              </button>
+            </div>
+
+            {/* Add Button + Dialog */}
+            <div className="flex justify-end mb-6">
+              {studyMaterials.active === 'reports' && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <PlusCircle className="w-4 h-4 mr-2" /> Add Market Report
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Add Market Report</DialogTitle>
+                    </DialogHeader>
+                    <form className="space-y-4">
+                      <div>
+                        <Label>Name</Label>
+                        <Input name="name" required />
+                      </div>
+                      <div>
+                        <Label>Date</Label>
+                        <Input type="text" name="date" defaultValue={new Date().toISOString().split("T")[0]} disabled />
+                      </div>
+                      <div>
+                        <Label>Type</Label>
+                        <Input name="type" required />
+                      </div>
+                      <div>
+                        <Label>Upload File</Label>
+                        <Input type="file" name="file" required />
+                      </div>
+                      <Button type="submit" className="w-full">Add Report</Button>
+                    </form>
+                  </DialogContent>
+                </Dialog>
+              )}
+
+              {studyMaterials.active === 'guides' && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <PlusCircle className="w-4 h-4 mr-2" /> Add Investment Guide
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Add Investment Guide</DialogTitle>
+                    </DialogHeader>
+                    <form className="space-y-4">
+                      <div>
+                        <Label>Name</Label>
+                        <Input name="name" required />
+                      </div>
+                      <div>
+                        <Label>Description</Label>
+                        <Textarea name="desc" rows={2} required />
+                      </div>
+                      <div>
+                        <Label>Category</Label>
+                        <Input name="category" required />
+                      </div>
+                      <div>
+                        <Label>Upload File</Label>
+                        <Input type="file" name="file" required />
+                      </div>
+                      <Button type="submit" className="w-full">Add Guide</Button>
+                    </form>
+                  </DialogContent>
+                </Dialog>
+              )}
+
+              {studyMaterials.active === 'videos' && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <PlusCircle className="w-4 h-4 mr-2" /> Add Video Link
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Add Video</DialogTitle>
+                    </DialogHeader>
+                    <form className="space-y-4">
+                      <div>
+                        <Label>Name</Label>
+                        <Input name="name" required />
+                      </div>
+                      <div>
+                        <Label>Category</Label>
+                        <Input name="category" required />
+                      </div>
+                      <div>
+                        <Label>Duration of Video</Label>
+                        <Input name="duration" required />
+                      </div>
+                      <div>
+                        <Label>Video Link</Label>
+                        <Input type="url" name="link" required />
+                      </div>
+                      <Button type="submit" className="w-full">Add Video</Button>
+                    </form>
+                  </DialogContent>
+                </Dialog>
+              )}
+            </div>
+
+            {/* Cards */}
+            <div className="grid gap-4">
+              {/* {studyMaterials.active === 'reports' &&
+                (studyMaterials.reports || []).map((report, index) => (
+                  <Card key={index}>
+                    <CardContent className="pt-6">
+                      <h3 className="font-semibold">{report.name}</h3>
+                      <p className="text-muted-foreground">Type: {report.type} | Pages: {report.pages}</p>
+                    </CardContent>
+                  </Card>
+                ))} */}
+
+              {studyMaterials.active === 'guides' &&
+                (studyMaterials.guides || []).map((guide, index) => (
+                  <Card key={index}>
+                    <CardContent className="pt-6">
+                      <h3 className="font-semibold">{guide.name}</h3>
+                      <p className="text-muted-foreground">{guide.desc}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+
+              {studyMaterials.active === 'videos' &&
+                (studyMaterials.videos || []).map((video, index) => (
+                  <Card key={index}>
+                    <CardContent className="pt-6">
+                      <h3 className="font-semibold">{video.name}</h3>
+                      <a href={video.link} target="_blank" className="text-primary underline">
+                        Watch Video
+                      </a>
+                    </CardContent>
+                  </Card>
+                ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
