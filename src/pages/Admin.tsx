@@ -48,8 +48,19 @@ const Admin = () => {
     file: null,
   });
 
-  const [guide, setGuide] = useState({ name: '', desc: '', category: '' });
-  const [video, setVideo] = useState({ name: '', category: '', duration: '', videoLink: '' });
+  const [guide, setGuide] = useState({
+    name: '',
+    desc: '',
+    category: '',
+    file: null
+  });
+
+  const [video, setVideo] = useState({ 
+    name: '', 
+    category: '', 
+    duration: '', 
+    videoLink: '' 
+  });
 
   const handleSubmitReport = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -68,16 +79,43 @@ const Admin = () => {
     }
   };
 
-
   const handleSubmitGuide = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+
+    const data = {
+      name: guide.name,
+      desc: guide.desc,
+      category: guide.category,
+      file: guide.file
+    }
+
+    try{
+      console.log("Guide uploaded:", data);
+      setGuide({ name: '', desc: '', category: '', file: '' });
+    }
+    catch(err) {
+      console.log("Upload failed:", err)
+    }
   }
 
   const handleSubmitVideo = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+
+    const data = {
+      name: video.name,
+      category: video.category,
+      duration: video.duration,
+      link: video.videoLink
+    }
+
+    try{
+      console.log("Video added:", data);
+      setVideo({ name: '', category: '', duration: '', videoLink: '' });
+    }
+    catch(err) {
+      console.log("Upload failed:", err)
+    }
   }
-
-
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -624,22 +662,22 @@ const Admin = () => {
                     <DialogHeader>
                       <DialogTitle>Add Investment Guide</DialogTitle>
                     </DialogHeader>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmitGuide}>
                       <div>
                         <Label>Name</Label>
-                        <Input name="name" required />
+                        <Input name="name" value={guide.name} onChange={(e) => setGuide({ ...guide, name: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Description</Label>
-                        <Textarea name="desc" rows={2} required />
+                        <Textarea name="desc" value={guide.desc} onChange={(e) => setGuide({...guide, desc: e.target.value})} rows={2} required />
                       </div>
                       <div>
                         <Label>Category</Label>
-                        <Input name="category" required />
+                        <Input name="category" value={guide.category} onChange={(e) => setGuide({...guide, category: e.target.value})} required />
                       </div>
                       <div>
                         <Label>Upload File</Label>
-                        <Input type="file" name="file" required />
+                        <Input type="file" name="file" onChange={(e) => setGuide({...guide, file: e.target.files[0]})} required />
                       </div>
                       <Button type="submit" className="w-full">Add Guide</Button>
                     </form>
@@ -658,22 +696,22 @@ const Admin = () => {
                     <DialogHeader>
                       <DialogTitle>Add Video</DialogTitle>
                     </DialogHeader>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmitVideo}>
                       <div>
                         <Label>Name</Label>
-                        <Input name="name" required />
+                        <Input name="name" value={video.name} onChange={(e) => setVideo({...video, name: e.target.value})} required />
                       </div>
                       <div>
                         <Label>Category</Label>
-                        <Input name="category" required />
+                        <Input name="category" value={video.category} onChange={(e) => setVideo({...video, category: e.target.value})} required />
                       </div>
                       <div>
                         <Label>Duration of Video</Label>
-                        <Input name="duration" required />
+                        <Input name="duration" value={video.duration} onChange={(e) => setVideo({...video, duration: e.target.value})} required />
                       </div>
                       <div>
                         <Label>Video Link</Label>
-                        <Input type="url" name="link" required />
+                        <Input type="url" name="link" value={video.videoLink} onChange={(e) => setVideo({...video, videoLink: e.target.value})} required />
                       </div>
                       <Button type="submit" className="w-full">Add Video</Button>
                     </form>
