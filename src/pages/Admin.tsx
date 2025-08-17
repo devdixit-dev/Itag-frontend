@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 const Admin = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
@@ -41,6 +41,42 @@ const Admin = () => {
     guides: [],
     videos: []
   });
+
+  const [report, setReport] = useState({
+    name: "",
+    type: "",
+    file: null,
+  });
+
+  const [guide, setGuide] = useState({ name: '', desc: '', category: '' });
+  const [video, setVideo] = useState({ name: '', category: '', duration: '', videoLink: '' });
+
+  const handleSubmitReport = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", report.name);
+    formData.append("type", report.type);
+    formData.append("date", new Date().toISOString().split("T")[0]);
+    formData.append("file", report.file);
+
+    try {
+      console.log("Uploaded:", report);
+      setReport({ name: '', type: '', file: '' });
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  };
+
+
+  const handleSubmitGuide = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+  }
+
+  const handleSubmitVideo = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+  }
+
 
 
   useEffect(() => {
@@ -83,8 +119,6 @@ const Admin = () => {
         username: loginForm.username,
         password: loginForm.password
       }, { withCredentials: true });
-
-      console.log('Login Success:', adminLogin.data);
 
       if (adminLogin.status === 200) {
         setIsLoggedIn(true);
@@ -517,8 +551,8 @@ const Admin = () => {
               <button
                 onClick={() => setStudyMaterials({ ...studyMaterials, active: 'reports' })}
                 className={`px-4 py-2 font-medium ${studyMaterials.active === 'reports'
-                    ? 'border-b-2 border-primary text-primary'
-                    : 'text-muted-foreground'
+                  ? 'border-b-2 border-primary text-primary'
+                  : 'text-muted-foreground'
                   }`}
               >
                 Market Reports
@@ -526,8 +560,8 @@ const Admin = () => {
               <button
                 onClick={() => setStudyMaterials({ ...studyMaterials, active: 'guides' })}
                 className={`px-4 py-2 font-medium ${studyMaterials.active === 'guides'
-                    ? 'border-b-2 border-primary text-primary'
-                    : 'text-muted-foreground'
+                  ? 'border-b-2 border-primary text-primary'
+                  : 'text-muted-foreground'
                   }`}
               >
                 Investment Guides
@@ -535,8 +569,8 @@ const Admin = () => {
               <button
                 onClick={() => setStudyMaterials({ ...studyMaterials, active: 'videos' })}
                 className={`px-4 py-2 font-medium ${studyMaterials.active === 'videos'
-                    ? 'border-b-2 border-primary text-primary'
-                    : 'text-muted-foreground'
+                  ? 'border-b-2 border-primary text-primary'
+                  : 'text-muted-foreground'
                   }`}
               >
                 Videos
@@ -556,10 +590,10 @@ const Admin = () => {
                     <DialogHeader>
                       <DialogTitle>Add Market Report</DialogTitle>
                     </DialogHeader>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmitReport}>
                       <div>
                         <Label>Name</Label>
-                        <Input name="name" required />
+                        <Input name="name" value={report.name} onChange={(e) => setReport({ ...report, name: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Date</Label>
@@ -567,11 +601,11 @@ const Admin = () => {
                       </div>
                       <div>
                         <Label>Type</Label>
-                        <Input name="type" required />
+                        <Input name="type" value={report.type} onChange={(e) => setReport({ ...report, type: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Upload File</Label>
-                        <Input type="file" name="file" required />
+                        <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
                       </div>
                       <Button type="submit" className="w-full">Add Report</Button>
                     </form>
