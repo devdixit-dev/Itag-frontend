@@ -22,7 +22,10 @@ import {
   Briefcase,
   Download,
   User2,
-  Book
+  Book,
+  Delete,
+  Loader,
+  Loader2
 } from 'lucide-react';
 
 const Admin = () => {
@@ -34,6 +37,7 @@ const Admin = () => {
   const [emailSubscribers, setEmailSubscribers] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
   const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [studyMaterials, setStudyMaterials] = useState({
     active: 'reports',
@@ -55,25 +59,36 @@ const Admin = () => {
     file: null
   });
 
-  const [video, setVideo] = useState({ 
-    name: '', 
-    category: '', 
-    duration: '', 
-    videoLink: '' 
+  const [video, setVideo] = useState({
+    name: '',
+    category: '',
+    duration: '',
+    videoLink: ''
   });
 
   const handleSubmitReport = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    setLoading(true);
+
+    if (!report.file) {
+      console.error("No file selected");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("name", report.name);
     formData.append("type", report.type);
-    formData.append("date", new Date().toISOString().split("T")[0]);
-    formData.append("file", report.file);
+    formData.append("report", report.file);
 
     try {
-      console.log("Uploaded:", report);
-      setReport({ name: '', type: '', file: '' });
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-report`,
+        formData,
+        {
+          withCredentials: true, headers: { "Content-Type": "multipart/form-data" }
+        });
+      console.log("Report uploaded:", response.data);
+      setLoading(false);
+      setReport({ name: '', type: '', file: null });
     } catch (err) {
       console.error("Upload failed:", err);
     }
@@ -89,11 +104,11 @@ const Admin = () => {
       file: guide.file
     }
 
-    try{
+    try {
       console.log("Guide uploaded:", data);
       setGuide({ name: '', desc: '', category: '', file: '' });
     }
-    catch(err) {
+    catch (err) {
       console.log("Upload failed:", err)
     }
   }
@@ -108,11 +123,11 @@ const Admin = () => {
       link: video.videoLink
     }
 
-    try{
+    try {
       console.log("Video added:", data);
       setVideo({ name: '', category: '', duration: '', videoLink: '' });
     }
-    catch(err) {
+    catch (err) {
       console.log("Upload failed:", err)
     }
   }
@@ -624,11 +639,11 @@ const Admin = () => {
                       <PlusCircle className="w-4 h-4 mr-2" /> Add Market Report
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="max-w-md" aria-describedby={undefined}>
                     <DialogHeader>
                       <DialogTitle>Add Market Report</DialogTitle>
                     </DialogHeader>
-                    <form className="space-y-4" onSubmit={handleSubmitReport}>
+                    <form className="space-y-4" onSubmit={handleSubmitReport} encType="multipart/form-data">
                       <div>
                         <Label>Name</Label>
                         <Input name="name" value={report.name} onChange={(e) => setReport({ ...report, name: e.target.value })} required />
@@ -645,7 +660,9 @@ const Admin = () => {
                         <Label>Upload File</Label>
                         <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
                       </div>
-                      <Button type="submit" className="w-full">Add Report</Button>
+                      <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? "Uploading report": "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
+                      </Button>
                     </form>
                   </DialogContent>
                 </Dialog>
@@ -669,15 +686,15 @@ const Admin = () => {
                       </div>
                       <div>
                         <Label>Description</Label>
-                        <Textarea name="desc" value={guide.desc} onChange={(e) => setGuide({...guide, desc: e.target.value})} rows={2} required />
+                        <Textarea name="desc" value={guide.desc} onChange={(e) => setGuide({ ...guide, desc: e.target.value })} rows={2} required />
                       </div>
                       <div>
                         <Label>Category</Label>
-                        <Input name="category" value={guide.category} onChange={(e) => setGuide({...guide, category: e.target.value})} required />
+                        <Input name="category" value={guide.category} onChange={(e) => setGuide({ ...guide, category: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Upload File</Label>
-                        <Input type="file" name="file" onChange={(e) => setGuide({...guide, file: e.target.files[0]})} required />
+                        <Input type="file" name="guide" onChange={(e) => setGuide({ ...guide, file: e.target.files[0] })} required />
                       </div>
                       <Button type="submit" className="w-full">Add Guide</Button>
                     </form>
@@ -699,19 +716,19 @@ const Admin = () => {
                     <form className="space-y-4" onSubmit={handleSubmitVideo}>
                       <div>
                         <Label>Name</Label>
-                        <Input name="name" value={video.name} onChange={(e) => setVideo({...video, name: e.target.value})} required />
+                        <Input name="name" value={video.name} onChange={(e) => setVideo({ ...video, name: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Category</Label>
-                        <Input name="category" value={video.category} onChange={(e) => setVideo({...video, category: e.target.value})} required />
+                        <Input name="category" value={video.category} onChange={(e) => setVideo({ ...video, category: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Duration of Video</Label>
-                        <Input name="duration" value={video.duration} onChange={(e) => setVideo({...video, duration: e.target.value})} required />
+                        <Input name="duration" value={video.duration} onChange={(e) => setVideo({ ...video, duration: e.target.value })} required />
                       </div>
                       <div>
                         <Label>Video Link</Label>
-                        <Input type="url" name="link" value={video.videoLink} onChange={(e) => setVideo({...video, videoLink: e.target.value})} required />
+                        <Input type="url" name="link" value={video.videoLink} onChange={(e) => setVideo({ ...video, videoLink: e.target.value })} required />
                       </div>
                       <Button type="submit" className="w-full">Add Video</Button>
                     </form>
@@ -722,37 +739,51 @@ const Admin = () => {
 
             {/* Cards */}
             <div className="grid gap-4">
-              {/* {studyMaterials.active === 'reports' &&
-                (studyMaterials.reports || []).map((report, index) => (
-                  <Card key={index}>
-                    <CardContent className="pt-6">
-                      <h3 className="font-semibold">{report.name}</h3>
-                      <p className="text-muted-foreground">Type: {report.type} | Pages: {report.pages}</p>
-                    </CardContent>
-                  </Card>
-                ))} */}
+              {studyMaterials.active === 'reports' &&
+                <Card key={""}>
+                  <CardContent className="pt-6 flex justify-between items-center">
+                    <div className='flex flex-col gap-2'>
+                      <h3 className="font-semibold">Mutual Fund Monthly Return Report</h3>
+                      <p className="text-muted-foreground text-sm">Type : Mutual Funds | Pages : 20</p>
+                      <p className='text-muted-foreground text-sm'>Date : {new Date().toISOString().split("T")[0]}</p>
+                    </div>
+                    <div>
+                      <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              }
 
               {studyMaterials.active === 'guides' &&
-                (studyMaterials.guides || []).map((guide, index) => (
-                  <Card key={index}>
-                    <CardContent className="pt-6">
-                      <h3 className="font-semibold">{guide.name}</h3>
-                      <p className="text-muted-foreground">{guide.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+                <Card key={""}>
+                  <CardContent className="pt-6 flex justify-between items-center">
+                    <div className='flex flex-col gap-2'>
+                      <h3 className="font-semibold">Investment Guide</h3>
+                      <p className='text-muted-foreground'>Description : This is the detailed description about the investment</p>
+                      <p className="text-muted-foreground text-sm">Category : Stocks | Pages : 40</p>
+                      <p className='text-muted-foreground text-sm'>Date : {new Date().toISOString().split("T")[0]}</p>
+                    </div>
+                    <div>
+                      <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              }
 
               {studyMaterials.active === 'videos' &&
-                (studyMaterials.videos || []).map((video, index) => (
-                  <Card key={index}>
-                    <CardContent className="pt-6">
-                      <h3 className="font-semibold">{video.name}</h3>
-                      <a href={video.link} target="_blank" className="text-primary underline">
-                        Watch Video
-                      </a>
-                    </CardContent>
-                  </Card>
-                ))}
+                <Card key={""}>
+                  <CardContent className="pt-6 flex justify-between items-center">
+                    <div className='flex flex-col gap-2'>
+                      <h3 className="font-semibold">SIP vs Lumpsum Investment</h3>
+                      <p className="text-muted-foreground text-sm">Category : Mutual Funds | Duration : 10 Minutes</p>
+                      <p className='text-muted-foreground text-sm'>Date : {new Date().toISOString().split("T")[0]}</p>
+                    </div>
+                    <div>
+                      <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              }
             </div>
           </div>
         )}
