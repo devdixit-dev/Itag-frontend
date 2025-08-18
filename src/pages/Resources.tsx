@@ -17,6 +17,8 @@ import {
   Star
 } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Resources = () => {
   const videos = [
@@ -85,37 +87,44 @@ const Resources = () => {
     }
   ];
 
-  const reports = [
-    {
-      title: "Monthly Market Outlook - January 2024",
-      date: "Jan 15, 2024",
-      type: "Market Report",
-      pages: "25 pages",
-      icon: TrendingUp,
-      link: pdf
-    },
-    {
-      title: "Top Performing Mutual Funds Q4 2023",
-      date: "Jan 10, 2024",
-      type: "Performance Report",
-      pages: "18 pages",
-      icon: Star
-    },
-    {
-      title: "Insurance Sector Analysis 2024",
-      date: "Jan 5, 2024",
-      type: "Sector Report",
-      pages: "32 pages",
-      icon: Shield
-    },
-    {
-      title: "Tax Saving Investment Options",
-      date: "Dec 28, 2023",
-      type: "Tax Guide",
-      pages: "15 pages",
-      icon: Calculator
+  // const reports = [
+  //   {
+  //     title: "Monthly Market Outlook - January 2024",
+  //     type: "Market Report",
+  //     link: pdf
+  //   },
+  //   {
+  //     title: "Top Performing Mutual Funds Q4 2023",
+  //     type: "Performance Report",
+  //   },
+  //   {
+  //     title: "Insurance Sector Analysis 2024",
+  //     type: "Sector Report",
+  //   },
+  //   {
+  //     title: "Tax Saving Investment Options",
+  //     type: "Tax Guide",
+  //   }
+  // ];
+
+  const [fetchReports, setFetchReports] = useState<any[]>([]);
+  const [fetchGuides, setFetchGuides] = useState<any[]>([]);
+
+  useEffect(() => {
+
+    const getReports = async () => {
+      const response = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`)).data
+      setFetchReports(response.reports);
     }
-  ];
+    getReports();
+
+    const getGuides = async () => {
+      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`)).data
+      setFetchGuides(response.guides);
+    }
+    getGuides();
+
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">
@@ -159,34 +168,22 @@ const Resources = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {guides.map((guide, index) => (
+                  {fetchGuides.map((guide, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                       <CardHeader>
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-light rounded-lg flex items-center justify-center">
-                            <guide.icon className="w-6 h-6 text-white" />
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                            <span className="text-sm font-medium">{guide.rating}</span>
-                          </div>
-                        </div>
-                        <CardTitle className="text-lg">{guide.title}</CardTitle>
-                        <CardDescription>{guide.description}</CardDescription>
+                        <CardTitle className="text-lg">{guide.name}</CardTitle>
+                        <CardDescription>{guide.desc}</CardDescription>
                       </CardHeader>
                       <CardContent>
                         <div className="flex items-center justify-between mb-4">
                           <span className="text-sm bg-primary/10 text-primary px-2 py-1 rounded">
                             {guide.category}
                           </span>
-                          <span className="text-sm text-muted-foreground">
-                            {guide.downloadCount} downloads
-                          </span>
                         </div>
-                        <Button className="w-full btn-finance">
-                          <Download className="w-4 h-4 mr-2" />
-                          Download PDF
-                        </Button>
+                        <a href={guide.fileLink} className="btn-finance flex items-center justify-center" target="_blank">
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </a>
                       </CardContent>
                     </Card>
                   ))}
@@ -250,27 +247,19 @@ const Resources = () => {
                 </div>
 
                 <div className="space-y-6">
-                  {reports.map((report, index) => (
+                  {fetchReports.map((report, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
-                            <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-light rounded-lg flex items-center justify-center">
-                              <report.icon className="w-6 h-6 text-white" />
-                            </div>
                             <div>
-                              <h3 className="text-lg font-semibold text-foreground">{report.title}</h3>
+                              <h3 className="text-lg font-semibold text-foreground">{report.name}</h3>
                               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                                <span className="flex items-center">
-                                  <Calendar className="w-4 h-4 mr-1" />
-                                  {report.date}
-                                </span>
                                 <span>{report.type}</span>
-                                <span>{report.pages}</span>
                               </div>
                             </div>
                           </div>
-                          <a href={report.link} className="btn-finance flex items-center">
+                          <a href={report.fileLink} className="btn-finance flex items-center" target="_blank">
                             <Download className="w-4 h-4 mr-2" />
                             Download
                           </a>
