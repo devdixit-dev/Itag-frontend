@@ -46,6 +46,9 @@ const Admin = () => {
     videos: []
   });
 
+  const [fetchStudyReports, setFetchStudyReports] = useState([]);
+  const [fetchStudyGuides, setFetchStudyGuides] = useState([]);
+
   const [report, setReport] = useState({
     name: "",
     type: "",
@@ -78,7 +81,7 @@ const Admin = () => {
     const formData = new FormData();
     formData.append("name", report.name);
     formData.append("type", report.type);
-    formData.append("report", report.file);
+    formData.append("report", report.file, report.file.name);
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-report`,
@@ -94,22 +97,33 @@ const Admin = () => {
     }
   };
 
-  const handleSubmitGuide = (e: { preventDefault: () => void; }) => {
+  const handleSubmitGuide = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    setLoading(true);
 
-    const data = {
-      name: guide.name,
-      desc: guide.desc,
-      category: guide.category,
-      file: guide.file
+    if (!guide.file) {
+      setLoading(false);
+      console.error("No file selected");
+      return;
     }
+
+    const formData = new FormData();
+    formData.append("name", guide.name);
+    formData.append("desc", guide.desc);
+    formData.append("category", guide.category);
+    formData.append("guide", guide.file, guide.file.name);
 
     try {
-      console.log("Guide uploaded:", data);
-      setGuide({ name: '', desc: '', category: '', file: '' });
-    }
-    catch (err) {
-      console.log("Upload failed:", err)
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-guide`,
+        formData,
+        {
+          withCredentials: true, headers: { "Content-Type": "multipart/form-data" }
+        });
+      console.log("Guide uploaded:", response.data);
+      setLoading(false);
+      setGuide({ name: '', desc: '', category: '', file: null });
+    } catch (err) {
+      console.error("Upload failed:", err);
     }
   }
 
@@ -156,6 +170,18 @@ const Admin = () => {
             setJobApplications(getJobApps.jobApplications);
           }
           await fetchJobApps();
+
+          const fetchReports = async () => {
+            const getReports = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`, { withCredentials: true })).data
+            setFetchStudyReports(getReports.reports);
+          }
+          fetchReports();
+
+          const fetchGuides = async () => {
+            const getGuides = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`, {withCredentials: true})).data
+            setFetchStudyGuides(getGuides.guides);
+          }
+          fetchGuides();
         }
       }
       catch (err) {
@@ -661,7 +687,7 @@ const Admin = () => {
                         <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
                       </div>
                       <Button type="submit" className="w-full" disabled={loading}>
-                        {loading ? "Uploading report": "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
+                        {loading ? "Uploading report" : "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
                       </Button>
                     </form>
                   </DialogContent>
@@ -675,7 +701,7 @@ const Admin = () => {
                       <PlusCircle className="w-4 h-4 mr-2" /> Add Investment Guide
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="max-w-md" aria-describedby={undefined}>
                     <DialogHeader>
                       <DialogTitle>Add Investment Guide</DialogTitle>
                     </DialogHeader>
@@ -696,7 +722,9 @@ const Admin = () => {
                         <Label>Upload File</Label>
                         <Input type="file" name="guide" onChange={(e) => setGuide({ ...guide, file: e.target.files[0] })} required />
                       </div>
-                      <Button type="submit" className="w-full">Add Guide</Button>
+                      <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? "Uploading report" : "Add Guide"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
+                      </Button>
                     </form>
                   </DialogContent>
                 </Dialog>
@@ -740,34 +768,40 @@ const Admin = () => {
             {/* Cards */}
             <div className="grid gap-4">
               {studyMaterials.active === 'reports' &&
-                <Card key={""}>
-                  <CardContent className="pt-6 flex justify-between items-center">
-                    <div className='flex flex-col gap-2'>
-                      <h3 className="font-semibold">Mutual Fund Monthly Return Report</h3>
-                      <p className="text-muted-foreground text-sm">Type : Mutual Funds | Pages : 20</p>
-                      <p className='text-muted-foreground text-sm'>Date : {new Date().toISOString().split("T")[0]}</p>
-                    </div>
-                    <div>
-                      <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                fetchStudyReports?.map((report, index) => (
+                  <Card key={report.id || index}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div className='flex flex-col gap-2'>
+                        <h3 className="font-semibold">{report.name}</h3>
+                        <p className="text-muted-foreground text-sm">Type : {report.type}</p>
+                      </div>
+                      <div>
+                        <Button
+                          className='bg-red-500 hover:bg-red-500 hover:opacity-80'
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
               }
 
               {studyMaterials.active === 'guides' &&
-                <Card key={""}>
-                  <CardContent className="pt-6 flex justify-between items-center">
-                    <div className='flex flex-col gap-2'>
-                      <h3 className="font-semibold">Investment Guide</h3>
-                      <p className='text-muted-foreground'>Description : This is the detailed description about the investment</p>
-                      <p className="text-muted-foreground text-sm">Category : Stocks | Pages : 40</p>
-                      <p className='text-muted-foreground text-sm'>Date : {new Date().toISOString().split("T")[0]}</p>
-                    </div>
-                    <div>
-                      <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                fetchStudyGuides?.map((guide, index) => (
+                  <Card key={guide.id || index}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div className='flex flex-col gap-2'>
+                        <h3 className="font-semibold">{guide.name}</h3>
+                        <p className='text-muted-foreground'>Description : {guide.desc}</p>
+                        <p className="text-muted-foreground text-sm">Category : {guide.category}</p>
+                      </div>
+                      <div>
+                        <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
               }
 
               {studyMaterials.active === 'videos' &&
