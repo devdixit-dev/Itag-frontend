@@ -52,61 +52,6 @@ const Resources = () => {
     }
   ];
 
-  const guides = [
-    {
-      title: "Complete Guide to Mutual Fund Investing",
-      description: "Learn the fundamentals of mutual fund investing, from SIP to lump sum strategies.",
-      category: "Investment",
-      downloadCount: "2.5K",
-      rating: 4.8,
-      icon: PiggyBank
-    },
-    {
-      title: "Tax Planning Strategies for 2024",
-      description: "Comprehensive guide to save taxes under various sections and optimize your returns.",
-      category: "Tax Planning",
-      downloadCount: "1.8K",
-      rating: 4.9,
-      icon: Calculator
-    },
-    {
-      title: "IPO Investment Guide",
-      description: "Everything you need to know about investing in Initial Public Offerings.",
-      category: "IPO",
-      downloadCount: "3.2K",
-      rating: 4.7,
-      icon: TrendingUp
-    },
-    {
-      title: "Insurance Planning Handbook",
-      description: "Choose the right insurance policies for complete financial protection.",
-      category: "Insurance",
-      downloadCount: "1.5K",
-      rating: 4.6,
-      icon: Shield
-    }
-  ];
-
-  // const reports = [
-  //   {
-  //     title: "Monthly Market Outlook - January 2024",
-  //     type: "Market Report",
-  //     link: pdf
-  //   },
-  //   {
-  //     title: "Top Performing Mutual Funds Q4 2023",
-  //     type: "Performance Report",
-  //   },
-  //   {
-  //     title: "Insurance Sector Analysis 2024",
-  //     type: "Sector Report",
-  //   },
-  //   {
-  //     title: "Tax Saving Investment Options",
-  //     type: "Tax Guide",
-  //   }
-  // ];
-
   const [fetchReports, setFetchReports] = useState<any[]>([]);
   const [fetchGuides, setFetchGuides] = useState<any[]>([]);
 
