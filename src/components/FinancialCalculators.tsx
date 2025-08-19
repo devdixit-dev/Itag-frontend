@@ -157,6 +157,18 @@ const FinancialCalculators = () => {
                       <Label htmlFor="inflPercent">Inflation Rate (%)</Label>
                       <Input id="inflPercent" type="number" step="0.1" value={inflPercent} onChange={(e) => setInflPercent(Number(e.target.value))} className="mt-2" />
                     </div> */}
+                    <div className="flex flex-col gap-2.5 pl-4 border-t-2">
+                      <h3 className="text-lg font-medium mt-6">About SIP Calculator</h3>
+                      <p className="text-muted-foreground">This calculator shows :</p>
+                      <ul className="text-sm">
+                        <option>- Future Value of your investment</option>
+                        <option>- Total Amount Invested</option>
+                        <option>- Returns Generated</option>
+                      </ul>
+                      <p className="text-sm">💡 Start early</p>
+                      <p className="text-sm">⚡ Stay consistent</p>
+                      <p className="text-sm">🎯 Grow wealth steadily</p>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -187,7 +199,7 @@ const FinancialCalculators = () => {
                     </CardContent>
                   </Card>
 
-                  <Card className="card-finance">
+                  <Card className="card-finance py-10">
                     <CardHeader>
                       <CardTitle>Investment Breakdown</CardTitle>
                     </CardHeader>
@@ -241,6 +253,18 @@ const FinancialCalculators = () => {
                       <Label htmlFor="loanYears">Loan Tenure (Years)</Label>
                       <Input id="loanYears" type="number" value={loanYears} onChange={(e) => setLoanYears(Number(e.target.value))} className="mt-2" />
                     </div>
+                    <div className="flex flex-col gap-2.5 pl-4 border-t-2">
+                      <h3 className="text-lg font-medium mt-6">About Loan Calculator</h3>
+                      <p className="text-muted-foreground">This calculator shows :</p>
+                      <ul className="text-sm">
+                        <option>- Monthly EMI to be paid</option>
+                        <option>- Total Interest Payable</option>
+                        <option>- Overall Loan Cost</option>
+                      </ul>
+                      <p className="text-sm">💡 Borrow smart</p>
+                      <p className="text-sm">⚡ Stay consistent</p>
+                      <p className="text-sm">🎯 Repay with confidence</p>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -271,7 +295,7 @@ const FinancialCalculators = () => {
                     </CardContent>
                   </Card>
 
-                  <Card className="card-finance">
+                  <Card className="card-finance py-10">
                     <CardHeader>
                       <CardTitle>Payment Breakdown</CardTitle>
                     </CardHeader>
@@ -325,6 +349,18 @@ const FinancialCalculators = () => {
                       <Label htmlFor="goalRate">Expected Return (% per annum)</Label>
                       <Input id="goalRate" type="number" step="0.1" value={goalRate} onChange={(e) => setGoalRate(Number(e.target.value))} className="mt-2" />
                     </div>
+                    <div className="flex flex-col gap-2.5 pl-4 border-t-2">
+                      <h3 className="text-lg font-medium mt-6">About Goal Calculator</h3>
+                      <p className="text-muted-foreground">This calculator shows :</p>
+                      <ul className="text-sm">
+                        <option>- Target Amount Needed</option>
+                        <option>- Monthly/Yearly Savings Required</option>
+                        <option>- Future Value of Investments</option>
+                      </ul>
+                      <p className="text-sm">💡 Set goals</p>
+                      <p className="text-sm">⚡ Invest wisely</p>
+                      <p className="text-sm">🎯 Achieve confidently</p>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -355,7 +391,7 @@ const FinancialCalculators = () => {
                     </CardContent>
                   </Card>
 
-                  <Card className="card-finance">
+                  <Card className="card-finance py-10">
                     <CardHeader>
                       <CardTitle>Investment vs Goal</CardTitle>
                     </CardHeader>
