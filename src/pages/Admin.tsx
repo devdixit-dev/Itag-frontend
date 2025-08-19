@@ -96,7 +96,8 @@ const Admin = () => {
       setReport({ name: '', type: '', file: null });
       setActiveTab('');
       toast({
-        title: `${response.data.message} 🎉`
+        title: `${response.data.message} 🎉`,
+        duration: 3000
       });
     } catch (err) {
       console.error("Upload failed:", err);
@@ -130,7 +131,8 @@ const Admin = () => {
       setGuide({ name: '', desc: '', category: '', file: null });
       setActiveTab('');
       toast({
-        title: `${response.data.message} 🎉`
+        title: `${response.data.message} 🎉`,
+        duration: 3000
       });
     } catch (err) {
       console.error("Upload failed:", err);
@@ -158,10 +160,59 @@ const Admin = () => {
       setVideo({ name: '', category: '', duration: '', videoLink: '' });
       setActiveTab('');
       toast({
-        title: `${response.data.message} 🎉`
+        title: `${response.data.message} 🎉`,
+        duration: 3000
       });
     } catch (err) {
       console.error("Video failed:", err);
+    }
+  }
+
+  const handleDeleteReport = async (id: string, e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/report/${id}`, {}, {withCredentials: true})
+      console.log(`Report deleted`, response.data);
+      toast({
+        title: `${response.data.message}`,
+        duration: 3000
+      });
+    }
+    catch (err) {
+      console.error("Video failed:", err);
+    }
+  }
+
+  const handleDeleteGuide = async (id: string, e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/guide/${id}`, {}, {withCredentials: true})
+      console.log(`Guide deleted`, response.data);
+      toast({
+        title: `${response.data.message}`,
+        duration: 3000
+      });
+    }
+    catch (err) {
+      console.error("Guide delete failed:", err);
+    }
+  }
+
+  const handleDeleteVideo = async (id: string, e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/video/${id}`, {}, {withCredentials: true})
+      console.log(`Video link deleted`, response.data);
+      toast({
+        title: `${response.data.message}`,
+        duration: 3000
+      });
+    }
+    catch (err) {
+      console.error("Video link delete failed:", err);
     }
   }
 
@@ -809,6 +860,7 @@ const Admin = () => {
                       </div>
                       <div>
                         <Button
+                          onClick={(e) => handleDeleteReport(report._id, e)}
                           className='bg-red-500 hover:bg-red-500 hover:opacity-80'
                         >
                           Remove
@@ -830,7 +882,9 @@ const Admin = () => {
                         <p className="text-muted-foreground text-sm">Category : {guide.category}</p>
                       </div>
                       <div>
-                        <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                        <Button 
+                        onClick={(e) => handleDeleteGuide(guide._id, e)}
+                        className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -846,7 +900,9 @@ const Admin = () => {
                         <p className="text-muted-foreground text-sm">Category : {video.category} | Duration : {video.duration} Minutes</p>
                       </div>
                       <div>
-                        <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                        <Button 
+                        onClick={(e) => handleDeleteVideo(video._id, e)}
+                        className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
                       </div>
                     </CardContent>
                   </Card>
