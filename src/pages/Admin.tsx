@@ -25,7 +25,8 @@ import {
   Book,
   Delete,
   Loader,
-  Loader2
+  Loader2,
+  FileChartColumnIncreasing
 } from 'lucide-react';
 
 const Admin = () => {
@@ -93,6 +94,10 @@ const Admin = () => {
       console.log("Report uploaded:", response.data);
       setLoading(false);
       setReport({ name: '', type: '', file: null });
+      setActiveTab('');
+      toast({
+        title: `${response.data.message} 🎉`
+      });
     } catch (err) {
       console.error("Upload failed:", err);
     }
@@ -123,6 +128,10 @@ const Admin = () => {
       console.log("Guide uploaded:", response.data);
       setLoading(false);
       setGuide({ name: '', desc: '', category: '', file: null });
+      setActiveTab('');
+      toast({
+        title: `${response.data.message} 🎉`
+      });
     } catch (err) {
       console.error("Upload failed:", err);
     }
@@ -147,7 +156,10 @@ const Admin = () => {
       console.log("Video uploaded:", response.data);
       setLoading(false);
       setVideo({ name: '', category: '', duration: '', videoLink: '' });
-      toast(response.data.message)
+      setActiveTab('');
+      toast({
+        title: `${response.data.message} 🎉`
+      });
     } catch (err) {
       console.error("Video failed:", err);
     }
@@ -185,7 +197,7 @@ const Admin = () => {
           fetchReports();
 
           const fetchGuides = async () => {
-            const getGuides = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`, {withCredentials: true})).data
+            const getGuides = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`, { withCredentials: true })).data
             setFetchStudyGuides(getGuides.guides);
           }
           fetchGuides();
@@ -299,6 +311,13 @@ const Admin = () => {
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold text-primary">Admin Panel</h1>
             <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                onClick={() => window.location.href = "/"}
+              >
+                <Eye className="w-4 h-4 mr-2" />
+                View Site
+              </Button>
               <Button variant="outline" onClick={handleLogout} className="hover:bg-red-500">
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
@@ -647,7 +666,7 @@ const Admin = () => {
                   : 'text-muted-foreground'
                   }`}
               >
-                Market Reports
+                Market Reports ({fetchStudyReports.length})
               </button>
               <button
                 onClick={() => setStudyMaterials({ ...studyMaterials, active: 'guides' })}
@@ -656,7 +675,7 @@ const Admin = () => {
                   : 'text-muted-foreground'
                   }`}
               >
-                Investment Guides
+                Investment Guides ({fetchStudyGuides.length})
               </button>
               <button
                 onClick={() => setStudyMaterials({ ...studyMaterials, active: 'videos' })}
@@ -665,7 +684,7 @@ const Admin = () => {
                   : 'text-muted-foreground'
                   }`}
               >
-                Videos
+                Videos ({fetchStudyVideos.length})
               </button>
             </div>
 
@@ -781,7 +800,7 @@ const Admin = () => {
             {/* Cards */}
             <div className="grid gap-4">
               {studyMaterials.active === 'reports' &&
-                fetchStudyReports?.map((report, index) => (
+                fetchStudyReports?.reverse().map((report, index) => (
                   <Card key={report.id || index}>
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div className='flex flex-col gap-2'>
@@ -799,9 +818,10 @@ const Admin = () => {
                   </Card>
                 ))
               }
+              
 
               {studyMaterials.active === 'guides' &&
-                fetchStudyGuides?.map((guide, index) => (
+                fetchStudyGuides?.reverse().map((guide, index) => (
                   <Card key={guide.id || index}>
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div className='flex flex-col gap-2'>
@@ -818,19 +838,19 @@ const Admin = () => {
               }
 
               {studyMaterials.active === 'videos' &&
-              fetchStudyVideos?.map((video, index) => (
-                <Card key={index}>
-                  <CardContent className="pt-6 flex justify-between items-center">
-                    <div className='flex flex-col gap-2'>
-                      <h3 className="font-semibold">{video.name}</h3>
-                      <p className="text-muted-foreground text-sm">Category : {video.category} | Duration : {video.duration} Minutes</p>
-                    </div>
-                    <div>
-                      <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                fetchStudyVideos?.reverse().map((video, index) => (
+                  <Card key={index}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div className='flex flex-col gap-2'>
+                        <h3 className="font-semibold">{video.name}</h3>
+                        <p className="text-muted-foreground text-sm">Category : {video.category} | Duration : {video.duration} Minutes</p>
+                      </div>
+                      <div>
+                        <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
             </div>
           </div>
         )}

@@ -14,7 +14,8 @@ import {
   Shield,
   PiggyBank,
   Calendar,
-  Star
+  Star,
+  FileChartColumnIncreasing 
 } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { useEffect, useState } from "react";
@@ -114,7 +115,7 @@ const Resources = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {fetchGuides.map((guide, index) => (
+                  {fetchGuides.reverse().map((guide, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                       <CardHeader>
                         <CardTitle className="text-lg">{guide.name}</CardTitle>
@@ -148,7 +149,7 @@ const Resources = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {fetchVideos.map((video, index) => (
+                  {fetchVideos.reverse().map((video, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                       <CardHeader>
                         <CardTitle className="text-lg">{video.name}</CardTitle>
@@ -182,11 +183,13 @@ const Resources = () => {
                 </div>
 
                 <div className="space-y-6">
-                  {fetchReports.map((report, index) => (
+                  {fetchReports.reverse().map((report, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between">
+                          
                           <div className="flex items-center space-x-4">
+                            <FileChartColumnIncreasing className="w-8 h-8 text-red-600" />
                             <div>
                               <h3 className="text-lg font-semibold text-foreground">{report.name}</h3>
                               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
