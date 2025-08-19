@@ -48,6 +48,7 @@ const Admin = () => {
 
   const [fetchStudyReports, setFetchStudyReports] = useState([]);
   const [fetchStudyGuides, setFetchStudyGuides] = useState([]);
+  const [fetchStudyVideos, setFetchStudyVideos] = useState([]);
 
   const [report, setReport] = useState({
     name: "",
@@ -127,22 +128,28 @@ const Admin = () => {
     }
   }
 
-  const handleSubmitVideo = (e: { preventDefault: () => void; }) => {
+  const handleSubmitVideo = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    setLoading(true);
 
-    const data = {
-      name: video.name,
-      category: video.category,
-      duration: video.duration,
-      link: video.videoLink
-    }
+    const formData = new FormData();
+    formData.append("name", video.name);
+    formData.append("category", video.category);
+    formData.append("duration", video.duration);
+    formData.append("videoLink", video.videoLink);
 
     try {
-      console.log("Video added:", data);
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-video`,
+        formData,
+        {
+          withCredentials: true, headers: { "Content-Type": "application/json" }
+        });
+      console.log("Video uploaded:", response.data);
+      setLoading(false);
       setVideo({ name: '', category: '', duration: '', videoLink: '' });
-    }
-    catch (err) {
-      console.log("Upload failed:", err)
+      toast(response.data.message)
+    } catch (err) {
+      console.error("Video failed:", err);
     }
   }
 
@@ -182,6 +189,12 @@ const Admin = () => {
             setFetchStudyGuides(getGuides.guides);
           }
           fetchGuides();
+
+          const fetchVideos = async () => {
+            const getVideos = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/videos`, { withCredentials: true })).data
+            setFetchStudyVideos(getVideos.videos);
+          }
+          fetchVideos();
         }
       }
       catch (err) {
@@ -286,7 +299,7 @@ const Admin = () => {
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold text-primary">Admin Panel</h1>
             <div className="flex items-center gap-4">
-              <Button variant="outline" onClick={handleLogout}>
+              <Button variant="outline" onClick={handleLogout} className="hover:bg-red-500">
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </Button>
@@ -737,7 +750,7 @@ const Admin = () => {
                       <PlusCircle className="w-4 h-4 mr-2" /> Add Video Link
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="max-w-md" aria-describedby={undefined}>
                     <DialogHeader>
                       <DialogTitle>Add Video</DialogTitle>
                     </DialogHeader>
@@ -756,7 +769,7 @@ const Admin = () => {
                       </div>
                       <div>
                         <Label>Video Link</Label>
-                        <Input type="url" name="link" value={video.videoLink} onChange={(e) => setVideo({ ...video, videoLink: e.target.value })} required />
+                        <Input type="url" name="videoLink" value={video.videoLink} onChange={(e) => setVideo({ ...video, videoLink: e.target.value })} required />
                       </div>
                       <Button type="submit" className="w-full">Add Video</Button>
                     </form>
@@ -805,19 +818,19 @@ const Admin = () => {
               }
 
               {studyMaterials.active === 'videos' &&
-                <Card key={""}>
+              fetchStudyVideos?.map((video, index) => (
+                <Card key={index}>
                   <CardContent className="pt-6 flex justify-between items-center">
                     <div className='flex flex-col gap-2'>
-                      <h3 className="font-semibold">SIP vs Lumpsum Investment</h3>
-                      <p className="text-muted-foreground text-sm">Category : Mutual Funds | Duration : 10 Minutes</p>
-                      <p className='text-muted-foreground text-sm'>Date : {new Date().toISOString().split("T")[0]}</p>
+                      <h3 className="font-semibold">{video.name}</h3>
+                      <p className="text-muted-foreground text-sm">Category : {video.category} | Duration : {video.duration} Minutes</p>
                     </div>
                     <div>
                       <Button className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
                     </div>
                   </CardContent>
                 </Card>
-              }
+              ))}
             </div>
           </div>
         )}

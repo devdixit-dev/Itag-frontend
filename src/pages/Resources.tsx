@@ -19,34 +19,31 @@ import {
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import IPOServices from "./IpoServices";
 
 const Resources = () => {
   const videos = [
     {
       title: "SIP vs Lump Sum: Which is Better?",
       duration: "12:45",
-      views: "45K",
       category: "Investment Basics",
       thumbnail: "🎯"
     },
     {
       title: "How to Read Annual Reports",
       duration: "18:30",
-      views: "32K",
       category: "Stock Analysis",
       thumbnail: "📊"
     },
     {
       title: "Understanding Life Insurance",
       duration: "15:20",
-      views: "28K",
       category: "Insurance",
       thumbnail: "🛡️"
     },
     {
       title: "Market Trends 2024",
       duration: "22:15",
-      views: "67K",
       category: "Market Analysis",
       thumbnail: "📈"
     }
@@ -54,9 +51,9 @@ const Resources = () => {
 
   const [fetchReports, setFetchReports] = useState<any[]>([]);
   const [fetchGuides, setFetchGuides] = useState<any[]>([]);
+  const [fetchVideos, setFetchVideos] = useState<any[]>([]);
 
   useEffect(() => {
-
     const getReports = async () => {
       const response = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`)).data
       setFetchReports(response.reports);
@@ -69,6 +66,11 @@ const Resources = () => {
     }
     getGuides();
 
+    const getVideos = async () => {
+      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/videos`)).data
+      setFetchVideos(response.videos);
+    }
+    getVideos();
   }, [])
 
   return (
@@ -147,33 +149,22 @@ const Resources = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {videos.map((video, index) => (
+                  {fetchVideos.map((video, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                       <CardHeader>
-                        <div className="relative bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg p-8 mb-4">
-                          <div className="text-6xl text-center">{video.thumbnail}</div>
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                              <Play className="w-8 h-8 text-white ml-1" />
-                            </div>
-                          </div>
-                        </div>
-                        <CardTitle className="text-lg">{video.title}</CardTitle>
+                        <CardTitle className="text-lg">{video.name}</CardTitle>
                         <CardDescription>{video.category}</CardDescription>
                       </CardHeader>
                       <CardContent>
                         <div className="flex items-center justify-between mb-4">
                           <span className="text-sm text-muted-foreground">
-                            Duration: {video.duration}
-                          </span>
-                          <span className="text-sm text-muted-foreground">
-                            {video.views} views
+                            Duration: {video.duration} Min
                           </span>
                         </div>
-                        <Button className="w-full btn-finance">
-                          <Play className="w-4 h-4 mr-2" />
-                          Watch Video
-                        </Button>
+                        <a href={video.videoLink} className="btn-finance flex items-center justify-center" target="_blank">
+                            <Play className="w-4 h-4 mr-2" />
+                            Watch Video
+                          </a>
                       </CardContent>
                     </Card>
                   ))}
