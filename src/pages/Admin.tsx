@@ -71,6 +71,17 @@ const Admin = () => {
     videoLink: ''
   });
 
+  const formatDate = (isoDate: string) => {
+    return new Date(isoDate).toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  };
+
+
   const handleSubmitReport = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setLoading(true);
@@ -171,8 +182,8 @@ const Admin = () => {
   const handleDeleteReport = async (id: string, e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    try{
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/report/${id}`, {}, {withCredentials: true})
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/report/${id}`, {}, { withCredentials: true })
       console.log(`Report deleted`, response.data);
       toast({
         title: `${response.data.message}`,
@@ -187,8 +198,8 @@ const Admin = () => {
   const handleDeleteGuide = async (id: string, e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    try{
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/guide/${id}`, {}, {withCredentials: true})
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/guide/${id}`, {}, { withCredentials: true })
       console.log(`Guide deleted`, response.data);
       toast({
         title: `${response.data.message}`,
@@ -203,8 +214,8 @@ const Admin = () => {
   const handleDeleteVideo = async (id: string, e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    try{
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/video/${id}`, {}, {withCredentials: true})
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/video/${id}`, {}, { withCredentials: true })
       console.log(`Video link deleted`, response.data);
       toast({
         title: `${response.data.message}`,
@@ -857,6 +868,7 @@ const Admin = () => {
                       <div className='flex flex-col gap-2'>
                         <h3 className="font-semibold">{report.name}</h3>
                         <p className="text-muted-foreground text-sm">Type : {report.type}</p>
+                        <p className="text-muted-foreground text-sm">Date : {formatDate(report.createdAt)}</p>
                       </div>
                       <div>
                         <Button
@@ -870,7 +882,6 @@ const Admin = () => {
                   </Card>
                 ))
               }
-              
 
               {studyMaterials.active === 'guides' &&
                 fetchStudyGuides?.reverse().map((guide, index) => (
@@ -882,9 +893,9 @@ const Admin = () => {
                         <p className="text-muted-foreground text-sm">Category : {guide.category}</p>
                       </div>
                       <div>
-                        <Button 
-                        onClick={(e) => handleDeleteGuide(guide._id, e)}
-                        className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                        <Button
+                          onClick={(e) => handleDeleteGuide(guide._id, e)}
+                          className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -900,9 +911,9 @@ const Admin = () => {
                         <p className="text-muted-foreground text-sm">Category : {video.category} | Duration : {video.duration} Minutes</p>
                       </div>
                       <div>
-                        <Button 
-                        onClick={(e) => handleDeleteVideo(video._id, e)}
-                        className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
+                        <Button
+                          onClick={(e) => handleDeleteVideo(video._id, e)}
+                          className='bg-red-500 hover:bg-red-500 hover:opacity-80'> Remove </Button>
                       </div>
                     </CardContent>
                   </Card>

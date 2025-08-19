@@ -22,32 +22,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Resources = () => {
-  const videos = [
-    {
-      title: "SIP vs Lump Sum: Which is Better?",
-      duration: "12:45",
-      category: "Investment Basics",
-      thumbnail: "🎯"
-    },
-    {
-      title: "How to Read Annual Reports",
-      duration: "18:30",
-      category: "Stock Analysis",
-      thumbnail: "📊"
-    },
-    {
-      title: "Understanding Life Insurance",
-      duration: "15:20",
-      category: "Insurance",
-      thumbnail: "🛡️"
-    },
-    {
-      title: "Market Trends 2024",
-      duration: "22:15",
-      category: "Market Analysis",
-      thumbnail: "📈"
-    }
-  ];
+  const formatDate = (isoDate: string) => {
+    return new Date(isoDate).toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
 
   const [fetchReports, setFetchReports] = useState<any[]>([]);
   const [fetchGuides, setFetchGuides] = useState<any[]>([]);
@@ -194,6 +175,7 @@ const Resources = () => {
                               <h3 className="text-lg font-semibold text-foreground">{report.name}</h3>
                               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                                 <span>{report.type}</span>
+                                <span>Date : {formatDate(report.createdAt)}</span>
                               </div>
                             </div>
                           </div>
