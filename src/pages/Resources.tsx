@@ -19,7 +19,6 @@ import {
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import IPOServices from "./IpoServices";
 
 const Resources = () => {
   const videos = [
