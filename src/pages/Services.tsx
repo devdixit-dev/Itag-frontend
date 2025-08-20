@@ -223,11 +223,11 @@ const Services = () => {
                     <div className="space-y-4">
                       <div className="text-4xl font-bold text-primary">
                         {index === 0 ? '500+' : index === 1 ? '₹100Cr+' : index === 2 ? '24/7' : 
-                         index === 3 ? '15%+' : index === 4 ? '48hrs' : '80C'}
+                         index === 3 ? '₹500Cr+' : index === 4 ? '48hrs' : '80C'}
                       </div>
                       <div className="text-muted-foreground">
                         {index === 0 ? 'IPOs Processed' : index === 1 ? 'AUM in Mutual Funds' : 
-                         index === 2 ? 'Claim Support' : index === 3 ? 'Average Returns' : 
+                         index === 2 ? 'Claim Support' : index === 3 ? 'Equity Assets' : 
                          index === 4 ? 'Loan Approval' : 'Tax Benefits'}
                       </div>
                     </div>

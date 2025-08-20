@@ -3,19 +3,14 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import pdf from '../../downloads/Aug Month.pdf'
 import {
   BookOpen,
   Download,
   Play,
-  FileText,
   Calculator,
   TrendingUp,
-  Shield,
   PiggyBank,
-  Calendar,
-  Star,
-  FileChartColumnIncreasing 
+  FileChartColumnIncreasing,
 } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { useEffect, useState } from "react";
@@ -34,25 +29,44 @@ const Resources = () => {
   const [fetchGuides, setFetchGuides] = useState<any[]>([]);
   const [fetchVideos, setFetchVideos] = useState<any[]>([]);
 
+  // filters for reports
+  const [yearFilter, setYearFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+
   useEffect(() => {
     const getReports = async () => {
-      const response = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`)).data
+      const response = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`)).data;
       setFetchReports(response.reports);
-    }
+    };
     getReports();
 
     const getGuides = async () => {
-      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`)).data
+      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`)).data;
       setFetchGuides(response.guides);
-    }
+    };
     getGuides();
 
     const getVideos = async () => {
-      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/videos`)).data
+      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/videos`)).data;
       setFetchVideos(response.videos);
-    }
+    };
     getVideos();
-  }, [])
+  }, []);
+
+  // filtered reports
+  const filteredReports = fetchReports.filter((report) => {
+    const reportYear = new Date(report.createdAt).getFullYear().toString();
+    const yearMatch = yearFilter === "all" || reportYear === yearFilter;
+    const typeMatch = typeFilter === "all" || report.type === typeFilter;
+    return yearMatch && typeMatch;
+  });
+
+  // generate year list dynamically
+  const reportYears = Array.from(
+    new Set(fetchReports.map((r) => new Date(r.createdAt).getFullYear().toString()))
+  ).sort((a, b) => Number(b) - Number(a));
+
+  const reportTypes = Array.from(new Set(fetchReports.map((r) => r.type)));
 
   return (
     <div className="min-h-screen bg-background">
@@ -85,7 +99,7 @@ const Resources = () => {
               <TabsTrigger value="calculators">Tools</TabsTrigger>
             </TabsList>
 
-            {/* Investment Guides */}
+            {/* Guides */}
             <TabsContent value="guides">
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">
@@ -96,30 +110,37 @@ const Resources = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {fetchGuides.reverse().map((guide, index) => (
-                    <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                      <CardHeader>
-                        <CardTitle className="text-lg">{guide.name}</CardTitle>
-                        <CardDescription>{guide.desc}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-sm bg-primary/10 text-primary px-2 py-1 rounded">
-                            {guide.category}
-                          </span>
-                        </div>
-                        <a href={guide.fileLink} className="btn-finance flex items-center justify-center" target="_blank">
+                  {fetchGuides
+                    .slice()
+                    .reverse()
+                    .map((guide, index) => (
+                      <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+                        <CardHeader>
+                          <CardTitle className="text-lg">{guide.name}</CardTitle>
+                          <CardDescription>{guide.desc}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-sm bg-primary/10 text-primary px-2 py-1 rounded">
+                              {guide.category}
+                            </span>
+                          </div>
+                          <a
+                            href={guide.fileLink}
+                            className="btn-finance flex items-center justify-center"
+                            target="_blank"
+                          >
                             <Download className="w-4 h-4 mr-2" />
                             Download
                           </a>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))}
                 </div>
               </div>
             </TabsContent>
 
-            {/* Video Tutorials */}
+            {/* Videos */}
             <TabsContent value="videos">
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">
@@ -130,30 +151,37 @@ const Resources = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {fetchVideos.reverse().map((video, index) => (
-                    <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                      <CardHeader>
-                        <CardTitle className="text-lg">{video.name}</CardTitle>
-                        <CardDescription>{video.category}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-sm text-muted-foreground">
-                            Duration: {video.duration} Min
-                          </span>
-                        </div>
-                        <a href={video.videoLink} className="btn-finance flex items-center justify-center" target="_blank">
+                  {fetchVideos
+                    .slice()
+                    .reverse()
+                    .map((video, index) => (
+                      <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+                        <CardHeader>
+                          <CardTitle className="text-lg">{video.name}</CardTitle>
+                          <CardDescription>{video.category}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-sm text-muted-foreground">
+                              Duration: {video.duration} Min
+                            </span>
+                          </div>
+                          <a
+                            href={video.videoLink}
+                            className="btn-finance flex items-center justify-center"
+                            target="_blank"
+                          >
                             <Play className="w-4 h-4 mr-2" />
                             Watch Video
                           </a>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))}
                 </div>
               </div>
             </TabsContent>
 
-            {/* Market Reports */}
+            {/* Reports */}
             <TabsContent value="reports">
               <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
@@ -163,35 +191,65 @@ const Resources = () => {
                   </p>
                 </div>
 
+                {/* Filter Section */}
+                <div className="flex gap-4 mb-8 justify-center">
+                  {/* Year Filter */}
+                  <select
+                    value={yearFilter}
+                    onChange={(e) => setYearFilter(e.target.value)}
+                    className="border border-gray-300 rounded px-3 py-2"
+                  >
+                    <option value="all">All Years</option>
+                    {reportYears.map((yr) => (
+                      <option key={yr} value={yr}>
+                        {yr}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Filtered Reports */}
                 <div className="space-y-6">
-                  {fetchReports.reverse().map((report, index) => (
-                    <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between">
-                          
-                          <div className="flex items-center space-x-4">
-                            <FileChartColumnIncreasing className="w-8 h-8 text-red-600" />
-                            <div>
-                              <h3 className="text-lg font-semibold text-foreground">{report.name}</h3>
-                              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                                <span>{report.type}</span>
-                                <span>Date : {formatDate(report.createdAt)}</span>
+                  {filteredReports
+                    .slice()
+                    .reverse()
+                    .map((report, index) => (
+                      <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                              <FileChartColumnIncreasing className="w-8 h-8 text-red-600" />
+                              <div>
+                                <h3 className="text-lg font-semibold text-foreground">
+                                  {report.name}
+                                </h3>
+                                <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                  <span>{report.type}</span>
+                                  <span>Date : {formatDate(report.createdAt)}</span>
+                                </div>
                               </div>
                             </div>
+                            <a
+                              href={report.fileLink}
+                              className="btn-finance flex items-center"
+                              target="_blank"
+                            >
+                              <Download className="w-4 h-4 mr-2" />
+                              Download
+                            </a>
                           </div>
-                          <a href={report.fileLink} className="btn-finance flex items-center" target="_blank">
-                            <Download className="w-4 h-4 mr-2" />
-                            Download
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))}
+
+                  {filteredReports.length === 0 && (
+                    <p className="text-center text-muted-foreground">No reports found.</p>
+                  )}
                 </div>
               </div>
             </TabsContent>
 
-            {/* Financial Tools */}
+            {/* Tools */}
             <TabsContent value="calculators">
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">
@@ -254,7 +312,6 @@ const Resources = () => {
       </section>
 
       <WhatsAppFloat />
-
       <Footer />
     </div>
   );

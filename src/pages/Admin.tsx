@@ -22,7 +22,7 @@ import {
   Briefcase,
   Download,
   User2,
-  Book, 
+  Book,
   Delete,
   Loader,
   Loader2,
@@ -34,11 +34,16 @@ const Admin = () => {
   const { toast } = useToast();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  const [activeTab, setActiveTab] = useState('emails');
+  const [activeTab, setActiveTab] = useState('');
   const [emailSubscribers, setEmailSubscribers] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  // Generate years range (e.g., 1980 - 2030)
+  const years = Array.from({ length: 4 }, (_, i) => 2025 - i);
 
   const [studyMaterials, setStudyMaterials] = useState({
     active: 'reports',
@@ -81,6 +86,9 @@ const Admin = () => {
     });
   };
 
+  const getYear = (isoDate: string) => {
+    return new Date(isoDate).getFullYear();
+  }
 
   const handleSubmitReport = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -753,39 +761,39 @@ const Admin = () => {
             {/* Add Button + Dialog */}
             <div className="flex justify-end mb-6">
               {studyMaterials.active === 'reports' && (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button>
-                      <PlusCircle className="w-4 h-4 mr-2" /> Add Market Report
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-md" aria-describedby={undefined}>
-                    <DialogHeader>
-                      <DialogTitle>Add Market Report</DialogTitle>
-                    </DialogHeader>
-                    <form className="space-y-4" onSubmit={handleSubmitReport} encType="multipart/form-data">
-                      <div>
-                        <Label>Name</Label>
-                        <Input name="name" value={report.name} onChange={(e) => setReport({ ...report, name: e.target.value })} required />
-                      </div>
-                      <div>
-                        <Label>Date</Label>
-                        <Input type="text" name="date" defaultValue={new Date().toISOString().split("T")[0]} disabled />
-                      </div>
-                      <div>
-                        <Label>Type</Label>
-                        <Input name="type" value={report.type} onChange={(e) => setReport({ ...report, type: e.target.value })} required />
-                      </div>
-                      <div>
-                        <Label>Upload File</Label>
-                        <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
-                      </div>
-                      <Button type="submit" className="w-full" disabled={loading}>
-                        {loading ? "Uploading report" : "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button>
+                        <PlusCircle className="w-4 h-4 mr-2" /> Add Market Report
                       </Button>
-                    </form>
-                  </DialogContent>
-                </Dialog>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-md" aria-describedby={undefined}>
+                      <DialogHeader>
+                        <DialogTitle>Add Market Report</DialogTitle>
+                      </DialogHeader>
+                      <form className="space-y-4" onSubmit={handleSubmitReport} encType="multipart/form-data">
+                        <div>
+                          <Label>Name</Label>
+                          <Input name="name" value={report.name} onChange={(e) => setReport({ ...report, name: e.target.value })} required />
+                        </div>
+                        <div>
+                          <Label>Date</Label>
+                          <Input type="text" name="date" defaultValue={new Date().toISOString().split("T")[0]} disabled />
+                        </div>
+                        <div>
+                          <Label>Type</Label>
+                          <Input name="type" value={report.type} onChange={(e) => setReport({ ...report, type: e.target.value })} required />
+                        </div>
+                        <div>
+                          <Label>Upload File</Label>
+                          <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
+                        </div>
+                        <Button type="submit" className="w-full" disabled={loading}>
+                          {loading ? "Uploading report" : "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
+                        </Button>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
               )}
 
               {studyMaterials.active === 'guides' && (
@@ -862,7 +870,7 @@ const Admin = () => {
             {/* Cards */}
             <div className="grid gap-4">
               {studyMaterials.active === 'reports' &&
-                fetchStudyReports?.reverse().map((report, index) => (
+                fetchStudyReports?.map((report, index) => (
                   <Card key={report.id || index}>
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div className='flex flex-col gap-2'>
@@ -880,11 +888,11 @@ const Admin = () => {
                       </div>
                     </CardContent>
                   </Card>
-                ))
+                )).reverse()
               }
 
               {studyMaterials.active === 'guides' &&
-                fetchStudyGuides?.reverse().map((guide, index) => (
+                fetchStudyGuides?.map((guide, index) => (
                   <Card key={guide.id || index}>
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div className='flex flex-col gap-2'>
@@ -899,11 +907,11 @@ const Admin = () => {
                       </div>
                     </CardContent>
                   </Card>
-                ))
+                )).reverse()
               }
 
               {studyMaterials.active === 'videos' &&
-                fetchStudyVideos?.reverse().map((video, index) => (
+                fetchStudyVideos?.map((video, index) => (
                   <Card key={index}>
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div className='flex flex-col gap-2'>
@@ -917,7 +925,8 @@ const Admin = () => {
                       </div>
                     </CardContent>
                   </Card>
-                ))}
+                )).reverse()
+              }
             </div>
           </div>
         )}
