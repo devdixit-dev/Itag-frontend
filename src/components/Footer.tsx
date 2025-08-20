@@ -211,7 +211,7 @@ const Footer = () => {
                 <h4 className="font-semibold mb-3">Downloads</h4>
                 <div className="flex flex-col space-y-2">
                   <a
-                    href="/will-form.xlsx"
+                    href="/will_form.pdf"
                     download
                     className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors"
                   >
@@ -219,7 +219,7 @@ const Footer = () => {
                     <span>Will Form Template</span>
                   </a>
                   <a
-                    href="/financial-planning.xlsx"
+                    href="/financial_planning.pdf"
                     download
                     className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors"
                   >
@@ -359,7 +359,7 @@ const Footer = () => {
             </div>
 
             <div className="flex items-center space-x-4 text-sm text-white/80">
-              <span>© {currentYear} I Tag Financials</span>
+              <span>copyrights © {currentYear} I Tag Financials</span>
               {/* <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
               <span>Made by <a href="https://github.com/devdixit-dev" className="border-b border-green-500" target="_blank">Dev Dixit</a></span> */}
             </div>
