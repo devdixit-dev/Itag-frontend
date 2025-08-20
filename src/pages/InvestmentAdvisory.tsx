@@ -62,7 +62,7 @@ const InvestmentAdvisory = () => {
               "Market Awareness: Stay updated on changes impacting your portfolio.",
               "Discipline: Structured processes for consistent long-term progress."
             ].map((item, i) => (
-              <div key={i} className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+              <div key={i} className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
                 <div className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" />
                   <span>{item}</span>
@@ -112,7 +112,7 @@ const InvestmentAdvisory = () => {
                   "Blend of long-term strategy with short-term tilts based on market conditions."
               }
             ].map(({ title, text }, i) => (
-              <div key={i} className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+              <div key={i} className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
                 <h3 className="text-xl font-semibold mb-2">{title}</h3>
                 <p className="text-muted-foreground">{text}</p>
               </div>
@@ -129,7 +129,7 @@ const InvestmentAdvisory = () => {
           </h2>
         </div>
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
             <ol className="space-y-4 list-decimal list-inside">
               {[
                 "Understand client’s financial goals, timelines, and constraints.",

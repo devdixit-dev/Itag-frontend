@@ -64,9 +64,9 @@ const FinancialPlanning = () => {
               "Financial Independence: Reduce debt dependency for a comfortable lifestyle.",
               "Liquidity: Maintain emergency funds for unplanned needs."
             ].map((objective, i) => (
-              <div key={i} className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+              <div key={i} className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
                 <div className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" />
+                  {/* <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" /> */}
                   <span>{objective}</span>
                 </div>
               </div>
@@ -114,7 +114,7 @@ const FinancialPlanning = () => {
                   "Optimize EMIs, reduce high-interest debt, and maintain a healthy credit profile."
               }
             ].map(({ title, text }, i) => (
-              <div key={i} className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+              <div key={i} className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
                 <h3 className="text-xl font-semibold mb-2">{title}</h3>
                 <p className="text-muted-foreground">{text}</p>
               </div>
@@ -129,7 +129,7 @@ const FinancialPlanning = () => {
           <h2 className="text-2xl font-semibold text-center mb-8">
             Steps to Create a Financial Plan
           </h2>
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
             <ol className="space-y-4 list-decimal list-inside">
               {[
                 "Assess current financial situation: net worth, income, expenses, liabilities, and insurance.",

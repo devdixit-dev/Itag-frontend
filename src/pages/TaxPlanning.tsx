@@ -61,7 +61,7 @@ const TaxPlanning = () => {
             ].map((objective, i) => (
               <div
                 key={i}
-                className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition"
+                className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition"
               >
                 <div className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" />
@@ -81,15 +81,15 @@ const TaxPlanning = () => {
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {[
-              "Section 80C Investments: ELSS Mutual Funds, Life Insurance Premiums, PPF, EPF, and NSC (Up to ₹1.5 lakh deduction).",
+              "Section 80C Investments: ELSS Mutual Funds, Life Insurance Premiums, etc...",
               "Health Insurance Premiums: Deductions under Section 80D.",
-              "Home Loan Benefits: Interest deduction under Section 24(b) and principal repayment under Section 80C.",
+              "Home Loan Benefits: Interest deduction under Section 24(b) and Section 80C.",
               "NPS (National Pension System): Additional deduction under Section 80CCD(1B).",
               "Tax-Free Allowances: HRA, LTA, and standard deductions for salaried employees."
             ].map((strategy, i) => (
               <div
                 key={i}
-                className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition"
+                className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition"
               >
                 <div className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" />

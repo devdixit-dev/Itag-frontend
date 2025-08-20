@@ -68,7 +68,7 @@ const MutualFund = () => {
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Lumpsum */}
-            <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div className="bg-card p-6 rounded-xl shadow-2xl hover:shadow-xl transition border-gray-100 border-2">
               <h3 className="text-xl font-semibold mb-3">1. Lumpsum Investment</h3>
               <p className="text-muted-foreground mb-4">
                 Invest a large amount in a mutual fund at one time. Best suited
@@ -88,7 +88,7 @@ const MutualFund = () => {
             </div>
 
             {/* SIP */}
-            <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div className="bg-card p-6 rounded-xl shadow-2xl hover:shadow-xl transition border-gray-100 border-2">
               <h3 className="text-xl font-semibold mb-3">
                 2. SIP (Systematic Investment Plan)
               </h3>

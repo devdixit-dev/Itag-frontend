@@ -50,7 +50,7 @@ const StockMarket = () => {
           <h2 className="text-2xl font-semibold text-center mb-8">
             How Does the Stock Market Work?
           </h2>
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition max-w-4xl mx-auto">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition max-w-4xl mx-auto">
             <p className="text-muted-foreground mb-4">
               The stock market operates on the principles of demand and supply:
             </p>
@@ -100,7 +100,7 @@ const StockMarket = () => {
             ].map((info, i) => (
               <div
                 key={i}
-                className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition"
+                className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition"
               >
                 <div className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" />

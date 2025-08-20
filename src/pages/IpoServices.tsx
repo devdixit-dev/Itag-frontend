@@ -52,12 +52,12 @@ const IPOServices = () => {
           <h2 className="text-2xl font-semibold text-center mb-8">
             How Does an IPO Work?
           </h2>
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition max-w-4xl mx-auto">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition max-w-4xl mx-auto">
             <ul className="space-y-2">
               {[
                 "A company files for an IPO with SEBI (Securities and Exchange Board of India) for approval.",
                 "The company works with investment banks to set a price band for its shares.",
-                "Investors apply for shares through their Demat & Trading account using ASBA (Application Supported by Blocked Amount).",
+                "Investors apply for shares through their Demat & Trading account.",
                 "Shares are allotted based on demand and availability.",
                 "The company’s shares get listed on the stock exchange (BSE/NSE) and can be traded freely."
               ].map((step, i) => (

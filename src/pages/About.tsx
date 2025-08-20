@@ -100,20 +100,20 @@ const About = () => {
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div className="card-finance text-center p-6">
-                  <div className="text-3xl font-bold text-primary mb-2">23+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">21+</div>
                   <div className="text-sm text-muted-foreground">Years of Experience</div>
                 </div>
                 <div className="card-finance text-center p-6">
-                  <div className="text-3xl font-bold text-primary mb-2">5000+</div>
-                  <div className="text-sm text-muted-foreground">Happy Clients</div>
+                  <div className="text-3xl font-bold text-primary mb-2">₹500Cr+</div>
+                  <div className="text-sm text-muted-foreground">Equity Assets</div>
                 </div>
                 <div className="card-finance text-center p-6">
-                  <div className="text-3xl font-bold text-primary mb-2">₹500Cr+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">₹100Cr+</div>
                   <div className="text-sm text-muted-foreground">Assets Under Management</div>
                 </div>
                 <div className="card-finance text-center p-6">
-                  <div className="text-3xl font-bold text-primary mb-2">98%</div>
-                  <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+                  <div className="text-3xl font-bold text-primary mb-2">5000+</div>
+                  <div className="text-sm text-muted-foreground">Total Clientele</div>
                 </div>
               </div>
             </div>

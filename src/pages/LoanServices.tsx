@@ -54,7 +54,7 @@ const LoanServices = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {/* Home Loan */}
-            <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
               <h3 className="text-xl font-semibold mb-3">1. Home Loan</h3>
               <p className="text-muted-foreground mb-4">
                 A home loan is used to purchase, construct, or renovate a house.
@@ -63,7 +63,7 @@ const LoanServices = () => {
                 {[
                   "Long repayment tenures (up to 30 years).",
                   "Lower interest rates compared to other loans.",
-                  "Tax benefits under Sections 80C & 24(b) of the Income Tax Act."
+                  "Tax benefits under Sections 80C & 24(b)"
                 ].map((point, i) => (
                   <li key={i} className="flex items-start">
                     <CheckCircle className="w-5 h-5 text-success mt-1 mr-2" />
@@ -74,7 +74,7 @@ const LoanServices = () => {
             </div>
 
             {/* Business Loan */}
-            <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
               <h3 className="text-xl font-semibold mb-3">2. Business Loan</h3>
               <p className="text-muted-foreground mb-4">
                 Designed to meet working capital requirements, expansion, or new ventures.
@@ -94,7 +94,7 @@ const LoanServices = () => {
             </div>
 
             {/* Education Loan */}
-            <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
               <h3 className="text-xl font-semibold mb-3">3. Education Loan</h3>
               <p className="text-muted-foreground mb-4">
                 Helps fund higher education in India or abroad.

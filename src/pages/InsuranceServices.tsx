@@ -52,7 +52,7 @@ const InsuranceServices = () => {
       {/* Term Insurance */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition mb-10">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition mb-10">
             <div className="flex items-center gap-3 mb-4">
               <Shield className="w-8 h-8 text-primary" />
               <h3 className="text-2xl font-semibold">1. Term Insurance</h3>
@@ -80,7 +80,7 @@ const InsuranceServices = () => {
           </div>
 
           {/* Health Insurance */}
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition mb-10">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition mb-10">
             <div className="flex items-center gap-3 mb-4">
               <HeartPulse className="w-8 h-8 text-primary" />
               <h3 className="text-2xl font-semibold">2. Health Insurance</h3>
@@ -107,7 +107,7 @@ const InsuranceServices = () => {
           </div>
 
           {/* Motor Insurance */}
-          <div className="bg-card p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div className="bg-card p-6 rounded-xl shadow-2xl border-gray-100 border-2 hover:shadow-lg transition">
             <div className="flex items-center gap-3 mb-4">
               <Car className="w-8 h-8 text-primary" />
               <h3 className="text-2xl font-semibold">3. Motor Insurance</h3>
