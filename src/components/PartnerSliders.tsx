@@ -37,6 +37,7 @@ import shriram from '../assets/amc/shriram.png'
 import sundaram from '../assets/amc/sundaram.png'
 import tata from '../assets/amc/tata.avif'
 import tauras from '../assets/amc/tauras.jpeg'
+import wealth_company from '../assets/amc/the_wealth_management.png'
 import trust from '../assets/amc/trust.png'
 import unifi from '../assets/amc/unifi.webp'
 import union from '../assets/amc/union.jpg'
@@ -79,6 +80,7 @@ const amcPartners = [
   { name: "Shriram Mutual Fund", logo: shriram },
   { name: "Tata Asset Management", logo: tata },
   { name: "Taurus Mutual Fund", logo: tauras },
+  { name: "The Wealth Company", logo: wealth_company },
   { name: "Trust Mutual Fund", logo: trust },
   { name: "Unifi Mutual Fund", logo: unifi },
   { name: "UTI Mutual Fund", logo: uti },
