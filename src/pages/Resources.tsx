@@ -11,6 +11,17 @@ import {
   TrendingUp,
   PiggyBank,
   FileChartColumnIncreasing,
+  CreditCard, 
+  ArrowRightLeft, 
+  Wallet, 
+  Umbrella, 
+  ShieldCheck, 
+  Percent, 
+  BarChart3, 
+  LineChart, 
+  CircleDollarSign, 
+  Droplet, 
+  Sigma
 } from "lucide-react";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { useEffect, useState } from "react";
@@ -259,16 +270,29 @@ const Resources = () => {
                   </p>
                 </div>
 
+                {/* Grid Layout */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {/* Investment Section */}
                   <Card className="text-center hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
                       <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
                         <Calculator className="w-8 h-8 text-white" />
                       </div>
                       <CardTitle>SIP Calculator</CardTitle>
-                      <CardDescription>
-                        Calculate returns from systematic investment plans
-                      </CardDescription>
+                      <CardDescription>Calculate returns from systematic investment plans</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button onClick={() => {'/sip'}} className="w-full btn-finance">Use Calculator</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <TrendingUp className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>Step-up SIP</CardTitle>
+                      <CardDescription>Plan SIPs that grow with your income</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Button className="w-full btn-finance">Use Calculator</Button>
@@ -278,35 +302,150 @@ const Resources = () => {
                   <Card className="text-center hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
                       <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
-                        <PiggyBank className="w-8 h-8 text-white" />
+                        <CreditCard className="w-8 h-8 text-white" />
                       </div>
-                      <CardTitle>Goal Planner</CardTitle>
-                      <CardDescription>
-                        Plan investments for your financial goals
-                      </CardDescription>
+                      <CardTitle>EMI Calculator</CardTitle>
+                      <CardDescription>Calculate EMIs for loans and purchases</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Button className="w-full btn-finance">Plan Goals</Button>
+                      <Button className="w-full btn-finance">Use Calculator</Button>
                     </CardContent>
                   </Card>
 
                   <Card className="text-center hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
                       <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
-                        <TrendingUp className="w-8 h-8 text-white" />
+                        <ArrowRightLeft className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>STP Calculator</CardTitle>
+                      <CardDescription>Plan systematic transfer of funds</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Use Calculator</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Wallet className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>SWP Calculator</CardTitle>
+                      <CardDescription>Plan systematic withdrawals from your investments</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Use Calculator</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Umbrella className="w-8 h-8 text-white" />
                       </div>
                       <CardTitle>Retirement Planner</CardTitle>
-                      <CardDescription>
-                        Calculate how much you need for retirement
-                      </CardDescription>
+                      <CardDescription>Calculate how much you need for retirement</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Button className="w-full btn-finance">Plan Retirement</Button>
                     </CardContent>
                   </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <ShieldCheck className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>National Pension Scheme</CardTitle>
+                      <CardDescription>Plan your retirement with NPS contributions</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Calculate NPS</Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Brokerage & Margin Section */}
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Percent className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>Brokerage Calculator</CardTitle>
+                      <CardDescription>Estimate brokerage costs for trades</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Calculate</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <BarChart3 className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>F&O Margin</CardTitle>
+                      <CardDescription>Check margin requirements for derivatives</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Check Margin</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <LineChart className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>Equity Futures</CardTitle>
+                      <CardDescription>Calculate margin for equity futures</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Check Futures</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CircleDollarSign className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>Currency Margin</CardTitle>
+                      <CardDescription>Calculate currency derivatives margin</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Calculate</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Droplet className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>Commodity Margin</CardTitle>
+                      <CardDescription>Calculate margin for commodities trading</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Check Margin</Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="text-center hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Sigma className="w-8 h-8 text-white" />
+                      </div>
+                      <CardTitle>Black & Scholes</CardTitle>
+                      <CardDescription>Options pricing with Black-Scholes model</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button className="w-full btn-finance">Calculate</Button>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
             </TabsContent>
+
           </Tabs>
         </div>
       </section>
