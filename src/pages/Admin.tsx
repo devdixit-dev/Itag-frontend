@@ -187,12 +187,30 @@ const Admin = () => {
     }
   }
 
+  const handleDeleteEmails = async (id: string, e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/email/${id}`, {}, { withCredentials: true })
+      console.log(`Email deleted`, response.data);
+      setEmailSubscribers((prev) => prev.filter((subscriber) => subscriber._id !== id));
+      toast({
+        title: `${response.data.message}`,
+        duration: 3000
+      });
+    }
+    catch (err) {
+      console.error("Email delete failed:", err);
+    }
+  }
+
   const handleDeleteReport = async (id: string, e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/report/${id}`, {}, { withCredentials: true })
       console.log(`Report deleted`, response.data);
+      setFetchStudyReports((prev) => prev.filter((report) => report._id !== id));
       toast({
         title: `${response.data.message}`,
         duration: 3000
@@ -209,6 +227,7 @@ const Admin = () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/guide/${id}`, {}, { withCredentials: true })
       console.log(`Guide deleted`, response.data);
+      setFetchStudyGuides((prev) => prev.filter((guide) => guide._id !== id));
       toast({
         title: `${response.data.message}`,
         duration: 3000
@@ -225,6 +244,7 @@ const Admin = () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/video/${id}`, {}, { withCredentials: true })
       console.log(`Video link deleted`, response.data);
+      setFetchStudyVideos((prev) => prev.filter((video) => video._id !== id));
       toast({
         title: `${response.data.message}`,
         duration: 3000
@@ -375,7 +395,7 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-w-screen bg-background">
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
@@ -397,9 +417,9 @@ const Admin = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container flex w-full gap-10 mx-auto px-4 py-8">
         {/* Tab Navigation */}
-        <div className="flex justify-between gap-4 mb-8 border-b">
+        <div className="flex flex-col text-center justify-start items-start gap-4 mb-8">
           <button
             onClick={() => setActiveTab('emails')}
             className={`px-4 py-2 font-medium ${activeTab === 'emails' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
@@ -426,13 +446,13 @@ const Admin = () => {
             className={`px-4 py-2 font-medium ${activeTab === 'study-materials' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
           >
             <Book className="w-4 h-4 inline mr-2" />
-            Upload Study Materials
+            Add Study Materials
           </button>
         </div>
 
         {/* Email Subscribers Tab */}
         {activeTab === 'emails' && (
-          <div>
+          <div className='w-[80%] h-full flex flex-col'>
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-foreground">Email Subscribers</h2>
@@ -457,11 +477,15 @@ const Admin = () => {
                 <Card key={index}>
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-center">
-                      <div className='w-full flex justify-between'>
-                        <p className="font-medium">{subscriber.email}</p>
-                        <div className="flex gap-4 text-sm text-muted-foreground">
-                          <span>Source : {subscriber.source}</span>
+                      <div className='w-full flex justify-between items-center'>
+                        <div>
+                          <p className="font-medium">Email : {subscriber.email}</p>
+                          <span className='text-muted-foreground text-sm'>Source : {subscriber.source}</span>
                         </div>
+
+                        <button onClick={(e) => handleDeleteEmails(subscriber._id, e)} className="flex gap-4 text-sm text-muted-foreground p-1 rounded-md hover:cursor-pointer">
+                          <Trash2 className='text-red-500' />
+                        </button>
                       </div>
                     </div>
                   </CardContent>
@@ -480,7 +504,7 @@ const Admin = () => {
 
         {/* Job Applications Tab */}
         {activeTab === 'jobs' && (
-          <div>
+          <div className='w-[80%]'>
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-foreground">Job Applications</h2>
@@ -555,7 +579,7 @@ const Admin = () => {
 
         {/* Client Details Tab */}
         {activeTab === 'clients' && (
-          <div>
+          <div className='w-[80%]'>
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-foreground">Client Details</h2>
@@ -726,7 +750,7 @@ const Admin = () => {
 
         {/* Study Materials Tab */}
         {activeTab === 'study-materials' && (
-          <div>
+          <div className='w-[80%]'>
             {/* Sub Tabs */}
             <div className="flex gap-4 mb-6 border-b">
               <button
@@ -761,39 +785,39 @@ const Admin = () => {
             {/* Add Button + Dialog */}
             <div className="flex justify-end mb-6">
               {studyMaterials.active === 'reports' && (
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button>
-                        <PlusCircle className="w-4 h-4 mr-2" /> Add Market Report
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <PlusCircle className="w-4 h-4 mr-2" /> Add Market Report
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md" aria-describedby={undefined}>
+                    <DialogHeader>
+                      <DialogTitle>Add Market Report</DialogTitle>
+                    </DialogHeader>
+                    <form className="space-y-4" onSubmit={handleSubmitReport} encType="multipart/form-data">
+                      <div>
+                        <Label>Name</Label>
+                        <Input name="name" value={report.name} onChange={(e) => setReport({ ...report, name: e.target.value })} required />
+                      </div>
+                      <div>
+                        <Label>Date</Label>
+                        <Input type="text" name="date" defaultValue={new Date().toISOString().split("T")[0]} disabled />
+                      </div>
+                      <div>
+                        <Label>Type</Label>
+                        <Input name="type" value={report.type} onChange={(e) => setReport({ ...report, type: e.target.value })} required />
+                      </div>
+                      <div>
+                        <Label>Upload File</Label>
+                        <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? "Uploading report" : "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
                       </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-md" aria-describedby={undefined}>
-                      <DialogHeader>
-                        <DialogTitle>Add Market Report</DialogTitle>
-                      </DialogHeader>
-                      <form className="space-y-4" onSubmit={handleSubmitReport} encType="multipart/form-data">
-                        <div>
-                          <Label>Name</Label>
-                          <Input name="name" value={report.name} onChange={(e) => setReport({ ...report, name: e.target.value })} required />
-                        </div>
-                        <div>
-                          <Label>Date</Label>
-                          <Input type="text" name="date" defaultValue={new Date().toISOString().split("T")[0]} disabled />
-                        </div>
-                        <div>
-                          <Label>Type</Label>
-                          <Input name="type" value={report.type} onChange={(e) => setReport({ ...report, type: e.target.value })} required />
-                        </div>
-                        <div>
-                          <Label>Upload File</Label>
-                          <Input type="file" name="report" onChange={(e) => setReport({ ...report, file: e.target.files[0] })} required />
-                        </div>
-                        <Button type="submit" className="w-full" disabled={loading}>
-                          {loading ? "Uploading report" : "Add Report"} <Loader2 className={`${loading ? "animate-spin" : "hidden"}`} />
-                        </Button>
-                      </form>
-                    </DialogContent>
-                  </Dialog>
+                    </form>
+                  </DialogContent>
+                </Dialog>
               )}
 
               {studyMaterials.active === 'guides' && (

@@ -61,12 +61,17 @@ const Footer = () => {
   }
 
 
-  const handleNewsletterEmail = async () => {
+  const handleNewsletterEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
     const getEmail = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/newsletter`, { email: newsletterEmail })).data
+    toast({
+      title: "Email subscription added 🎉"
+    });
+    setNewsletterEmail('');
 
-    if (getEmail.status === 200) {
+    if (getEmail.status === 400) {
       toast({
-        title: "🎉 Email subscription added"
+        title: "Your email id is already exist"
       });
       setNewsletterEmail('');
     }
@@ -186,7 +191,7 @@ const Footer = () => {
                 </p>
                 <form
                   className="flex flex-col sm:flex-row gap-2"
-                  onSubmit={(e) => { e.preventDefault(); handleNewsletterEmail(); }}
+                  onSubmit={handleNewsletterEmail}
                 >
                   <input
                     type="email"
@@ -198,7 +203,7 @@ const Footer = () => {
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-white text-primary rounded-md hover:bg-white/90 transition-colors font-medium flex items-center justify-center"
+                    className="px-4 py-2 bg-white text-primary rounded-md hover:bg-white/70 transition-colors font-medium flex items-center justify-center"
                     aria-label="Subscribe to newsletter"
                   >
                     <BellIcon width={18} />
