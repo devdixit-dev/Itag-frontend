@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
@@ -162,7 +161,7 @@ const Career = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_DEV_URL}/apply-job`,
+        `${import.meta.env.VITE_BASE_URL}/user/apply-job`,
         formData,
         {
           headers: {

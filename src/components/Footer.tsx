@@ -63,7 +63,7 @@ const Footer = () => {
 
   const handleNewsletterEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    const getEmail = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/newsletter`, { email: newsletterEmail })).data
+    const getEmail = await (await axios.post(`${import.meta.env.VITE_BASE_URL}/user/newsletter`, { email: newsletterEmail })).data
     toast({
       title: "Email subscription added 🎉"
     });

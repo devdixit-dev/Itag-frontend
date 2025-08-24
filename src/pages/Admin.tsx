@@ -105,7 +105,7 @@ const Admin = () => {
     formData.append("report", report.file, report.file.name);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-report`,
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/add-report`,
         formData,
         {
           withCredentials: true, headers: { "Content-Type": "multipart/form-data" }
@@ -140,7 +140,7 @@ const Admin = () => {
     formData.append("guide", guide.file, guide.file.name);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-guide`,
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/add-guide`,
         formData,
         {
           withCredentials: true, headers: { "Content-Type": "multipart/form-data" }
@@ -169,7 +169,7 @@ const Admin = () => {
     formData.append("videoLink", video.videoLink);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/add-video`,
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/add-video`,
         formData,
         {
           withCredentials: true, headers: { "Content-Type": "application/json" }
@@ -191,7 +191,7 @@ const Admin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/email/${id}`, {}, { withCredentials: true })
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/remove/email/${id}`, {}, { withCredentials: true })
       console.log(`Email deleted`, response.data);
       setEmailSubscribers((prev) => prev.filter((subscriber) => subscriber._id !== id));
       toast({
@@ -208,7 +208,7 @@ const Admin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/report/${id}`, {}, { withCredentials: true })
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/remove/report/${id}`, {}, { withCredentials: true })
       console.log(`Report deleted`, response.data);
       setFetchStudyReports((prev) => prev.filter((report) => report._id !== id));
       toast({
@@ -225,7 +225,7 @@ const Admin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/guide/${id}`, {}, { withCredentials: true })
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/remove/guide/${id}`, {}, { withCredentials: true })
       console.log(`Guide deleted`, response.data);
       setFetchStudyGuides((prev) => prev.filter((guide) => guide._id !== id));
       toast({
@@ -242,7 +242,7 @@ const Admin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/remove/video/${id}`, {}, { withCredentials: true })
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/remove/video/${id}`, {}, { withCredentials: true })
       console.log(`Video link deleted`, response.data);
       setFetchStudyVideos((prev) => prev.filter((video) => video._id !== id));
       toast({
@@ -258,42 +258,42 @@ const Admin = () => {
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/verify`, { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/verify/admin`, { withCredentials: true });
         if (response.status === 200 && response.data.loggedIn) {
           setIsLoggedIn(true);
 
           const fetchClients = async () => {
-            const getClients = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/clients`, { withCredentials: true })).data
+            const getClients = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/clients`, { withCredentials: true })).data
             setClients(getClients.clients);
           }
           await fetchClients();
 
           const fetchEmails = async () => {
-            const getEmails = await (await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/emails`, {}, { withCredentials: true })).data
+            const getEmails = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/emails`, { withCredentials: true })).data
             setEmailSubscribers(getEmails.emails);
           }
           await fetchEmails();
 
           const fetchJobApps = async () => {
-            const getJobApps = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/job-apps`, { withCredentials: true })).data
+            const getJobApps = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/job-apps`, { withCredentials: true })).data
             setJobApplications(getJobApps.jobApplications);
           }
           await fetchJobApps();
 
           const fetchReports = async () => {
-            const getReports = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`, { withCredentials: true })).data
+            const getReports = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/reports`, { withCredentials: true })).data
             setFetchStudyReports(getReports.reports);
           }
           fetchReports();
 
           const fetchGuides = async () => {
-            const getGuides = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`, { withCredentials: true })).data
+            const getGuides = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/guides`, { withCredentials: true })).data
             setFetchStudyGuides(getGuides.guides);
           }
           fetchGuides();
 
           const fetchVideos = async () => {
-            const getVideos = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/videos`, { withCredentials: true })).data
+            const getVideos = (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/videos`, { withCredentials: true })).data
             setFetchStudyVideos(getVideos.videos);
           }
           fetchVideos();
@@ -309,7 +309,7 @@ const Admin = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const adminLogin = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin`, {
+      const adminLogin = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login/admin`, {
         username: loginForm.username,
         password: loginForm.password
       }, { withCredentials: true });
@@ -341,7 +341,7 @@ const Admin = () => {
   };
 
   const handleLogout = async () => {
-    const adminLogout = await axios.post(`${import.meta.env.VITE_DEV_URL}/logout`, {}, { withCredentials: true })
+    const adminLogout = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/logout`, {}, { withCredentials: true })
     setIsLoggedIn(false);
     console.log(`Logged out`, adminLogout);
     setLoginForm({ username: '', password: '' });
