@@ -29,7 +29,7 @@ const PostJob = () => {
   const onSubmit = async (data: JobPostData) => {
     setIsSubmitting(true);
     
-    const response = await axios.post(`${import.meta.env.VITE_DEV_URL}/admin/post-job`,
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/post-job`,
       {
         title: data.title,
         department: data.department,

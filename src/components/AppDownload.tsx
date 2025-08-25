@@ -69,8 +69,9 @@ const AppDownload = () => {
                 </div>
               </Button>
               
+              <a href="https://play.google.com/store/apps/details?id=com.itagfin" target="_blank">
               <Button 
-                size="lg" 
+                size="lg"
                 className="bg-white text-primary hover:bg-white/90 font-semibold px-8 py-4 h-auto"
               >
                 <Play className="w-6 h-6 mr-3" />
@@ -79,6 +80,7 @@ const AppDownload = () => {
                   <div className="text-lg font-bold">Google Play</div>
                 </div>
               </Button>
+              </a>
             </div>
 
             {/* Download Stats */}
@@ -111,18 +113,9 @@ const AppDownload = () => {
                 <img 
                   src={mobileApp} 
                   alt="ITagFin Mobile App" 
-                  className="w-80 h-auto drop-shadow-2xl"
+                  className="w-80 h-auto rounded-xl drop-shadow-2xl"
                 />
               </div>
-
-              {/* Floating Elements
-              <div className="absolute -top-4 -left-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <Download className="w-6 h-6 text-white" />
-              </div>
-              
-              <div className="absolute -bottom-4 -right-4 bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <Star className="w-6 h-6 text-yellow-400" />
-              </div> */}
             </div>
           </div>
         </div>

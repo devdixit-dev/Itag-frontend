@@ -49,19 +49,19 @@ const Resources = () => {
 
   useEffect(() => {
     const getReports = async () => {
-      const response = await (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/reports`)).data;
+      const response = await (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/reports`)).data;
       setFetchReports(response.reports);
     };
     getReports();
 
     const getGuides = async () => {
-      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/guides`)).data;
+      const response = (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/guides`)).data;
       setFetchGuides(response.guides);
     };
     getGuides();
 
     const getVideos = async () => {
-      const response = (await axios.get(`${import.meta.env.VITE_DEV_URL}/admin/videos`)).data;
+      const response = (await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/videos`)).data;
       setFetchVideos(response.videos);
     };
     getVideos();
