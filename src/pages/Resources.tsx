@@ -10,16 +10,16 @@ import {
   Play,
   Calculator,
   TrendingUp,
-  CreditCard, 
-  ArrowRightLeft, 
-  Wallet, 
-  Umbrella, 
-  ShieldCheck, 
-  Percent, 
-  BarChart3, 
-  LineChart, 
-  CircleDollarSign, 
-  Droplet, 
+  CreditCard,
+  ArrowRightLeft,
+  Wallet,
+  Umbrella,
+  ShieldCheck,
+  Percent,
+  BarChart3,
+  LineChart,
+  CircleDollarSign,
+  Droplet,
   Sigma,
   FileChartColumnIncreasing
 } from "lucide-react";
@@ -160,32 +160,48 @@ const Resources = () => {
 
                 {/* Filtered Reports */}
                 <div className="space-y-6">
-                  {filteredReports.slice().reverse().map((report, index) => (
-                    <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4">
-                            <FileChartColumnIncreasing className="w-8 h-8 text-red-600" />
-                            <div>
-                              <h3 className="text-lg font-semibold text-foreground">{report.name}</h3>
-                              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                                <span>{report.type}</span>
-                                <span>Date : {formatDate(report.createdAt)}</span>
+                  {filteredReports
+                    .slice()
+                    .reverse()
+                    .map((report, index) => (
+                      <Card
+                        key={index}
+                        className="hover:shadow-lg transition-shadow duration-300"
+                      >
+                        <CardContent className="p-6">
+                          {/* Responsive flex container */}
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            {/* Left Section (Icon + Info) */}
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                              <div className="flex items-center space-x-4 mb-2 sm:mb-0">
+                                <FileChartColumnIncreasing className="w-8 h-8 text-red-600 flex-shrink-0" />
+                                <div>
+                                  <h3 className="text-lg font-semibold text-foreground break-words">
+                                    {report.name}
+                                  </h3>
+                                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-sm text-muted-foreground mt-1">
+                                    <span>{report.type}</span>
+                                    <span>Date: {formatDate(report.createdAt)}</span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
+
+                            {/* Right Section (Download button) */}
+                            <div className="w-full sm:w-auto">
+                              <a
+                                href={report.fileLink}
+                                className="btn-finance flex justify-center sm:justify-start items-center w-full sm:w-auto text-center"
+                                target="_blank"
+                              >
+                                <Download className="w-4 h-4 mr-2" />
+                                Download
+                              </a>
+                            </div>
                           </div>
-                          <a
-                            href={report.fileLink}
-                            className="btn-finance flex items-center"
-                            target="_blank"
-                          >
-                            <Download className="w-4 h-4 mr-2" />
-                            Download
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))}
 
                   {filteredReports.length === 0 && (
                     <p className="text-center text-muted-foreground">No reports found.</p>
