@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -30,7 +30,7 @@ interface PersonalDetails {
   fullName: string;
   email: string;
   mobileNumber: string;
-  finalGoalAmount: number;
+  dateOfBirth: Date;
   employmentType: string;
   sourceOfIncome: string;
   monthlyIncome: number;
@@ -39,6 +39,7 @@ interface PersonalDetails {
   annualBonusGiftIncome: number;
   npsScheme: string;
   annualNpsAmount: number;
+  coverDependant: number;
 }
 
 interface Liability {
@@ -74,6 +75,8 @@ const FinancialJourney = () => {
   const [showLiabilityForm, setShowLiabilityForm] = useState(false);
   const [showInvestmentForm, setShowInvestmentForm] = useState(false);
   const [showInsuranceForm, setShowInsuranceForm] = useState(false);
+  const [age, setAge] = useState("");
+  const dateOfBirth = watch("dateOfBirth");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -104,6 +107,31 @@ const FinancialJourney = () => {
     { name: 'Insurance', amount: totalInsurance },
     { name: 'Buffer', amount: Math.max(bufferAmount, 0) },
   ];
+
+  function calculateAge(dob: string): number {
+    if (!dob) return 0;
+    const birthDate = new Date(dob);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age >= 0 ? age : 0;
+  }
+
+
+  useEffect(() => {
+    if (dateOfBirth) {
+      const ageValue = calculateAge(dateOfBirth.toString());
+      setAge(ageValue.toString());
+    } else {
+      setAge("");
+    }
+  }, [dateOfBirth]);
 
   const addLiability = (data: any) => {
     const newLiability: Liability = {
@@ -279,8 +307,13 @@ const FinancialJourney = () => {
                       <Input {...register("mobileNumber", { required: true })} placeholder="+91 9876543210" />
                     </div>
                     <div>
-                      <Label htmlFor="finalGoalAmount">Final Goal Amount (₹)</Label>
-                      <Input {...register("finalGoalAmount", { valueAsNumber: true })} type="number" placeholder="10000000" />
+                      <div className="flex justify-between text-center mb-2.5">
+                        <Label htmlFor="dateOfBirth">Date Of Birth</Label>
+                        <Label htmlFor="showAge" className="text-blue-900">
+                          {age ? `${age} years old` : "Your age shows here"}
+                        </Label>
+                      </div>
+                      <Input {...register("dateOfBirth")} type="date" />
                     </div>
                     <div>
                       <Label htmlFor="employmentType">Employment Type</Label>
@@ -324,6 +357,10 @@ const FinancialJourney = () => {
                     <div>
                       <Label htmlFor="npsAmount">Annual NPS Amount (₹)</Label>
                       <Input {...register("annualNpsAmount", { valueAsNumber: true })} onChange={(e) => { setNpsAmount(e.target.value) }} type="number" placeholder="50000" />
+                    </div>
+                    <div>
+                      <Label htmlFor="coverDependant">Cover Dependant</Label>
+                      <Input {...register("coverDependant", { valueAsNumber: true })} onChange={(e) => { setNpsAmount(e.target.value) }} type="number" placeholder="4" />
                     </div>
                   </div>
                 </form>
@@ -489,6 +526,25 @@ const FinancialJourney = () => {
                   </Badge>
                 </div>
               </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="mb-4">Suggested Insurance Amount</CardTitle>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="text-center p-3 bg-red-50 rounded-lg">
+                      <p className="text-sm text-muted-foreground">Term Insured Amount</p>
+                      <p className="text-lg font-bold text-red-600">₹1,20,00,000</p>
+                    </div>
+
+                    <div className="text-center p-3 bg-green-50 rounded-lg mt-4">
+                      <p className="text-sm text-muted-foreground">Health Insured Amount</p>
+                      <p className="text-lg font-bold text-green-600">₹5,00,000</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </CardHeader>
             </Card>
 
             {/* Pie Chart */}
