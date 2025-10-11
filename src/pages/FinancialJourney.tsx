@@ -78,6 +78,7 @@ const FinancialJourney = () => {
   const [age, setAge] = useState("");
   const dateOfBirth = watch("dateOfBirth");
 
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
@@ -87,12 +88,35 @@ const FinancialJourney = () => {
   const totalIncome = (personalDetails?.monthlyIncome || 0) * 12 +
     (personalDetails?.annualDividendIncome || 0) +
     (personalDetails?.annualRentInterestIncome || 0) +
-    (personalDetails?.annualBonusGiftIncome || 0);
+    (personalDetails?.annualBonusGiftIncome || 0)
 
   const totalLiabilities = liabilities.reduce((sum, liability) => sum + liability.emi * 12, 0);
   const totalInvestments = investments.reduce((sum, investment) => sum + investment.amount, 0);
   const totalInsurance = insurances.reduce((sum, insurance) => sum + insurance.premium, 0);
   const bufferAmount = totalIncome - totalLiabilities - totalInsurance - npsAmount;
+
+  const userIncome = Number(totalIncome) || 0;
+  const userLiabilities = Number(totalLiabilities) || 0;
+  const userDependants = Number(personalDetails?.coverDependant) || 0;
+
+  const suggestedTermInsuredAmount = (userIncome * 3) + (userLiabilities * userDependants);
+
+  let suggestedHealthInsuredAmount = 0;
+
+  if (Number(age) >= 20 && Number(age) <= 24) {
+    suggestedHealthInsuredAmount = 500000;
+  } else if (Number(age) >= 25 && Number(age) <= 34) {
+    suggestedHealthInsuredAmount = 1000000;
+  } else if (Number(age) >= 35 && Number(age) <= 44) {
+    suggestedHealthInsuredAmount = 1500000;
+  } else if (Number(age) >= 45 && Number(age) <= 54) {
+    suggestedHealthInsuredAmount = 2000000;
+  } else if (Number(age) >= 55) {
+    suggestedHealthInsuredAmount = 2500000;
+  } else {
+    suggestedHealthInsuredAmount = 0;
+  }
+
 
   const pieChartData = [
     { name: 'Available Income', value: Math.max(bufferAmount, 0), color: '#22c55e' },
@@ -535,12 +559,12 @@ const FinancialJourney = () => {
                   <div className="grid grid-cols-1 gap-4">
                     <div className="text-center p-3 bg-red-50 rounded-lg">
                       <p className="text-sm text-muted-foreground">Term Insured Amount</p>
-                      <p className="text-lg font-bold text-red-600">₹1,20,00,000</p>
+                      <p className="text-lg font-bold text-red-600">₹{suggestedTermInsuredAmount}</p>
                     </div>
 
                     <div className="text-center p-3 bg-green-50 rounded-lg mt-4">
                       <p className="text-sm text-muted-foreground">Health Insured Amount</p>
-                      <p className="text-lg font-bold text-green-600">₹5,00,000</p>
+                      <p className="text-lg font-bold text-green-600">₹{suggestedHealthInsuredAmount}</p>
                     </div>
                   </div>
                 </CardContent>
